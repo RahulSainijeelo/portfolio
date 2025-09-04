@@ -238,7 +238,7 @@ const Greet = forwardRef<RotatingCubesRef, RotatingCubesProps>(({
         // Fade out cubes at the end
         if (progress > 0.7) {
           const fadeProgress = (progress - 0.7) / 0.3
-          cube.material.opacity = (isBackground ? 0.8 : 1.0) * (1 - fadeProgress)
+          // cube.material.opacity = (isBackground ? 0.8 : 1.0) * (1 - fadeProgress)
         }
       })
       
