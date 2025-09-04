@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import anime from 'animejs/lib/anime.es';
+import { animate } from 'animejs';
 import LoadingIndicator from './LoadingIndicator';
 import { loadCustomFonts } from '../utils/fontLoader';
 import { GreetingScreenProps } from '../types';
@@ -7,8 +7,10 @@ import styles from '../styles/greeting.module.css';
 
 const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
   const textRef = useRef<HTMLHeadingElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [currentText, setCurrentText] = useState<string>('Hi,');
   const [loadingProgress, setLoadingProgress] = useState<number>(0);
+  const [animationComplete, setAnimationComplete] = useState<boolean>(false);
   const [assetsLoaded, setAssetsLoaded] = useState<boolean>(false);
 
   const greetingTexts: string[] = [
@@ -18,53 +20,76 @@ const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
   ];
 
   useEffect(() => {
-    // Start text animation sequence
-    animateTextSequence();
-    
-    // Start preloading assets
-    preloadAssets();
+    // Start both processes simultaneously
+    startAnimationSequence();
+    startAssetPreloading();
   }, []);
 
-  const animateTextSequence = (): void => {
-    let currentIndex = 0;
-    
-    const animateNext = (): void => {
-      if (currentIndex < greetingTexts.length - 1) {
-        // Fade out current text
-        anime({
-          targets: textRef.current,
-          opacity: 0,
-          translateY: -20,
-          duration: 800,
-          easing: 'easeInOutQuad',
-          complete: () => {
-            currentIndex++;
-            setCurrentText(greetingTexts[currentIndex]);
-            
-            // Fade in new text
-            anime({
-              targets: textRef.current,
-              opacity: 1,
-              translateY: 0,
-              duration: 800,
-              easing: 'easeInOutQuad',
-              delay: 200,
-              complete: () => {
-                setTimeout(animateNext, 1500); // Wait before next transition
-              }
-            });
-          }
-        });
-      }
-    };
+  // Check if both animation and assets are complete
+  useEffect(() => {
+    if (animationComplete && assetsLoaded) {
+      hideGreetingScreen();
+    }
+  }, [animationComplete, assetsLoaded]);
 
-    // Start the sequence after initial render
-    setTimeout(animateNext, 2000);
+  const startAnimationSequence = async (): Promise<void> => {
+    if (!textRef.current) return;
+
+    // Wait for initial display
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // Run through all text sequences
+    for (let i = 1; i < greetingTexts.length; i++) {
+      await animateTextTransition(i);
+    }
+
+    // Animation sequence complete
+    setAnimationComplete(true);
   };
 
-  const preloadAssets = async (): Promise<void> => {
+  const animateTextTransition = (index: number): Promise<void> => {
+    return new Promise((resolve) => {
+      if (!textRef.current) {
+        resolve();
+        return;
+      }
+
+      // Fade out current text
+      animate(textRef.current, {
+        opacity: 0,
+        y: -20,
+        duration: 800,
+        ease: 'inOut(2)',
+        onComplete: () => {
+          // Update text content
+          setCurrentText(greetingTexts[index]);
+          
+          // Fade in new text
+          if (!textRef.current) {
+            resolve();
+            return;
+          }
+          
+          animate(textRef.current, {
+            opacity: 1,
+            y: 0,
+            duration: 800,
+            ease: 'inOut(2)',
+            delay: 200,
+            onComplete: () => {
+              // Wait before next transition or completion
+              setTimeout(() => {
+                resolve();
+              }, 1500);
+            }
+          });
+        }
+      });
+    });
+  };
+
+  const startAssetPreloading = async (): Promise<void> => {
     const assetsToLoad: string[] = [
-      // Images
       '/images/hero-bg.jpg',
       '/images/profile.jpg',
       '/images/project1.jpg',
@@ -85,37 +110,40 @@ const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
         img.onerror = () => {
           loaded++;
           setLoadingProgress((loaded / total) * 100);
-          resolve(); // Resolve even on error to continue
+          resolve();
         };
         img.src = asset;
       });
     });
-
-    // Also load fonts
-    try {
-      await loadCustomFonts();
-    } catch (error) {
+    const fontPromise = loadCustomFonts().catch((error) => {
       console.log('Font loading error:', error);
-    }
+    });
 
-    await Promise.all(loadPromises);
-    setAssetsLoaded(true);
+    // Wait for all assets and fonts to load
+    await Promise.all([...loadPromises, fontPromise]);
     
-    // Wait a bit more for dramatic effect, then transition
+    setAssetsLoaded(true);
+  };
+
+  const hideGreetingScreen = (): void => {
+    // Add a small delay for dramatic effect
     setTimeout(() => {
-      anime({
-        targets: `.${styles.greetingContainer}`,
+      if (!containerRef.current) return;
+      
+      animate(containerRef.current, {
         opacity: 0,
         scale: 1.1,
         duration: 1000,
-        easing: 'easeInOutQuad',
-        complete: onComplete
+        ease: 'inOut(2)',
+        onComplete: () => {
+          onComplete();
+        }
       });
-    }, 1000);
+    }, 500);
   };
 
   return (
-    <div className={styles.greetingContainer}>
+    <div ref={containerRef} className={styles.greetingContainer}>
       <div className={styles.backgroundImage}></div>
       <div className={styles.overlay}></div>
       

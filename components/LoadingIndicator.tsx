@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import anime from 'animejs/lib/anime';
+import { animate } from 'animejs';
 import { LoadingIndicatorProps } from '../types';
 import styles from '../styles/greeting.module.css';
 
@@ -9,12 +9,10 @@ const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({ progress }) => {
 
   useEffect(() => {
     if (progressRef.current) {
-      anime({
-        targets: progressRef.current,
-        innerHTML: [progressRef.current.innerHTML, Math.round(progress).toString()],
+      animate(progressRef.current, {
+        innerHTML: Math.round(progress),
         duration: 500,
-        round: 1,
-        easing: 'easeOutExpo'
+        ease: 'outExpo'
       });
     }
 
@@ -22,11 +20,10 @@ const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({ progress }) => {
       const circumference = 2 * Math.PI * 20; // radius = 20
       const strokeDashoffset = circumference - (progress / 100) * circumference;
       
-      anime({
-        targets: circleRef.current,
+      animate(circleRef.current, {
         strokeDashoffset: strokeDashoffset,
         duration: 500,
-        easing: 'easeOutExpo'
+        ease: 'outExpo'
       });
     }
   }, [progress]);
