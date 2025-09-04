@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import anime from 'animejs/lib/anime.es.js';
+import anime from 'animejs/lib/anime.es';
 import LoadingIndicator from './LoadingIndicator';
 import { loadCustomFonts } from '../utils/fontLoader';
 import { GreetingScreenProps } from '../types';

@@ -1,0 +1,85 @@
+.greetingContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.backgroundImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/greeting-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(2px);
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.greetingText {
+  font-family: 'YourFont1', sans-serif;
+  font-size: clamp(3rem, 8vw, 8rem);
+  font-weight: 300;
+  color: #ffffff;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 2px;
+}
+
+.loadingIndicator {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
+  font-family: 'YourFont2', sans-serif;
+  font-size: 14px;
+  z-index: 3;
+}
+
+.loadingCircle {
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.3));
+}
+
+.progressText {
+  font-weight: 500;
+  min-width: 30px;
+  text-align: right;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .greetingText {
+    font-size: clamp(2rem, 12vw, 4rem);
+  }
+  
+  .loadingIndicator {
+    bottom: 20px;
+    right: 20px;
+    font-size: 12px;
+  }
+}

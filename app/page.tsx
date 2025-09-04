@@ -1,9 +1,22 @@
-import Image from "next/image";
+'use client'; // Add this if using app directory
 
-export default function Home() {
+import { useState } from 'react';
+import GreetingScreen from '../components/GreetingScreen';
+// import MainContent from '../components/MainContent';
+
+export default function Home(){
+  const [showGreeting, setShowGreeting] = useState<boolean>(true);
+
+  const handleGreetingComplete = (): void => {
+    setShowGreeting(false);
+  };
+
   return (
-    <div>
-      Hello
-    </div>
+    <>
+      {showGreeting && (
+        <GreetingScreen onComplete={handleGreetingComplete} />
+      )}
+      {!showGreeting && <div> hello </div>}
+    </>
   );
 }

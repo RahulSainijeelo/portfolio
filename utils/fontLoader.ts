@@ -4,7 +4,7 @@ export const loadCustomFonts = (): Promise<FontFace[][]> => {
   const fonts: FontConfig[] = [
     { name: 'AtAero-Regular', files: ['/public/fonts/AtAero-Regular.otf'] },
     { name: 'Elianto-Regular', files: ['/public/fonts/Elianto-Regular.otf'] },
-    { name: 'Elianto-Regular', files: ['/public/fonts/kanopibrazil-regular.otf'] },
+    { name: 'Kanopi-Regular', files: ['/public/fonts/kanopibrazil-regular.otf'] },
   ];
 
   return Promise.all(
