@@ -1,17 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import { animate } from 'animejs';
 import LoadingIndicator from './LoadingIndicator';
-import { loadCustomFonts } from '../utils/fontLoader';
+import { loadCustomFonts } from '@/utils/fontLoader';
 import { GreetingScreenProps } from '../types';
-import styles from '../styles/greeting.module.css';
+import styles from '@/styles/greeting.module.css';
+import Greet, { RotatingCubesRef } from './Greet';
 
 const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
   const textRef = useRef<HTMLHeadingElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const greetRef = useRef<RotatingCubesRef>(null);
   const [currentText, setCurrentText] = useState<string>('Hi,');
   const [loadingProgress, setLoadingProgress] = useState<number>(0);
   const [animationComplete, setAnimationComplete] = useState<boolean>(false);
   const [assetsLoaded, setAssetsLoaded] = useState<boolean>(false);
+  const [portalStarted, setPortalStarted] = useState<boolean>(false);
 
   const greetingTexts: string[] = [
     'Hi,',
@@ -20,30 +23,27 @@ const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
   ];
 
   useEffect(() => {
-    // Start both processes simultaneously
     startAnimationSequence();
     startAssetPreloading();
   }, []);
 
   // Check if both animation and assets are complete
   useEffect(() => {
-    if (animationComplete && assetsLoaded) {
-      hideGreetingScreen();
+    if (animationComplete && assetsLoaded && !portalStarted) {
+      setPortalStarted(true);
+      startPortalTransition();
     }
-  }, [animationComplete, assetsLoaded]);
+  }, [animationComplete, assetsLoaded, portalStarted]);
 
   const startAnimationSequence = async (): Promise<void> => {
     if (!textRef.current) return;
 
-    // Wait for initial display
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    // Run through all text sequences
     for (let i = 1; i < greetingTexts.length; i++) {
       await animateTextTransition(i);
     }
 
-    // Animation sequence complete
     setAnimationComplete(true);
   };
 
@@ -54,17 +54,14 @@ const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
         return;
       }
 
-      // Fade out current text
       animate(textRef.current, {
         opacity: 0,
         y: -20,
         duration: 800,
         ease: 'inOut(2)',
         onComplete: () => {
-          // Update text content
           setCurrentText(greetingTexts[index]);
           
-          // Fade in new text
           if (!textRef.current) {
             resolve();
             return;
@@ -77,7 +74,6 @@ const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
             ease: 'inOut(2)',
             delay: 200,
             onComplete: () => {
-              // Wait before next transition or completion
               setTimeout(() => {
                 resolve();
               }, 1500);
@@ -93,7 +89,6 @@ const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
       '/images/hero-bg.jpg',
       '/images/profile.jpg',
       '/images/project1.jpg',
-      // Add more assets...
     ];
 
     let loaded = 0;
@@ -115,46 +110,64 @@ const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
         img.src = asset;
       });
     });
+
     const fontPromise = loadCustomFonts().catch((error) => {
       console.log('Font loading error:', error);
     });
 
-    // Wait for all assets and fonts to load
     await Promise.all([...loadPromises, fontPromise]);
-    
     setAssetsLoaded(true);
   };
 
-  const hideGreetingScreen = (): void => {
-    // Add a small delay for dramatic effect
-    setTimeout(() => {
-      if (!containerRef.current) return;
-      
-      animate(containerRef.current, {
+  const startPortalTransition = (): void => {
+    // Start the portal effect
+    if (greetRef.current) {
+      greetRef.current.startPortalTransition();
+    }
+
+    // Fade out the greeting text during portal animation
+    if (textRef.current) {
+      animate(textRef.current, {
         opacity: 0,
-        scale: 1.1,
-        duration: 1000,
+        scale: 0.8,
+        duration: 1500,
         ease: 'inOut(2)',
-        onComplete: () => {
-          onComplete();
-        }
       });
-    }, 500);
+    }
+  };
+
+  const handlePortalComplete = (): void => {
+    // Portal animation is complete, now hide the greeting screen
+    if (!containerRef.current) return;
+    
+    animate(containerRef.current, {
+      opacity: 0,
+      duration: 500,
+      ease: 'inOut(2)',
+      onComplete: () => {
+        onComplete();
+      }
+    });
   };
 
   return (
-    <div ref={containerRef} className={styles.greetingContainer}>
-      <div className={styles.backgroundImage}></div>
-      <div className={styles.overlay}></div>
-      
-      <div className={styles.content}>
-        <h1 ref={textRef} className={styles.greetingText}>
-          {currentText}
-        </h1>
+    <>
+      <Greet 
+        ref={greetRef}
+        colorSpeed={0.03} 
+        isBackground={true}
+        onPortalComplete={handlePortalComplete}
+      />
+      <div ref={containerRef} className={styles.greetingContainer}>
+        <div className={styles.content}>
+          <h1 ref={textRef} className={styles.greetingText}>
+            {currentText}
+          </h1>
+        </div>
+        
+        <LoadingIndicator progress={loadingProgress} />
       </div>
-      
-      <LoadingIndicator progress={loadingProgress} />
-    </div>
+    </>
   );
 };
 
