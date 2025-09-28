@@ -1,17 +1,15 @@
-import { animate } from 'animejs';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
-
-export const useAnimationPreloader = () => {
+export function useAnimationPreloader() {
   const [animationsReady, setAnimationsReady] = useState(false);
 
   useEffect(() => {
-    const preloadAnimations = async () => {
+    const timer = setTimeout(() => {
       setAnimationsReady(true);
-    };
+    }, 1000);
 
-    preloadAnimations();
+    return () => clearTimeout(timer);
   }, []);
 
-  return { animationsReady, animate };
-};
+  return { animationsReady };
+}

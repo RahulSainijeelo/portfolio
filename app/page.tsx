@@ -1,10 +1,28 @@
 'use client';
 import { useState } from 'react';
-import GreetingScreen from '../components/GreetingScreen';
-import Header from '@/components/Header';
 import { useAnimationPreloader } from '@/hooks/useAnimationPreloader';
-import Footer from '@/components/Footer';
+import GreetingScreen from '@/components/GreetingScreen';
+import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
+import PortfolioSection from '@/components/PortfolioSection';
+import Footer from '@/components/Footer';
+import SkillsSection from '@/components/SkillSection';
+const OtherComponent = () => {
+  return (
+    <div style={{
+      height: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#1a1a1a',
+      color: 'white',
+      fontSize: '3rem'
+    }}>
+      <p>This is the next section! 👋</p>
+    </div>
+  );
+};
+
 
 export default function Home() {
   const [showGreeting, setShowGreeting] = useState<boolean>(true);
@@ -18,24 +36,21 @@ export default function Home() {
 
   return (
     <>
-      {showGreeting && (
+      {showGreeting ? (
         <GreetingScreen 
           onComplete={handleGreetingComplete}
           animationsReady={animationsReady}
         />
-      )}
-      {!showGreeting && (
-        <>
-
+      ) : (
         <main>
-          <Header logoText="Rahul Saini" />
-
-          <div id="main-content">
-            <HeroSection/>
-          </div>
-          <Footer/>
+          <Header logoText="RAHUL SAINI" />
+          <HeroSection />
+          {/* <HeroAnimation/> */}
+          <OtherComponent/>
+          {/* <PortfolioSection />
+          <SkillsSection/> */}
+          <Footer />
         </main>
-        </>
       )}
     </>
   );

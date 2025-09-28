@@ -27,6 +27,10 @@ body {
 
 }
 
+::-webkit-scrollbar{
+  display: none;
+}
+
 @font-face {
   font-family: 'AtAero-Regular';
   src: url('/fonts/AtAero-Regular.otf') format('opentype');

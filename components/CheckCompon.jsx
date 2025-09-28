@@ -4,20 +4,11 @@ import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
-import styles from '@/styles/hero.module.css';
 
-interface FrameData {
-  id: string;
-  image: string;
-  text: string;
-  subtext?: string;
-  bgPhase: 'minimal' | 'wireframes' | 'nodes' | 'grid' | 'experience';
-}
-
-const framesData: FrameData[] = [
+const framesData = [
   {
     id: 'frame-1',
-    image: '/images/developer-icon.svg',
+    image: '/images/developer-icon.svg', // Added image path
     text: 'I am a Developer.',
     bgPhase: 'minimal'
   },
@@ -61,17 +52,17 @@ const framesData: FrameData[] = [
 ];
 
 // Map bgPhase to actual background colors
-const backgroundPhases: Record<FrameData['bgPhase'], string> = {
-  minimal: '#0a0a0a',
-  wireframes: '#1a1a2e',
-  nodes: '#16213e',
-  grid: '#0f3460',
-  experience: '#533483'
+const backgroundPhases = {
+  minimal: '#f0f4f8',
+  wireframes: '#e3f2fd',
+  nodes: '#d1c4e9',
+  grid: '#c8e6c9',
+  experience: '#bbdefb'
 };
 
-const HeroSection: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const frameRefs = useRef<(HTMLDivElement | null)[]>([]);
+const HeroSection = () => {
+  const containerRef = useRef(null);
+  const frameRefs = useRef([]);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -90,7 +81,7 @@ const HeroSection: React.FC = () => {
         pin: true,
         scrub: 0.5,
         start: 'top top',
-        end: `+=700%`, // Adjust duration as needed
+        end: `+=${framesData.length * 600}`, // Adjust duration as needed
       },
     });
 
@@ -132,44 +123,59 @@ const HeroSection: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className={styles.heroContainer}
+      style={{
+        height: '100vh',
+        width: '100%',
+        position: 'relative',
+        overflow: 'hidden',
+        fontFamily: 'sans-serif',
+        color: '#1a202c',
+        transition: 'background-color 0.5s ease', // For smooth GSAP animation
+      }}
     >
       {framesData.map((frame, index) => (
         <div
           key={frame.id}
-          ref={(el: HTMLDivElement | null) => {
-            frameRefs.current[index] = el;
+          ref={(el) => (frameRefs.current[index] = el)}
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '2rem',
+            boxSizing: 'border-box',
           }}
-          className={`${styles.frame} ${styles[`frame${index + 1}`]}`}
         >
-          <div className={styles.frameContent}>
+          {/* Inner container for the content layout */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '3rem',
+            maxWidth: '1000px'
+          }}>
             {/* Left side: Image */}
-            <div className={styles.frameImageContainer}>
-              <div className={styles.frameImageWrapper}>
-                <Image
-                  src={frame.image}
-                  alt={frame.text}
-                  width={200}
-                  height={200}
-                  className={styles.frameImage}
-                />
-                <div className={styles.imageGlow}></div>
-              </div>
+            <div style={{ flexShrink: 0 }}>
+              <Image
+                src={frame.image}
+                alt={frame.text}
+                width={150}
+                height={150}
+                style={{ objectFit: 'contain' }}
+              />
             </div>
 
             {/* Right side: Text Content */}
-            <div className={styles.frameTextContainer}>
-              <h1 className={styles.frameTitle}>
+            <div>
+              <h1 style={{ fontSize: '2.5rem', margin: 0, lineHeight: 1.2 }}>
                 {frame.text}
               </h1>
               {frame.subtext && (
-                <p className={styles.frameSubtext}>
+                <p style={{ fontSize: '1.25rem', marginTop: '1rem', opacity: 0.8 }}>
                   {frame.subtext}
                 </p>
               )}
-              <div className={styles.frameNumber}>
-                {String(index + 1).padStart(2, '0')}
-              </div>
             </div>
           </div>
         </div>
