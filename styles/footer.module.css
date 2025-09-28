@@ -1,0 +1,52 @@
+.footer {
+  position: static;
+  bottom: 0;
+  width: 100%;
+  padding: 2rem 0;
+  background: transparent;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.name {
+  font-family: var(--font-body);
+  font-size: 10.2rem;
+  font-weight: 500;
+  color: white;
+  margin: 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer {
+    padding: 1.5rem 0;
+  }
+  
+  .footerContent {
+    padding: 0 1rem;
+  }
+  
+  .name {
+    font-size: 5rem;
+    letter-spacing: 1.5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 1rem 0;
+  }
+  
+  .name {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+}

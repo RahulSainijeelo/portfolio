@@ -32,7 +32,7 @@
 }
 
 .greetingText {
-  font-family: 'YourFont1', sans-serif;
+  font-family: 'AtAero-Regular', sans-serif;
   font-size: clamp(3rem, 8vw, 8rem);
   font-weight: 300;
   color: #ffffff;

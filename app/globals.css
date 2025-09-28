@@ -23,22 +23,24 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  cursor: url("https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png")
+
 }
 
 @font-face {
   font-family: 'AtAero-Regular';
-  src: url('/public/fonts/AtAero-Regular.otf') format('opentype');
+  src: url('/fonts/AtAero-Regular.otf') format('opentype');
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Elianto-Regular';
-  src: url('/public/fonts/Elianto-Regular.otf') format('opentype');
+  src: url('/fonts/Elianto-Regular.otf') format('opentype');
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Kanopi-Regular';
-  src: url('/public/fonts/kanopibrazil-regular.otf') format('opentype');
+  src: url('/fonts/kanopibrazil-regular.otf') format('opentype');
   font-display: swap;
 }

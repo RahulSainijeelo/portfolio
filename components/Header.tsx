@@ -1,80 +1,132 @@
-import { useEffect, useRef, useState } from 'react';
-import { animate } from 'animejs';
-import ScrollShapes from './ScrollShapes';
-import InteractiveMenu from './InteractiveMenu';
-import styles from '../styles/header.module.css';
+'use client';
+import { useEffect, useRef, useState, useCallback } from 'react';
+import styles from '@/styles/header.module.css';
+import { animate, createTimeline } from 'animejs';
 
 interface HeaderProps {
   logoText: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ logoText }) => {
-  const headerRef = useRef<HTMLHeadElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [scrollY, setScrollY] = useState<number>(0);
+export default function Header({ logoText }: HeaderProps) {
+  const headerRef = useRef<HTMLElement>(null);
+  const logoContainerRef = useRef<HTMLDivElement>(null);
+  const fullNameRef = useRef<HTMLDivElement>(null);
+  const initialsRef = useRef<HTMLDivElement>(null);
+  const navigationRef = useRef<HTMLElement>(null);
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-      
-      // Header background opacity based on scroll
-      if (headerRef.current) {
-        const opacity = Math.min(window.scrollY / 100, 0.95);
-        headerRef.current.style.backgroundColor = `rgba(0, 0, 0, ${opacity})`;
-      }
-
-      // Logo scale effect on scroll
-      if (logoRef.current) {
-        const scale = Math.max(1 - window.scrollY / 1000, 0.8);
-        logoRef.current.style.transform = `scale(${scale})`;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    if (headerRef.current) {
+      animate(headerRef.current, {
+        opacity: [0, 1],
+        translateY: [-50, 0],
+        duration: 1000,
+        easing: 'easeOutExpo',
+        delay: 200,
+      });
+    }
   }, []);
 
-  const handleMenuToggle = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const handleScroll = useCallback(() => {
+    const scrolled = window.scrollY > 100;
+
+    if (scrolled !== isScrolled) {
+      setIsScrolled(scrolled);
+
+      if (scrolled) {
+        if (!fullNameRef.current || !initialsRef.current || !navigationRef.current || !headerRef.current) {
+          return;
+        }
+
+        const scrollTimeline = createTimeline();
+
+        scrollTimeline
+          .add(fullNameRef.current, {
+            opacity: [1, 0],
+            scale: [1, 0.8],
+            translateY: [0, -20],
+            duration: 300,
+            easing: 'easeInOutQuad',
+          })
+          .add(navigationRef.current, {
+            opacity: [1, 0],
+            translateX: [0, 50],
+            duration: 300,
+            easing: 'easeInOutQuad',
+          }, '<')
+          .add(initialsRef.current, {
+            opacity: [0, 1],
+            scale: [0.8, 1],
+            translateY: [20, 0],
+            duration: 400,
+            easing: 'easeOutExpo',
+          }, '<+=150')
+
+      } else {
+        if (!fullNameRef.current || !initialsRef.current || !navigationRef.current || !headerRef.current) {
+          return;
+        }
+
+        const backTimeline = createTimeline();
+
+        backTimeline
+          .add(initialsRef.current, {
+            opacity: [1, 0],
+            scale: [1, 0.8],
+            translateY: [0, -20],
+            duration: 300,
+            easing: 'easeInOutQuad',
+          })
+          .add(fullNameRef.current, {
+            opacity: [0, 1],
+            scale: [0.8, 1],
+            translateY: [20, 0],
+            duration: 400,
+            easing: 'easeOutExpo',
+          }, '<+=100')
+          .add(navigationRef.current, {
+            opacity: [0, 1],
+            translateX: [-50, 0],
+            duration: 400,
+            easing: 'easeOutExpo',
+          }, '<+=50')
+          .add(headerRef.current, {
+            backgroundColor: ['rgba(0, 0, 0, 0.9)', 'rgba(0, 0, 0, 0)'],
+            duration: 400,
+            easing: 'easeOutQuad',
+          }, 0);
+      }
+    }
+  }, [isScrolled]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  console.log('Header logoText:', logoText);
 
   return (
-    <>
-      <header ref={headerRef} className={styles.header}>
-        <div className={styles.headerContent}>
-          {/* Animated Geometric Shapes */}
-          <ScrollShapes scrollY={scrollY} />
-          
-          {/* Center Logo */}
-          <div ref={logoRef} className={styles.logoContainer}>
-            <div className={styles.logo}>
-              <span className={styles.logoText}>{logoText}</span>
-              <div className={styles.logoUnderline}></div>
-            </div>
+    <header
+      ref={headerRef}
+      className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}
+    >
+      <div className={styles.headerContent}>
+        <div ref={logoContainerRef} className={styles.logoContainer}>
+          <div ref={fullNameRef} className={`${styles.logoView} ${styles.fullNameView}`}>
+            <div className={styles.nameBox}>Rahul</div>
+            <div className={styles.nameBox}>Saini</div>
           </div>
-          
-          {/* Interactive Menu Button */}
-          <div className={styles.menuButtonContainer}>
-            <button 
-              className={`${styles.menuButton} ${isMenuOpen ? styles.active : ''}`}
-              onClick={handleMenuToggle}
-              aria-label="Toggle Menu"
-            >
-              <div className={styles.menuIcon}>
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-            </button>
+          <div ref={initialsRef} className={`${styles.logoView} ${styles.initialsView} ${styles.verticalView}`}>
+            <div className={styles.initialsBox}>R</div>
+            <div className={styles.initialsBox}>S</div>
           </div>
         </div>
-      </header>
-
-      {/* Interactive Menu Overlay */}
-      <InteractiveMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
-    </>
+        <nav ref={navigationRef} className={styles.navigation}>
+          <a href="#about" className={styles.nameBox}>About</a>
+          <a href="#contact" className={styles.nameBox}>Contact</a>
+        </nav>
+      </div>
+    </header>
   );
-};
-
-export default Header;
+}

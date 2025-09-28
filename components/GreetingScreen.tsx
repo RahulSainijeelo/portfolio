@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { animate } from 'animejs';
 import LoadingIndicator from './LoadingIndicator';
-import { loadCustomFonts } from '@/utils/fontLoader';
 import { GreetingScreenProps } from '../types';
 import styles from '@/styles/greeting.module.css';
 import Greet from './Greet';
 
-const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
+const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete, animationsReady }) => {
   const textRef = useRef<HTMLHeadingElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentText, setCurrentText] = useState<string>('Hi,');
@@ -21,10 +20,12 @@ const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
   ];
 
   useEffect(() => {
-    // Start both processes simultaneously
-    startAnimationSequence();
-    startAssetPreloading();
-  }, []);
+    if (animationsReady) {
+      // Start both processes simultaneously
+      startAnimationSequence();
+      startAssetPreloading();
+    }
+  }, [animationsReady]); // Add animationsReady dependency
 
   // Check if both animation and assets are complete
   useEffect(() => {
@@ -116,12 +117,8 @@ const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
         img.src = asset;
       });
     });
-    const fontPromise = loadCustomFonts().catch((error) => {
-      console.log('Font loading error:', error);
-    });
-
     // Wait for all assets and fonts to load
-    await Promise.all([...loadPromises, fontPromise]);
+    await Promise.all([...loadPromises]);
     
     setAssetsLoaded(true);
   };
