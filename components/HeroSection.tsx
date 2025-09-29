@@ -6,6 +6,23 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import styles from '@/styles/hero.module.css';
 
+const secondaryImages = [
+  '/animation/0.png',
+  '/animation/1.png',
+  '/animation/2.png',
+  '/animation/3.png',
+  '/animation/4.png',
+  '/animation/5.png',
+  '/animation/6.png',
+  '/animation/7.png',
+  '/animation/8.png',
+  '/animation/9.png',
+  '/animation/10.png',
+  '/animation/11.png',
+  '/animation/11.png',
+  '/animation/11.png',
+];
+
 interface FrameData {
   id: string;
   image: string;
@@ -60,7 +77,6 @@ const framesData: FrameData[] = [
   }
 ];
 
-// Map bgPhase to actual background colors
 const backgroundPhases: Record<FrameData['bgPhase'], string> = {
   minimal: '#0a0a0a',
   wireframes: '#1a1a2e',
@@ -72,58 +88,136 @@ const backgroundPhases: Record<FrameData['bgPhase'], string> = {
 const HeroSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const frameRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const secondaryCanvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
+    
+    const DURATION_PER_FRAME = 200;
+    const totalDuration = framesData.length * DURATION_PER_FRAME;
 
-    // Set initial states
-    // Frame visibility: only the first is visible
+    // Initial setup
     gsap.set(frameRefs.current.slice(1), { opacity: 0 });
-    // Background color: set to the first frame's bgPhase
     gsap.set(containerRef.current, { 
       backgroundColor: backgroundPhases[framesData[0].bgPhase] 
     });
 
+    // Show first frame
+    if (frameRefs.current[0]) {
+      gsap.set(frameRefs.current[0], { opacity: 1 });
+    }
+
+    // Main timeline
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
         pin: true,
-        scrub: 0.5,
+        scrub: 0.8,
         start: 'top top',
-        end: `+=700%`, // Adjust duration as needed
+        end: `+=${totalDuration}%`,
       },
     });
 
-    frameRefs.current.forEach((frame, index) => {
-      if (index === 0) return; // Skip the first frame as it's already visible
+    // Secondary animation setup
+    const secondaryCanvas = secondaryCanvasRef.current;
+    const secondaryContext = secondaryCanvas?.getContext('2d');
+    
+    if (secondaryCanvas && secondaryContext) {
+      secondaryCanvas.width = 300;
+      secondaryCanvas.height = 200;
 
-      const currentFrameData = framesData[index];
-      const previousFrameData = framesData[index - 1];
+      const secondaryFrame = { index: 0 };
+      const preloadedSecondaryImages: HTMLImageElement[] = [];
 
-      // Add a pause/label at the start of the transition
-      tl.addLabel(`frame-${index}`);
+      // Preload secondary images
+      secondaryImages.forEach((src, index) => {
+        const img = document.createElement('img') as HTMLImageElement;
+        img.src = src;
+        img.onload = () => {
+          if (index === 0) renderSecondaryFrame();
+        };
+        img.onerror = () => {
+          console.error(`Failed to load image: ${src}`);
+        };
+        preloadedSecondaryImages.push(img);
+      });
 
-      // 1. Animate background color if it changes
-      if (currentFrameData.bgPhase !== previousFrameData.bgPhase) {
-        tl.to(containerRef.current, {
-          backgroundColor: backgroundPhases[currentFrameData.bgPhase],
-          duration: 0.5,
-        }, `frame-${index}`); // Start at the label
-      }
+      const renderSecondaryFrame = () => {
+        const img = preloadedSecondaryImages[Math.floor(secondaryFrame.index)];
+        if (img && img.complete) {
+          secondaryContext.clearRect(0, 0, secondaryCanvas.width, secondaryCanvas.height);
+          secondaryContext.drawImage(img, 0, 0, secondaryCanvas.width, secondaryCanvas.height);
+        }
+      };
 
-      // 2. Fade in the new frame
-      tl.to(frame, {
-        opacity: 1,
-        duration: 0.5,
-      }, `frame-${index}`); // Start at the same time as the background change
+      // Continuous secondary image animation (spans entire scroll duration)
+      tl.to(secondaryFrame, {
+        index: secondaryImages.length - 1,
+        duration: totalDuration,
+        ease: 'none',
+        onUpdate: renderSecondaryFrame,
+      }, 0); // Start at beginning of timeline
 
-      // 3. Fade out the previous frame
-      tl.to(frameRefs.current[index - 1], {
-        opacity: 0,
-        duration: 0.5,
-      }, `frame-${index}`); // Also start at the same time (cross-fade)
-    });
+      // Add frame animations (discrete changes every 200 units)
+      framesData.forEach((frame, index) => {
+        if (index === 0) return; // Skip first frame
 
+        const currentFrame = frameRefs.current[index];
+        const previousFrame = frameRefs.current[index - 1];
+        const currentFrameData = framesData[index];
+        const previousFrameData = framesData[index - 1];
+
+        tl.addLabel(`frame-${index}`, index * DURATION_PER_FRAME);
+
+        // Background color change
+        if (currentFrameData.bgPhase !== previousFrameData.bgPhase) {
+          tl.to(containerRef.current, {
+            backgroundColor: backgroundPhases[currentFrameData.bgPhase],
+            duration: 50,
+          }, `frame-${index}`);
+        }
+
+        // Frame transition
+        tl.to(currentFrame, {
+          opacity: 1,
+          duration: 50,
+        }, `frame-${index}`)
+        .to(previousFrame, {
+          opacity: 0,
+          duration: 50,
+        }, `frame-${index}`);
+      });
+
+    } else {
+      // If no secondary canvas, just add frame animations
+      framesData.forEach((frame, index) => {
+        if (index === 0) return;
+
+        const currentFrame = frameRefs.current[index];
+        const previousFrame = frameRefs.current[index - 1];
+        const currentFrameData = framesData[index];
+        const previousFrameData = framesData[index - 1];
+
+        tl.addLabel(`frame-${index}`, index * DURATION_PER_FRAME);
+
+        if (currentFrameData.bgPhase !== previousFrameData.bgPhase) {
+          tl.to(containerRef.current, {
+            backgroundColor: backgroundPhases[currentFrameData.bgPhase],
+            duration: 50,
+          }, `frame-${index}`);
+        }
+
+        tl.to(currentFrame, {
+          opacity: 1,
+          duration: 50,
+        }, `frame-${index}`)
+        .to(previousFrame, {
+          opacity: 0,
+          duration: 50,
+        }, `frame-${index}`);
+      });
+    }
+    
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
@@ -143,7 +237,6 @@ const HeroSection: React.FC = () => {
           className={`${styles.frame} ${styles[`frame${index + 1}`]}`}
         >
           <div className={styles.frameContent}>
-            {/* Left side: Image */}
             <div className={styles.frameImageContainer}>
               <div className={styles.frameImageWrapper}>
                 <Image
@@ -157,7 +250,6 @@ const HeroSection: React.FC = () => {
               </div>
             </div>
 
-            {/* Right side: Text Content */}
             <div className={styles.frameTextContainer}>
               <h1 className={styles.frameTitle}>
                 {frame.text}
@@ -174,6 +266,10 @@ const HeroSection: React.FC = () => {
           </div>
         </div>
       ))}
+      
+      <div className={styles.secondaryAnimationContainer}>
+        <canvas ref={secondaryCanvasRef} className={styles.secondaryCanvas}></canvas>
+      </div>
     </div>
   );
 };

@@ -4,11 +4,20 @@ import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
+import styles from '@/styles/hero.module.css';
 
-const framesData = [
+interface FrameData {
+  id: string;
+  image: string;
+  text: string;
+  subtext?: string;
+  bgPhase: 'minimal' | 'wireframes' | 'nodes' | 'grid' | 'experience';
+}
+
+const framesData: FrameData[] = [
   {
     id: 'frame-1',
-    image: '/images/developer-icon.svg', // Added image path
+    image: '/images/developer-icon.svg',
     text: 'I am a Developer.',
     bgPhase: 'minimal'
   },
@@ -52,17 +61,17 @@ const framesData = [
 ];
 
 // Map bgPhase to actual background colors
-const backgroundPhases = {
-  minimal: '#f0f4f8',
-  wireframes: '#e3f2fd',
-  nodes: '#d1c4e9',
-  grid: '#c8e6c9',
-  experience: '#bbdefb'
+const backgroundPhases: Record<FrameData['bgPhase'], string> = {
+  minimal: '#0a0a0a',
+  wireframes: '#1a1a2e',
+  nodes: '#16213e',
+  grid: '#0f3460',
+  experience: '#533483'
 };
 
-const HeroSection = () => {
-  const containerRef = useRef(null);
-  const frameRefs = useRef([]);
+const HeroSection: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const frameRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -81,7 +90,7 @@ const HeroSection = () => {
         pin: true,
         scrub: 0.5,
         start: 'top top',
-        end: `+=${framesData.length * 600}`, // Adjust duration as needed
+        end: `+=700%`, // Adjust duration as needed
       },
     });
 
@@ -123,59 +132,44 @@ const HeroSection = () => {
   return (
     <div
       ref={containerRef}
-      style={{
-        height: '100vh',
-        width: '100%',
-        position: 'relative',
-        overflow: 'hidden',
-        fontFamily: 'sans-serif',
-        color: '#1a202c',
-        transition: 'background-color 0.5s ease', // For smooth GSAP animation
-      }}
+      className={styles.heroContainer}
     >
       {framesData.map((frame, index) => (
         <div
           key={frame.id}
-          ref={(el) => (frameRefs.current[index] = el)}
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: '2rem',
-            boxSizing: 'border-box',
+          ref={(el: HTMLDivElement | null) => {
+            frameRefs.current[index] = el;
           }}
+          className={`${styles.frame} ${styles[`frame${index + 1}`]}`}
         >
-          {/* Inner container for the content layout */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '3rem',
-            maxWidth: '1000px'
-          }}>
+          <div className={styles.frameContent}>
             {/* Left side: Image */}
-            <div style={{ flexShrink: 0 }}>
-              <Image
-                src={frame.image}
-                alt={frame.text}
-                width={150}
-                height={150}
-                style={{ objectFit: 'contain' }}
-              />
+            <div className={styles.frameImageContainer}>
+              <div className={styles.frameImageWrapper}>
+                <Image
+                  src={frame.image}
+                  alt={frame.text}
+                  width={200}
+                  height={200}
+                  className={styles.frameImage}
+                />
+                <div className={styles.imageGlow}></div>
+              </div>
             </div>
 
             {/* Right side: Text Content */}
-            <div>
-              <h1 style={{ fontSize: '2.5rem', margin: 0, lineHeight: 1.2 }}>
+            <div className={styles.frameTextContainer}>
+              <h1 className={styles.frameTitle}>
                 {frame.text}
               </h1>
               {frame.subtext && (
-                <p style={{ fontSize: '1.25rem', marginTop: '1rem', opacity: 0.8 }}>
+                <p className={styles.frameSubtext}>
                   {frame.subtext}
                 </p>
               )}
+              <div className={styles.frameNumber}>
+                {String(index + 1).padStart(2, '0')}
+              </div>
             </div>
           </div>
         </div>

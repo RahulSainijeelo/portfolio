@@ -7,6 +7,7 @@ import HeroSection from '@/components/HeroSection';
 import PortfolioSection from '@/components/PortfolioSection';
 import Footer from '@/components/Footer';
 import SkillsSection from '@/components/SkillSection';
+import ImageSequenceScroller from '@/components/ImageSequenceScroller';
 const OtherComponent = () => {
   return (
     <div style={{
@@ -22,7 +23,6 @@ const OtherComponent = () => {
     </div>
   );
 };
-
 
 export default function Home() {
   const [showGreeting, setShowGreeting] = useState<boolean>(true);
@@ -45,6 +45,7 @@ export default function Home() {
         <main>
           <Header logoText="RAHUL SAINI" />
           <HeroSection />
+         
           {/* <HeroAnimation/> */}
           <OtherComponent/>
           {/* <PortfolioSection />

@@ -1,0 +1,15 @@
+.scrollerContainer {
+  height: 100vh; /* Give the container some space */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #111;
+  position: relative; /* Important for positioning children if needed */
+}
+
+.scrollerCanvas {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+}

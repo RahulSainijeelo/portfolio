@@ -5,7 +5,7 @@
   width: 100%;
   position: relative;
   overflow: hidden;
-  font-family: var(--font-third);
+  font-family: var(--font-body);
   color: #ffffff;
   transition: background-color 0.5s ease;
   background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
@@ -354,4 +354,24 @@
   .frameNumber {
     font-size: 2.5rem;
   }
+}
+
+
+.secondaryAnimationContainer {
+  position: absolute;
+  bottom: 3rem;
+  right: 3rem;
+  width: 300px; /* Match canvas width */
+  height: 200px; /* Match canvas height */
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.secondaryAnimationContainer canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
