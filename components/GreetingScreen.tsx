@@ -15,8 +15,8 @@ const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
 
   const greetingTexts: string[] = [
     'Hi,',
-    'Welcome to my world',
-    'Let\'s create something amazing'
+    // 'Welcome to my world',
+    // 'Let\'s create something amazing'
   ];
 
   useEffect(() => {

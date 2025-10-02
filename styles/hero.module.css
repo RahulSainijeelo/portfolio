@@ -15,66 +15,34 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  display: flex;
+  display: none; /* Start hidden */
   justify-content: center;
   align-items: center;
   padding: 2rem;
   box-sizing: border-box;
+  opacity: 0;
 }
 
-.frameContent {
-  display: flex;
-  align-items: center;
-  gap: 4rem;
-  max-width: 1200px;
-  width: 100%;
-  position: relative;
-}
-
-/* Image Container Styling */
-.frameImageContainer {
-  flex-shrink: 0;
-  position: relative;
-}
-
-.frameImageWrapper {
-  position: relative;
-  width: 200px;
-  height: 200px;
+/* Component Container Styling - Updated for animated components */
+.frameComponentContainer {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(138, 43, 226, 0.3);
-  backdrop-filter: blur(10px);
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.frameImage {
-  position: relative;
-  z-index: 2;
-  filter: brightness(1.2) contrast(1.1);
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.imageGlow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 120%;
-  height: 120%;
-  background: radial-gradient(circle, rgba(138, 43, 226, 0.2) 0%, transparent 70%);
-  border-radius: 50%;
-  opacity: 0;
-  transition: opacity 0.6s ease;
+  min-width: 400px; /* Bigger size for animated components */
+  min-height: 300px; /* Bigger height for animated components */
+  max-width: 500px; /* Prevent it from getting too big */
 }
 
 /* Text Container Styling */
 .frameTextContainer {
   flex: 1;
-  position: relative;
+  text-align: left;
+  max-width: 600px; /* Limit text width for better readability */
+}
+
+.frameReverse .frameTextContainer {
+  text-align: right;
 }
 
 .frameTitle {
@@ -88,6 +56,7 @@
   background-clip: text;
   position: relative;
   letter-spacing: -0.02em;
+  text-transform: uppercase;
 }
 
 .frameSubtext {
@@ -101,18 +70,14 @@
 }
 
 .frameNumber {
-  position: absolute;
-  top: -1rem;
-  right: 0;
-  font-size: 5rem;
-  font-weight: 700;
-  color: rgba(138, 43, 226, 0.15);
-  font-family: 'Courier New', monospace;
-  line-height: 1;
-  user-select: none;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  margin-top: 2rem;
 }
 
-/* Frame-specific styling */
+/* Frame-specific styling for text only */
 .frame1 .frameTitle {
   background: linear-gradient(135deg, #00ff9d, #ffffff);
   -webkit-background-clip: text;
@@ -120,16 +85,6 @@
   background-clip: text;
   font-weight: 700;
   font-size: clamp(2.5rem, 5vw, 4rem);
-}
-
-.frame1 .frameImageWrapper {
-  border-color: rgba(0, 255, 157, 0.4);
-  background: rgba(0, 255, 157, 0.05);
-}
-
-.frame1 .imageGlow {
-  background: radial-gradient(circle, rgba(0, 255, 157, 0.3) 0%, transparent 70%);
-  opacity: 1;
 }
 
 .frame2 .frameTitle {
@@ -140,11 +95,6 @@
   font-weight: 500;
 }
 
-.frame2 .frameImageWrapper {
-  border-color: rgba(138, 43, 226, 0.4);
-  background: rgba(138, 43, 226, 0.05);
-}
-
 .frame3 .frameTitle {
   background: linear-gradient(135deg, #00bcd4, #ffffff);
   -webkit-background-clip: text;
@@ -153,27 +103,12 @@
   font-weight: 600;
 }
 
-.frame3 .frameImageWrapper {
-  border-color: rgba(0, 188, 212, 0.4);
-  background: rgba(0, 188, 212, 0.05);
-  transform: rotate(-5deg);
-}
-
 .frame4 .frameTitle {
   background: linear-gradient(135deg, #ff6b35, #ffffff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 600;
-}
-
-.frame4 .frameImageWrapper {
-  border-color: rgba(255, 107, 53, 0.4);
-  background: rgba(255, 107, 53, 0.05);
-}
-
-.frame4 .frameImage {
-  animation: pulse 2s ease-in-out infinite;
 }
 
 .frame5 .frameTitle {
@@ -185,28 +120,12 @@
   text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
 }
 
-.frame5 .frameImageWrapper {
-  border-color: rgba(255, 215, 0, 0.4);
-  background: rgba(255, 215, 0, 0.05);
-}
-
-.frame5 .imageGlow {
-  background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
-  opacity: 1;
-  animation: glow 3s ease-in-out infinite alternate;
-}
-
 .frame6 .frameTitle {
   background: linear-gradient(135deg, #10b981, #ffffff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-weight: 600;
-}
-
-.frame6 .frameImageWrapper {
-  border-color: rgba(16, 185, 129, 0.4);
-  background: rgba(16, 185, 129, 0.05);
 }
 
 .frame7 .frameTitle {
@@ -225,11 +144,9 @@
   gap: 2rem;
 }
 
-.frame7 .frameImageWrapper {
-  border-color: rgba(138, 43, 226, 0.6);
-  background: rgba(138, 43, 226, 0.1);
-  width: 250px;
-  height: 250px;
+.frame7 .frameComponentContainer {
+  min-width: 450px;
+  min-height: 350px;
 }
 
 .frame7 .frameSubtext {
@@ -240,66 +157,94 @@
 }
 
 .frame7 .frameNumber {
-  top: 2rem;
-  right: 50%;
-  transform: translateX(50%);
-  color: rgba(0, 255, 157, 0.2);
+  color: rgba(0, 255, 157, 0.6);
 }
 
-/* Hover effects */
-.frameImageWrapper:hover {
-  transform: scale(1.05) rotate(3deg);
-  border-color: rgba(138, 43, 226, 0.6);
-  background: rgba(138, 43, 226, 0.1);
+/* Background component styling */
+.frameBackground {
+  position: relative;
 }
 
-.frame3 .frameImageWrapper:hover {
-  transform: scale(1.05) rotate(-2deg);
+.frameBackgroundContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
 }
 
-.frameImageWrapper:hover .imageGlow {
-  opacity: 1;
+.frameTextOverlay {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  padding: 2rem;
+  background: transparent;
+  /* backdrop-filter: blur(1px); */
 }
 
-.frameImageWrapper:hover .frameImage {
-  transform: scale(1.1);
+.frameTextOverlay .frameTitle {
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); */
+  background: linear-gradient(135deg, #00ff9d, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-transform: uppercase;
 }
 
-/* Animations */
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
+.frameTextOverlay .frameSubtext {
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  max-width: 600px;
+  line-height: 1.5;
 }
 
-@keyframes glow {
-  0% {
-    opacity: 0.3;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  100% {
-    opacity: 0.6;
-    transform: translate(-50%, -50%) scale(1.2);
-  }
+/* Side-by-side layout */
+.frameContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  width: 100%;
+  height: 100%;
+}
+
+.frameReverse .frameContent {
+  flex-direction: row-reverse;
+}
+
+.frameTextOverlay .frameNumber {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  margin-top: 2rem;
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
   .frameContent {
+    max-width: 1000px;
     gap: 3rem;
-    max-width: 900px;
   }
   
-  .frameImageWrapper {
-    width: 180px;
-    height: 180px;
-  }
-  
-  .frameNumber {
-    font-size: 4rem;
+  .frameComponentContainer {
+    min-width: 350px;
+    min-height: 250px;
+    max-width: 400px;
   }
 }
 
@@ -314,26 +259,25 @@
     text-align: center;
   }
   
-  .frameImageWrapper {
-    width: 160px;
-    height: 160px;
+  .frameReverse .frameContent {
+    flex-direction: column;
   }
   
-  .frameTextContainer {
+  .frameTextContainer,
+  .frameReverse .frameTextContainer {
     text-align: center;
+    max-width: 100%;
+  }
+  
+  .frameComponentContainer {
+    min-width: 300px;
+    min-height: 200px;
+    max-width: 350px;
   }
   
   .frameNumber {
-    position: relative;
-    top: 1rem;
-    right: auto;
-    font-size: 3rem;
+    font-size: 0.9rem;
     margin-top: 1rem;
-  }
-  
-  .frame7 .frameImageWrapper {
-    width: 200px;
-    height: 200px;
   }
 }
 
@@ -344,34 +288,16 @@
   
   .frameContent {
     gap: 1.5rem;
+    padding: 0 1rem;
   }
   
-  .frameImageWrapper {
-    width: 140px;
-    height: 140px;
+  .frameComponentContainer {
+    min-width: 250px;
+    min-height: 180px;
+    max-width: 300px;
   }
   
   .frameNumber {
-    font-size: 2.5rem;
+    font-size: 0.8rem;
   }
-}
-
-
-.secondaryAnimationContainer {
-  position: absolute;
-  bottom: 3rem;
-  right: 3rem;
-  width: 300px; /* Match canvas width */
-  height: 200px; /* Match canvas height */
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-  z-index: 10;
-}
-
-.secondaryAnimationContainer canvas {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
