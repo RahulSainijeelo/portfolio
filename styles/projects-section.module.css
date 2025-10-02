@@ -1,0 +1,279 @@
+.container {
+    height: 400vh; /* Ensure enough height */
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+}
+
+.backgroundOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+    z-index: 0;
+}
+
+/* LaserFlow Section - Extended to cover 2 scroll sections */
+.laserContainer {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120%;
+    height: 200vh; /* Extended height for 2 scroll sections */
+    z-index: 2;
+}
+
+/* PROJECTS Title Section - Positioned after LaserFlow */
+.titleSection {
+    position: absolute;
+    top: 50%; /* Position in middle initially */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    text-align: center;
+    width: 100%;
+}
+
+.titleContainer {
+    padding: 0 2rem;
+    position: relative;
+}
+
+.title {
+    font-size: clamp(6rem, 15vw, 12rem);
+    font-weight: 900;
+    margin: 0;
+    background: linear-gradient(135deg, #FF79C6, #BD93F9, #8BE9FD);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 50px rgba(255, 121, 198, 0.5);
+    letter-spacing: -0.05em;
+    font-family: inherit;
+    text-transform: uppercase;
+    will-change: transform, opacity; /* Performance optimization */
+}
+
+.subtitle {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: rgba(255, 255, 255, 0.8);
+    margin: 1rem 0 0 0;
+    line-height: 1.4;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    will-change: transform, opacity; /* Performance optimization */
+}
+
+/* Gallery Section - Positioned after title parallax */
+.gallerySection {
+    position: absolute;
+    top: 300vh; /* Position near bottom */
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    padding: 0 2rem;
+}
+
+.galleryContainer {
+    max-width: 100%;
+    margin: 0 auto;
+    z-index: 10;
+}
+
+.galleryPlaceholder {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    padding: 4rem;
+    min-height: 80vh; /* Increased height */
+}
+
+.galleryContent {
+    text-align: center;
+    color: white;
+}
+
+.galleryTitle {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #8BE9FD, #BD93F9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.galleryDescription {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 3rem;
+    line-height: 1.6;
+}
+
+.placeholderProjects {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    padding: 2rem 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.placeholderProjects::-webkit-scrollbar {
+    display: none;
+}
+
+.projectCard {
+    min-width: 320px; /* Slightly larger cards */
+    background: rgba(255, 121, 198, 0.1);
+    border: 1px solid rgba(255, 121, 198, 0.3);
+    border-radius: 20px;
+    padding: 2.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.projectCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #FF79C6, #BD93F9, #8BE9FD);
+}
+
+.projectCard:hover {
+    background: rgba(255, 121, 198, 0.2);
+    transform: translateY(-10px);
+    border-color: rgba(255, 121, 198, 0.5);
+}
+
+.projectNumber {
+    font-size: 1rem;
+    color: #8BE9FD;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
+}
+
+.projectCard h3 {
+    font-size: 1.5rem;
+    margin: 0 0 1rem 0;
+    color: white;
+}
+
+.projectCard p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Particles - More distributed */
+.particle {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: #FF79C6;
+    border-radius: 50%;
+    opacity: 0.7;
+    z-index: 5;
+}
+
+.particle-0 {
+    animation: float-0 4s infinite ease-in-out;
+}
+
+.particle-1 {
+    animation: float-1 4.5s infinite ease-in-out;
+}
+
+.particle-2 {
+    animation: float-2 5s infinite ease-in-out;
+}
+
+/* Scroll Indicator - Positioned in LaserFlow section */
+.scrollIndicator {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    text-align: center;
+}
+
+.scrollLine {
+    width: 2px;
+    height: 50px;
+    background: linear-gradient(to bottom, #FF79C6, transparent);
+    margin: 0 auto;
+    animation: pulse 2s infinite;
+}
+
+.scrollText {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    letter-spacing: 0.1em;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+@keyframes float-0 {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-30px) scale(1.4); }
+}
+
+@keyframes float-1 {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-25px) scale(0.9); }
+}
+
+@keyframes float-2 {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-35px) scale(1.2); }
+}
+
+@media (max-width: 768px) {
+    .container {
+        height: 350vh;
+    }
+    
+    .laserContainer {
+        height: 180vh;
+    }
+    
+    .titleSection {
+        top: 100vh;
+    }
+    
+    .gallerySection {
+        top: 250vh;
+        padding: 0 1rem;
+    }
+    
+    .title {
+        font-size: clamp(4rem, 18vw, 8rem);
+    }
+    
+    .galleryPlaceholder {
+        padding: 2rem;
+    }
+    
+    .placeholderProjects {
+        gap: 1rem;
+    }
+    
+    .projectCard {
+        min-width: 280px;
+        padding: 2rem;
+    }
+}

@@ -4,10 +4,12 @@ import { useAnimationPreloader } from '@/hooks/useAnimationPreloader';
 import GreetingScreen from '@/components/GreetingScreen';
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
-import PortfolioSection from '@/components/PortfolioSection';
+// import PortfolioSection from '@/components/PortfolioSection';
 import Footer from '@/components/Footer';
 import SkillsSection from '@/components/SkillSection';
-import ImageSequenceScroller from '@/components/ImageSequenceScroller';
+// import ImageSequenceScroller from '@/components/ImageSequenceScroller';
+import {ReactLenis} from "lenis/react"
+import ProjectsSection from '@/components/ProjectsSection';
 const OtherComponent = () => {
   return (
     <div style={{
@@ -42,16 +44,22 @@ export default function Home() {
           animationsReady={animationsReady}
         />
       ) : (
-        <main>
+        <ReactLenis root>
+          <main>
           <Header logoText="RAHUL SAINI" />
           <HeroSection />
          
           {/* <HeroAnimation/> */}
+          {/* <ProjectsTransition /> */}
+          <ProjectsSection/>
           <OtherComponent/>
+          <OtherComponent/>
+
           {/* <PortfolioSection />
           <SkillsSection/> */}
           <Footer />
         </main>
+        </ReactLenis>
       )}
     </>
   );
