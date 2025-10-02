@@ -1,0 +1,377 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+.heroContainer {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-body);
+  color: #ffffff;
+  transition: background-color 0.5s ease;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+}
+
+.frame {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.frameContent {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  max-width: 1200px;
+  width: 100%;
+  position: relative;
+}
+
+/* Image Container Styling */
+.frameImageContainer {
+  flex-shrink: 0;
+  position: relative;
+}
+
+.frameImageWrapper {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(138, 43, 226, 0.3);
+  backdrop-filter: blur(10px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.frameImage {
+  position: relative;
+  z-index: 2;
+  filter: brightness(1.2) contrast(1.1);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.imageGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(138, 43, 226, 0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+/* Text Container Styling */
+.frameTextContainer {
+  flex: 1;
+  position: relative;
+}
+
+.frameTitle {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #ffffff, #e0e0e0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  letter-spacing: -0.02em;
+}
+
+.frameSubtext {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 400;
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+.frameNumber {
+  position: absolute;
+  top: -1rem;
+  right: 0;
+  font-size: 5rem;
+  font-weight: 700;
+  color: rgba(138, 43, 226, 0.15);
+  font-family: 'Courier New', monospace;
+  line-height: 1;
+  user-select: none;
+}
+
+/* Frame-specific styling */
+.frame1 .frameTitle {
+  background: linear-gradient(135deg, #00ff9d, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+}
+
+.frame1 .frameImageWrapper {
+  border-color: rgba(0, 255, 157, 0.4);
+  background: rgba(0, 255, 157, 0.05);
+}
+
+.frame1 .imageGlow {
+  background: radial-gradient(circle, rgba(0, 255, 157, 0.3) 0%, transparent 70%);
+  opacity: 1;
+}
+
+.frame2 .frameTitle {
+  background: linear-gradient(135deg, #8a2be2, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 500;
+}
+
+.frame2 .frameImageWrapper {
+  border-color: rgba(138, 43, 226, 0.4);
+  background: rgba(138, 43, 226, 0.05);
+}
+
+.frame3 .frameTitle {
+  background: linear-gradient(135deg, #00bcd4, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+}
+
+.frame3 .frameImageWrapper {
+  border-color: rgba(0, 188, 212, 0.4);
+  background: rgba(0, 188, 212, 0.05);
+  transform: rotate(-5deg);
+}
+
+.frame4 .frameTitle {
+  background: linear-gradient(135deg, #ff6b35, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+}
+
+.frame4 .frameImageWrapper {
+  border-color: rgba(255, 107, 53, 0.4);
+  background: rgba(255, 107, 53, 0.05);
+}
+
+.frame4 .frameImage {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.frame5 .frameTitle {
+  background: linear-gradient(135deg, #ffd700, #ffed4a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+}
+
+.frame5 .frameImageWrapper {
+  border-color: rgba(255, 215, 0, 0.4);
+  background: rgba(255, 215, 0, 0.05);
+}
+
+.frame5 .imageGlow {
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+  opacity: 1;
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+.frame6 .frameTitle {
+  background: linear-gradient(135deg, #10b981, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+}
+
+.frame6 .frameImageWrapper {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.frame7 .frameTitle {
+  background: linear-gradient(135deg, #8a2be2, #00ff9d, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  text-align: center;
+}
+
+.frame7 .frameContent {
+  flex-direction: column;
+  text-align: center;
+  gap: 2rem;
+}
+
+.frame7 .frameImageWrapper {
+  border-color: rgba(138, 43, 226, 0.6);
+  background: rgba(138, 43, 226, 0.1);
+  width: 250px;
+  height: 250px;
+}
+
+.frame7 .frameSubtext {
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  color: rgba(0, 255, 157, 0.8);
+  font-weight: 500;
+  margin-top: 1rem;
+}
+
+.frame7 .frameNumber {
+  top: 2rem;
+  right: 50%;
+  transform: translateX(50%);
+  color: rgba(0, 255, 157, 0.2);
+}
+
+/* Hover effects */
+.frameImageWrapper:hover {
+  transform: scale(1.05) rotate(3deg);
+  border-color: rgba(138, 43, 226, 0.6);
+  background: rgba(138, 43, 226, 0.1);
+}
+
+.frame3 .frameImageWrapper:hover {
+  transform: scale(1.05) rotate(-2deg);
+}
+
+.frameImageWrapper:hover .imageGlow {
+  opacity: 1;
+}
+
+.frameImageWrapper:hover .frameImage {
+  transform: scale(1.1);
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes glow {
+  0% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .frameContent {
+    gap: 3rem;
+    max-width: 900px;
+  }
+  
+  .frameImageWrapper {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .frameNumber {
+    font-size: 4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .frame {
+    padding: 1.5rem;
+  }
+  
+  .frameContent {
+    flex-direction: column;
+    gap: 2rem;
+    text-align: center;
+  }
+  
+  .frameImageWrapper {
+    width: 160px;
+    height: 160px;
+  }
+  
+  .frameTextContainer {
+    text-align: center;
+  }
+  
+  .frameNumber {
+    position: relative;
+    top: 1rem;
+    right: auto;
+    font-size: 3rem;
+    margin-top: 1rem;
+  }
+  
+  .frame7 .frameImageWrapper {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .frame {
+    padding: 1rem;
+  }
+  
+  .frameContent {
+    gap: 1.5rem;
+  }
+  
+  .frameImageWrapper {
+    width: 140px;
+    height: 140px;
+  }
+  
+  .frameNumber {
+    font-size: 2.5rem;
+  }
+}
+
+
+.secondaryAnimationContainer {
+  position: absolute;
+  bottom: 3rem;
+  right: 3rem;
+  width: 300px; /* Match canvas width */
+  height: 200px; /* Match canvas height */
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.secondaryAnimationContainer canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

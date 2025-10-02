@@ -1,0 +1,280 @@
+.portfolioSection {
+  height: 500vh; /* Extra height for scroll duration */
+  position: relative;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+  overflow: hidden;
+}
+
+.portfolioContainer {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* PORTFOLIO Title - starts large and scales down */
+.portfolioTitle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(4rem, 12vw, 12rem);
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.1);
+  text-align: center;
+  z-index: 1;
+  pointer-events: none;
+  transform-origin: center;
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+  background: linear-gradient(45deg, rgba(138, 43, 226, 0.1), rgba(0, 255, 157, 0.1));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 100px rgba(138, 43, 226, 0.3);
+}
+
+/* Gallery wrapper - appears after title scales down */
+.galleryWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+/* Horizontal scrolling gallery */
+.gallery {
+  display: flex;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  gap: 3rem;
+  padding: 0 5vw;
+  align-items: center;
+  scroll-behavior: smooth;
+  width: max-content;
+}
+
+/* Individual portfolio items */
+.portfolioItem {
+  flex: 0 0 450px;
+  height: 70vh;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.itemImageContainer {
+  flex: 1;
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #222;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.itemImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.portfolioItem:hover .itemImage {
+  transform: scale(1.1);
+}
+
+/* Item overlay with content */
+.itemOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.95));
+  padding: 2.5rem 2rem 2rem;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.portfolioItem:hover .itemOverlay {
+  transform: translateY(0);
+}
+
+.itemCategory {
+  font-size: 0.875rem;
+  color: #00ff9d;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.itemTitle {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.itemDescription {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.viewButton {
+  background: linear-gradient(45deg, #8a2be2, #00ff9d);
+  color: white;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: flex-start;
+}
+
+.viewButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(138, 43, 226, 0.4);
+}
+
+.buttonArrow {
+  transition: transform 0.3s ease;
+}
+
+.viewButton:hover .buttonArrow {
+  transform: translateX(5px);
+}
+
+/* Item number indicator */
+.itemNumber {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.3);
+  text-align: center;
+  font-family: 'Courier New', monospace;
+}
+
+/* Enhanced progress indicator */
+.progressIndicator {
+  position: fixed;
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.progressLabel {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+
+.progressBar {
+  width: 3px;
+  height: 120px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progressFill {
+  width: 100%;
+  background: linear-gradient(to top, #8a2be2, #00ff9d);
+  transition: height 0.2s ease;
+  border-radius: 2px;
+  position: relative;
+}
+
+.progressFill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+}
+
+.progressPercentage {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .portfolioItem {
+    flex: 0 0 380px;
+    height: 65vh;
+  }
+  
+  .gallery {
+    gap: 2rem;
+    padding: 0 3vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfolioTitle {
+    font-size: clamp(3rem, 15vw, 8rem);
+  }
+  
+  .portfolioItem {
+    flex: 0 0 320px;
+    height: 60vh;
+  }
+  
+  .gallery {
+    gap: 1.5rem;
+    padding: 0 2rem;
+  }
+  
+  .progressIndicator {
+    right: 1rem;
+  }
+  
+  .itemTitle {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .portfolioItem {
+    flex: 0 0 280px;
+    height: 55vh;
+  }
+  
+  .itemOverlay {
+    padding: 1.5rem;
+  }
+}

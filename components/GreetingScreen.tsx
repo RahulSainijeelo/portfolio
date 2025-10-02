@@ -5,7 +5,7 @@ import { GreetingScreenProps } from '../types';
 import styles from '@/styles/greeting.module.css';
 import Greet from './Greet';
 
-const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete, animationsReady }) => {
+const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
   const textRef = useRef<HTMLHeadingElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentText, setCurrentText] = useState<string>('Hi,');
@@ -20,12 +20,10 @@ const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete, animationsR
   ];
 
   useEffect(() => {
-    if (animationsReady) {
-      // Start both processes simultaneously
-      startAnimationSequence();
-      startAssetPreloading();
-    }
-  }, [animationsReady]); // Add animationsReady dependency
+    // Start both processes simultaneously
+    startAnimationSequence();
+    startAssetPreloading();
+  }, []);
 
   // Check if both animation and assets are complete
   useEffect(() => {

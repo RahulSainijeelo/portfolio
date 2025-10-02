@@ -1,52 +1,241 @@
 .footer {
-  position: static;
-  bottom: 0;
-  width: 100%;
-  padding: 2rem 0;
-  background: transparent;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 50%, #f0f0f0 100%);
+  padding: 1rem 0 2rem;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
 .footerContent {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem;
-  text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
-.name {
-  font-family: var(--font-body);
-  font-size: 10.2rem;
-  font-weight: 500;
-  color: white;
+.ctaSection {
+  margin-bottom: 4rem;
+}
+
+.ctaText {
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 400;
+  color: #2c2c2c;
+  line-height: 1.2;
   margin: 0;
-  letter-spacing: 2px;
+  max-width: 600px;
+}
+
+.linksSection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 3rem;
+  margin-bottom: 6rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid #2c2c2c;
+}
+
+.linkColumn {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.columnTitle {
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #2c2c2c;
+  letter-spacing: 0.1em;
+  margin: 0 0 0.5rem 0;
+  text-transform: uppercase;
+}
+
+.linkDivider {
+  width: 100%;
+  height: 1px;
+  background: #2c2c2c;
+  margin-bottom: 1.5rem;
+}
+
+.linksList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.link {
+  font-family: var(--font-body), sans-serif;
+  font-size: 1.1rem;
+  color: #2c2c2c;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 0.25rem 0;
+}
+
+.link:hover {
+  color: #666;
+  transform: translateX(5px);
+}
+
+.emailLink {
+  font-family: var(--font-body), sans-serif;
+  font-size: 1.1rem;
+  color: #2c2c2c;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  word-break: break-word;
+}
+
+.emailLink:hover {
+  color: #666;
+}
+
+.footerBottom {
+  position: relative;
+}
+
+.footerInfo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.75rem;
+  color: #2c2c2c;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+}
+
+.copyright,
+.location {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.tagline {
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: #666;
+  align-self: end;
+}
+
+.nameDisplay {
+  position: relative;
+  text-align: center;
+  margin-top: 2rem;
+
+}
+
+.largeName {
+  font-family: var(--font-heading), sans-serif;
+  font-size: clamp(4rem, 15vw, 12rem);
+  font-weight: 900;
+  color: #2c2c2c;
+  margin: 0;
+  line-height: 0.8;
+  letter-spacing: -0.02em;
+  opacity: 0.9;
   text-transform: uppercase;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .footer {
-    padding: 1.5rem 0;
+    padding: 3rem 0 2rem;
+    min-height: auto;
   }
-  
+
   .footerContent {
     padding: 0 1rem;
   }
-  
-  .name {
-    font-size: 5rem;
-    letter-spacing: 1.5px;
+
+  .ctaSection {
+    margin-bottom: 3rem;
+  }
+
+  .ctaText {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  .linksSection {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .footerInfo {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .tagline {
+    align-self: center;
+    text-align: center;
+  }
+
+  .largeName {
+    font-size: clamp(3rem, 12vw, 8rem);
   }
 }
 
 @media (max-width: 480px) {
   .footer {
-    padding: 1rem 0;
+    padding: 2rem 0 1rem;
   }
-  
-  .name {
-    font-size: 0.9rem;
-    letter-spacing: 1px;
+
+  .ctaText {
+    font-size: clamp(1.5rem, 10vw, 2.5rem);
+  }
+
+  .linkColumn {
+    text-align: center;
+  }
+
+  .largeName {
+    font-size: clamp(2.5rem, 15vw, 6rem);
+  }
+}
+
+/* Enhanced animation for name on scroll */
+@media (prefers-reduced-motion: no-preference) {
+  .largeName {
+    animation: subtleFloat 6s ease-in-out infinite;
+  }
+
+  @keyframes subtleFloat {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+
+  .link {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .link:hover::before {
+    left: 100%;
   }
 }
