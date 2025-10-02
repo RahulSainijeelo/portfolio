@@ -1,0 +1,236 @@
+.menuContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: none;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  opacity: 0;
+}
+
+.menuContent {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, 
+    rgba(20, 20, 20, 0.95) 0%,
+    rgba(30, 30, 30, 0.90) 50%,
+    rgba(10, 10, 10, 0.95) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.decoration {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.decoration1 {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  top: 10%;
+  right: 10%;
+  animation: rotate 20s linear infinite;
+}
+
+.decoration2 {
+  width: 100px;
+  height: 100px;
+  bottom: 20%;
+  left: 15%;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  animation: float 8s ease-in-out infinite;
+}
+
+.decoration3 {
+  width: 150px;
+  height: 150px;
+  top: 30%;
+  left: 20%;
+  transform: rotate(45deg);
+  animation: pulse 6s ease-in-out infinite;
+}
+
+.menuItems {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  align-items: center;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 3rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(10px);
+  width: 400px;
+  position: relative;
+  overflow: hidden;
+}
+
+.menuItem:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.menuItem::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.1), 
+    transparent);
+  transition: left 0.5s ease;
+}
+
+.menuItem:hover::before {
+  left: 100%;
+}
+
+.itemNumber {
+  font-family: 'YourFont2', monospace;
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 300;
+  min-width: 60px;
+}
+
+.itemContent {
+  flex: 1;
+}
+
+.itemTitle {
+  font-family: 'YourFont1', serif;
+  font-size: 2rem;
+  color: #ffffff;
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+.itemSubtitle {
+  font-family: 'YourFont2', sans-serif;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0.5rem 0 0 0;
+  transition: color 0.3s ease;
+}
+
+.menuItem:hover .itemTitle {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.menuItem:hover .itemSubtitle {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.itemArrow {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.menuItem:hover .itemArrow {
+  color: #ffffff;
+  transform: translateX(10px);
+}
+
+.closeButton {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.closeButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1) rotate(90deg);
+}
+
+.closeButton span {
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.closeButton span:first-child {
+  transform: rotate(45deg);
+}
+
+.closeButton span:last-child {
+  transform: rotate(-45deg);
+}
+
+/* Animations */
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; transform: rotate(45deg) scale(1); }
+  50% { opacity: 1; transform: rotate(45deg) scale(1.1); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .menuItem {
+    width: 90vw;
+    padding: 1.5rem 2rem;
+  }
+  
+  .itemTitle {
+    font-size: 1.5rem;
+  }
+  
+  .decoration1 {
+    width: 100px;
+    height: 100px;
+  }
+}
