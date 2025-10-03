@@ -1,8 +1,9 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import styles from '@/styles/hero.module.css';
 import UseTime from './animation/UseTime';
 import Cube from './Cube';
@@ -10,6 +11,9 @@ import PathDrawing from './animation/PathDrawing';
 import MotionPath from './animation/MotionPath';
 import MagnetciGrid from './animation/MagneticGrid';
 import Hyperspeed from "@/components/Hyperspeed"
+import DecryptedText from "@/components/DecryptedText"
+// Register plugins
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const Bgs = () => {
   return (
@@ -58,6 +62,7 @@ const Bgs = () => {
 interface FrameData {
   id: string;
   text: string;
+  fancy?:any
   subtext?: string;
   bgPhase: 'minimal' | 'wireframes' | 'nodes' | 'grid' | 'experience';
   animatedCompo: any;
@@ -75,6 +80,8 @@ const framesData: FrameData[] = [
   {
     id: 'frame-2',
     text: 'Coding since \'23 — from crafting engaging frontends…',
+    fancy:<DecryptedText text="Customize me"
+speed={100} className={styles.frameTitle}/>,
     bgPhase: 'minimal',
     animatedCompo: <PathDrawing />,
     componentSide: 'right'
@@ -107,13 +114,6 @@ const framesData: FrameData[] = [
     animatedCompo: <UseTime />,
     componentSide: 'right'
   },
-  // {
-  //   id: 'frame-7',
-  //   text: 'This is not just development. It\'s building experiences.',
-  //   bgPhase: 'experience',
-  //   animatedCompo: <UseTime/>,
-  //   componentSide: 'left'
-  // }
 ];
 
 const backgroundPhases: Record<FrameData['bgPhase'], string> = {
@@ -128,94 +128,85 @@ const HeroSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const frameRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    const DURATION_PER_FRAME = 150;
+  useGSAP(() => {
+    const DURATION_PER_FRAME = 90;
     const totalDuration = framesData.length * DURATION_PER_FRAME;
 
-    // Wait for next tick to ensure refs are populated
-    const timer = setTimeout(() => {
-      // Initial setup - Hide all frames except first
-      frameRefs.current.forEach((frame, index) => {
-        if (frame) {
-          if (index === 0) {
-            gsap.set(frame, { opacity: 1, display: 'flex' });
-          } else {
-            gsap.set(frame, { opacity: 0, display: 'none' });
+    // Initial setup - Hide all frames except first
+    frameRefs.current.forEach((frame, index) => {
+      if (frame) {
+        if (index === 0) {
+          gsap.set(frame, { opacity: 1, display: 'flex' });
+        } else {
+          gsap.set(frame, { opacity: 0, display: 'none' });
+        }
+      }
+    });
+
+    // Set initial background color
+    if (containerRef.current) {
+      gsap.set(containerRef.current, {
+        backgroundColor: backgroundPhases[framesData[0].bgPhase]
+      });
+    }
+
+    // Main timeline
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        pin: true,
+        scrub: 0.8,
+        start: 'top top',
+        end: `+=${totalDuration}%`,
+        onUpdate: (self) => {
+          // Calculate which frame should be active based on progress
+          const progress = self.progress;
+          const activeFrameIndex = Math.min(
+            Math.floor(progress * framesData.length),
+            framesData.length - 1
+          );
+
+          // Show only the active frame
+          frameRefs.current.forEach((frame, index) => {
+            if (frame) {
+              if (index === activeFrameIndex) {
+                gsap.set(frame, { display: 'flex' });
+                gsap.to(frame, { opacity: 1, duration: 0.1 });
+              } else {
+                gsap.to(frame, {
+                  opacity: 0,
+                  duration: 0.1,
+                  onComplete: () => {
+                    gsap.set(frame, { display: 'none' });
+                  }
+                });
+              }
+            }
+          });
+
+          // Update background color
+          if (containerRef.current) {
+            const currentBgPhase = framesData[activeFrameIndex].bgPhase;
+            gsap.to(containerRef.current, {
+              backgroundColor: backgroundPhases[currentBgPhase],
+              duration: 0.3
+            });
           }
         }
-      });
+      },
+    });
 
-      // Set initial background color
-      if (containerRef.current) {
-        gsap.set(containerRef.current, {
-          backgroundColor: backgroundPhases[framesData[0].bgPhase]
-        });
-      }
+    // Add frame animations for smooth transitions
+    framesData.forEach((frame, index) => {
+      if (index === 0) return; // Skip first frame
 
-      // Main timeline
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          pin: true,
-          scrub: 0.8,
-          start: 'top top',
-          end: `+=${totalDuration}%`,
-          onUpdate: (self) => {
-            // Calculate which frame should be active based on progress
-            const progress = self.progress;
-            const activeFrameIndex = Math.min(
-              Math.floor(progress * framesData.length),
-              framesData.length - 1
-            );
+      tl.addLabel(`frame-${index}`, index * DURATION_PER_FRAME);
 
-            // Show only the active frame
-            frameRefs.current.forEach((frame, index) => {
-              if (frame) {
-                if (index === activeFrameIndex) {
-                  gsap.set(frame, { display: 'flex' });
-                  gsap.to(frame, { opacity: 1, duration: 0.1 });
-                } else {
-                  gsap.to(frame, {
-                    opacity: 0,
-                    duration: 0.1,
-                    onComplete: () => {
-                      gsap.set(frame, { display: 'none' });
-                    }
-                  });
-                }
-              }
-            });
+      // Add a placeholder animation to maintain timeline structure
+      tl.to({}, { duration: 50 }, `frame-${index}`);
+    });
 
-            // Update background color
-            if (containerRef.current) {
-              const currentBgPhase = framesData[activeFrameIndex].bgPhase;
-              gsap.to(containerRef.current, {
-                backgroundColor: backgroundPhases[currentBgPhase],
-                duration: 0.3
-              });
-            }
-          }
-        },
-      });
-
-      // Add frame animations for smooth transitions
-      framesData.forEach((frame, index) => {
-        if (index === 0) return; // Skip first frame
-
-        tl.addLabel(`frame-${index}`, index * DURATION_PER_FRAME);
-
-        // Add a placeholder animation to maintain timeline structure
-        tl.to({}, { duration: 50 }, `frame-${index}`);
-      });
-    }, 0);
-
-    return () => {
-      clearTimeout(timer);
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, []);
+  }, { scope: containerRef }); // Scope to container for better performance
 
   const renderFrameContent = (frame: FrameData, index: number) => {
     if (frame.componentSide === 'background') {
@@ -229,9 +220,9 @@ const HeroSection: React.FC = () => {
 
           {/* Text Overlay */}
           <div className={styles.frameTextOverlay}>
-            <h1 className={styles.frameTitle}>
+            {frame.fancy?frame.fancy:(<h1 className={styles.frameTitle}>
               {frame.text}
-            </h1>
+            </h1>)}
             {frame.subtext && (
               <p className={styles.frameSubtext}>
                 {frame.subtext}
@@ -251,17 +242,14 @@ const HeroSection: React.FC = () => {
 
           {/* Text Container */}
           <div className={styles.frameTextContainer}>
-            <h1 className={styles.frameTitle}>
+            {frame.fancy?frame.fancy:(<h1 className={styles.frameTitle}>
               {frame.text}
-            </h1>
+            </h1>)}
             {frame.subtext && (
               <p className={styles.frameSubtext}>
                 {frame.subtext}
               </p>
             )}
-            {/* <div className={styles.frameNumber}>
-              {String(index + 1).padStart(2, '0')}
-            </div> */}
           </div>
         </div>
       );

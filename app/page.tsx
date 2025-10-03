@@ -10,6 +10,8 @@ import SkillsSection from '@/components/SkillSection';
 // import ImageSequenceScroller from '@/components/ImageSequenceScroller';
 import {ReactLenis} from "lenis/react"
 import ProjectsSection from '@/components/ProjectsSection';
+import HeroAnimation from '@/components/animation/Checkcompon';
+import FlickerText from '@/components/Hero-Section-Frames/FlickerText';
 const OtherComponent = () => {
   return (
     <div style={{
@@ -52,11 +54,12 @@ export default function Home() {
           {/* <HeroAnimation/> */}
           {/* <ProjectsTransition /> */}
           <ProjectsSection/>
-          <OtherComponent/>
+          {/* <HeroAnimation/> */}
           <OtherComponent/>
 
           {/* <PortfolioSection />
           <SkillsSection/> */}
+          <FlickerText/>
           <Footer />
         </main>
         </ReactLenis>
