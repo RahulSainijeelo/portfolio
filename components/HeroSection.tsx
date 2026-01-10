@@ -12,6 +12,10 @@ import MotionPath from './animation/MotionPath';
 import MagnetciGrid from './animation/MagneticGrid';
 import Hyperspeed from "@/components/Hyperspeed"
 import DecryptedText from "@/components/DecryptedText"
+import BlurText from "@/components/BlurText"
+import SplitText from './SplitText';
+import Orb from './Orb';
+import Galaxy from "./Galaxy"
 // Register plugins
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -62,7 +66,7 @@ const Bgs = () => {
 interface FrameData {
   id: string;
   text: string;
-  fancy?:any
+  fancy?: any
   subtext?: string;
   bgPhase: 'minimal' | 'wireframes' | 'nodes' | 'grid' | 'experience';
   animatedCompo: any;
@@ -80,8 +84,13 @@ const framesData: FrameData[] = [
   {
     id: 'frame-2',
     text: 'Coding since \'23 — from crafting engaging frontends…',
-    fancy:<DecryptedText text="Customize me"
-speed={100} className={styles.frameTitle}/>,
+    fancy: <BlurText
+      text={'Coding since \'23 — from crafting engaging frontends…'}
+      delay={150}
+      animateBy="words"
+      direction="top"
+    />
+    ,
     bgPhase: 'minimal',
     animatedCompo: <PathDrawing />,
     componentSide: 'right'
@@ -90,8 +99,17 @@ speed={100} className={styles.frameTitle}/>,
     id: 'frame-3',
     text: '…to building sophisticated backends & services.',
     bgPhase: 'wireframes',
-    animatedCompo: <UseTime />,
-    componentSide: 'left'
+    fancy: <SplitText text='…to building sophisticated backends & services.'
+
+
+      // splitType="chars"
+      from={{ opacity: 0, y: 40 }}
+      to={{ opacity: 1, y: 0 }}
+    // threshold={0.1}
+    // rootMargin="-100px"
+    />,
+    animatedCompo: <Orb />,
+    componentSide: 'background'
   },
   {
     id: 'frame-4',
@@ -111,8 +129,15 @@ speed={100} className={styles.frameTitle}/>,
     id: 'frame-6',
     text: 'DevOps. Problem solving. Turning errors into elegant solutions.',
     bgPhase: 'grid',
-    animatedCompo: <UseTime />,
-    componentSide: 'right'
+    animatedCompo: <Galaxy
+      mouseRepulsion={true}
+      mouseInteraction={true}
+      density={1.5}
+      glowIntensity={0.5}
+      saturation={0.8}
+      hueShift={240}
+    />,
+    componentSide: 'background'
   },
 ];
 
@@ -220,9 +245,15 @@ const HeroSection: React.FC = () => {
 
           {/* Text Overlay */}
           <div className={styles.frameTextOverlay}>
-            {frame.fancy?frame.fancy:(<h1 className={styles.frameTitle}>
-              {frame.text}
-            </h1>)}
+            {frame.fancy ? (
+              <div className={styles.frameTitle}>
+                {frame.fancy}
+              </div>
+            ) : (
+              <h1 className={styles.frameTitle}>
+                {frame.text}
+              </h1>
+            )}
             {frame.subtext && (
               <p className={styles.frameSubtext}>
                 {frame.subtext}
@@ -242,9 +273,16 @@ const HeroSection: React.FC = () => {
 
           {/* Text Container */}
           <div className={styles.frameTextContainer}>
-            {frame.fancy?frame.fancy:(<h1 className={styles.frameTitle}>
-              {frame.text}
-            </h1>)}
+            {frame.fancy ?
+              <div className={styles.frameTitle}>
+                {frame.fancy}
+              </div>
+
+              : (
+                <h1 className={styles.frameTitle}>
+                  {frame.text}
+                </h1>
+              )}
             {frame.subtext && (
               <p className={styles.frameSubtext}>
                 {frame.subtext}

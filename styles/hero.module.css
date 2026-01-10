@@ -24,6 +24,8 @@
   opacity: 0;
 }
 
+
+
 /* Component Container Styling - Updated for animated components */
 .frameComponentContainer {
   flex: 0 0 auto;
@@ -57,7 +59,7 @@
   line-height: 1.2;
   background: linear-gradient(135deg, #ffffff, #e0e0e0);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
   background-clip: text;
   position: relative;
   letter-spacing: -0.02em;
@@ -86,7 +88,7 @@
 .frame1 .frameTitle {
   background: linear-gradient(135deg, #00ff9d, #ffffff);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
   background-clip: text;
   font-weight: 700;
   font-size: clamp(2.5rem, 5vw, 4rem);
@@ -124,7 +126,7 @@
 .frame2 .frameTitle {
   background: linear-gradient(135deg, #8a2be2, #ffffff);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
   background-clip: text;
   font-weight: 500;
 }
@@ -132,7 +134,7 @@
 .frame3 .frameTitle {
   background: linear-gradient(135deg, #00bcd4, #ffffff);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
   background-clip: text;
   font-weight: 600;
 }
@@ -140,7 +142,7 @@
 .frame4 .frameTitle {
   background: linear-gradient(135deg, #ff6b35, #ffffff);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
   background-clip: text;
   font-weight: 600;
 }
@@ -148,7 +150,7 @@
 .frame5 .frameTitle {
   background: linear-gradient(135deg, #ffd700, #ffed4a);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
   background-clip: text;
   font-weight: 700;
   text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
@@ -157,7 +159,7 @@
 .frame6 .frameTitle {
   background: linear-gradient(135deg, #10b981, #ffffff);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
   background-clip: text;
   font-weight: 600;
 }
@@ -165,7 +167,7 @@
 .frame7 .frameTitle {
   background: linear-gradient(135deg, #8a2be2, #00ff9d, #ffffff);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
   background-clip: text;
   font-weight: 700;
   font-size: clamp(2.5rem, 5vw, 4rem);
@@ -230,7 +232,7 @@
   /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); */
   background: linear-gradient(135deg, #00ff9d, #ffffff);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
   background-clip: text;
   text-transform: uppercase;
 }
