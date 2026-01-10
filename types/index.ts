@@ -1,5 +1,4 @@
 export interface GreetingScreenProps {
-  animationsReady:any
   onComplete: () => void;
 }
 

@@ -16,6 +16,7 @@ import BlurText from "@/components/BlurText"
 import SplitText from './SplitText';
 import Orb from './Orb';
 import Galaxy from "./Galaxy"
+import Antigravity from "./animation/Antigravity"
 // Register plugins
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -93,7 +94,7 @@ const framesData: FrameData[] = [
     ,
     bgPhase: 'minimal',
     animatedCompo: <PathDrawing />,
-    componentSide: 'right'
+    componentSide: 'background'
   },
   {
     id: 'frame-3',
@@ -116,14 +117,14 @@ const framesData: FrameData[] = [
     text: 'Crafting seamless mobile apps with React Native.',
     bgPhase: 'wireframes',
     animatedCompo: <MotionPath />,
-    componentSide: 'right'
+    componentSide: 'background'
   },
   {
     id: 'frame-5',
     text: 'Exploring Blockchain — Solana & Ethereum dApps, Solidity contracts, audits.',
     bgPhase: 'nodes',
-    animatedCompo: <MagnetciGrid className='w-full h-full' />,
-    componentSide: 'left'
+    animatedCompo: <Antigravity />,
+    componentSide: 'background'
   },
   {
     id: 'frame-6',

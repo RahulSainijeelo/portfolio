@@ -1,5 +1,5 @@
 .container {
-    height: 400vh;
+    height: 150vh;
     /* Ensure enough height */
     position: relative;
     overflow: hidden;
@@ -37,7 +37,7 @@
 }
 
 .titleContainer {
-    padding: 0 2rem;
+    padding: 0;
     position: relative;
 }
 
@@ -284,19 +284,11 @@
 
 @media (max-width: 768px) {
     .container {
-        height: 350vh;
-    }
-
-    .laserContainer {
-        height: 180vh;
-    }
-
-    .titleSection {
-        top: 100vh;
+        height: 150vh;
     }
 
     .gallerySection {
-        top: 250vh;
+        top: 0vh;
         padding: 0 1rem;
     }
 

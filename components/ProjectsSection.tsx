@@ -3,7 +3,6 @@
 import React, { useRef } from 'react';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
-import LaserFlow from "./LaserFlow";
 import styles from '@/styles/projects-section.module.css';
 import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import CircularGallery, { CircularGalleryRef } from './CircularGallery';
@@ -81,27 +80,6 @@ const ProjectsSection = () => {
             // ref={containerRef}
             className={styles.container}
         >
-            <div className={styles.backgroundOverlay} />
-            <div
-                // ref={laserRef}
-                className={styles.laserContainer}
-            >
-                <LaserFlow
-                    horizontalBeamOffset={0.15}
-                    horizontalSizing={10}
-                    verticalSizing={5}
-                    verticalBeamOffset={0.05}
-                    wispDensity={3}
-                    wispIntensity={20}
-                    wispSpeed={40}
-                    flowSpeed={1.1}
-                    decay={0.5}
-                    dpr={1}
-                    // color="#FF79C6"
-                    className="laserflow"
-                    style={{ height: "300vh" }}
-                />
-            </div>
             <div className={styles.titleSection}>
                 <div className={styles.titleContainer + " projectTitle"}>
                     <h1 ref={titleRef} className={styles.title}>PROJECTS</h1>
@@ -116,7 +94,7 @@ const ProjectsSection = () => {
                         <CircularGallery
                             ref={galleryCompRef}
                             items={projectItems}
-                            bend={3}
+                            bend={1}
                             textColor="#BD93F9"
                             borderRadius={0.05}
                             font="bold 24px Figtree"
@@ -124,7 +102,7 @@ const ProjectsSection = () => {
                             itemHeight={900}
                         />
                     </div>
-                    <ControlWheel onRotate={handleRotate} size={400} />
+                    {/* <ControlWheel onRotate={handleRotate} size={400} /> */}
                 </div>
             </div>
             {[...Array(12)].map((_, i) => (
