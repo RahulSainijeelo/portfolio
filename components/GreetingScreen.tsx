@@ -14,8 +14,8 @@ const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
   const [assetsLoaded, setAssetsLoaded] = useState<boolean>(false);
 
   const greetingTexts: string[] = [
-    'Hi,',
-    // 'Welcome to my world',
+    'Hi',
+    'Nice to meet You',
     // 'Let\'s create something amazing'
   ];
 
@@ -63,13 +63,13 @@ const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
         onComplete: () => {
           // Update text content
           setCurrentText(greetingTexts[index]);
-          
+
           // Fade in new text
           if (!textRef.current) {
             resolve();
             return;
           }
-          
+
           animate(textRef.current, {
             opacity: 1,
             y: 0,
@@ -117,41 +117,39 @@ const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
     });
     // Wait for all assets and fonts to load
     await Promise.all([...loadPromises]);
-    
+
     setAssetsLoaded(true);
   };
 
   const hideGreetingScreen = (): void => {
-    // Add a small delay for dramatic effect
     setTimeout(() => {
       if (!containerRef.current) return;
-      
+
       animate(containerRef.current, {
         opacity: 0,
         scale: 1.1,
-        duration: 1000,
+        duration: 400,
         ease: 'inOut(2)',
         onComplete: () => {
           onComplete();
         }
       });
-    }, 500);
+    }, 200);
   };
 
   return (
     <>
-    <Greet colorSpeed={0.03} isBackground={true}/>
-    <div ref={containerRef} className={styles.greetingContainer}>
-      {/* <div className={styles.overlay}></div> */}
-      
-      <div className={styles.content}>
-        <h1 ref={textRef} className={styles.greetingText}>
-          {currentText}
-        </h1>
+      <div ref={containerRef} className={styles.greetingContainer}>
+        {/* <div className={styles.overlay}></div> */}
+
+        <div className={styles.content}>
+          <h1 ref={textRef} className={styles.greetingText}>
+            {currentText}
+          </h1>
+        </div>
+
+        <LoadingIndicator progress={loadingProgress} />
       </div>
-      
-      <LoadingIndicator progress={loadingProgress} />
-    </div>
     </>
   );
 };

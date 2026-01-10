@@ -6,15 +6,34 @@ import { useGSAP } from '@gsap/react';
 import LaserFlow from "./LaserFlow";
 import styles from '@/styles/projects-section.module.css';
 import ScrollTrigger from 'gsap/dist/ScrollTrigger';
+import CircularGallery, { CircularGalleryRef } from './CircularGallery';
+import ControlWheel from './ControlWheel';
 
-// Register plugins
 gsap.registerPlugin(ScrollTrigger, useGSAP);
+
+const projectItems = [
+    { image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80', text: 'React Dashboard' },
+    { image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80', text: 'Cloud API' },
+    { image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80', text: 'Fintech App' },
+    { image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80', text: 'Mobile Wallet' },
+    { image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80', text: 'AI Platform' },
+    { image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80', text: 'E-commerce' },
+    { image: 'https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800&q=80', text: 'Security Hub' },
+    { image: 'https://images.unsplash.com/photo-1522252234503-e356532cafd5?w=800&q=80', text: 'Dev Workflow' },
+];
 
 const ProjectsSection = () => {
     const laserRef = useRef<HTMLDivElement>(null);
     const titleRef = useRef<HTMLDivElement>(null);
     const galleryRef = useRef<HTMLDivElement>(null);
-    const subRef = useRef<HTMLParagraphElement>(null)
+    const subRef = useRef<HTMLParagraphElement>(null);
+    const galleryCompRef = useRef<CircularGalleryRef>(null);
+
+    const handleRotate = (delta: number) => {
+        if (galleryCompRef.current) {
+            galleryCompRef.current.setScrollTarget(delta);
+        }
+    };
     useGSAP(() => {
         // const container = containerRef.current;
         // const laser = laserRef.current;
@@ -24,38 +43,35 @@ const ProjectsSection = () => {
 
 
         if (!title || !gallery) return;
-
-        // PROJECTS title parallax - moves downward slower than scroll
         gsap.to(title, {
             scrollTrigger: {
                 trigger: ".projectTitle",
-                markers:true,
-                start: '100px 90px', // Start when title section reaches top
-                end:"500px 40%",
-                scrub: 0.4, // Slower than scroll speed (0.6 means 60% of scroll speed)
+                start: '100px 90px',
+                end: "500px 40%",
+                scrub: 0.4,
                 invalidateOnRefresh: true,
-                toggleActions:"restart pause reverse pause"
+                toggleActions: "restart pause reverse pause"
             },
-            y: 600, // Move downward by 160vh (slower than the 160vh scroll distance)
-            // rotation:360,
-            duration:7,
-            scale: 0.7, // Scale down to create depth effect
-            opacity: 0.6, // Become very transparent
+            y: 670,
+            rotation: 428,
+            x: 500,
+            duration: 7,
+            scale: 0.3,
+            opacity: 0.6,
             ease: "none"
         });
         gsap.to(subText, {
             scrollTrigger: {
                 trigger: subText,
-                markers:true,
-                start: '0 300px', // Start when title section reaches top
-                end:"0 40%",
-                scrub: 0.4, // Slower than scroll speed (0.6 means 60% of scroll speed)
+                start: '0 300px',
+                end: "0 40%",
+                scrub: 0.4,
                 invalidateOnRefresh: true,
-                toggleActions:"restart pause reverse pause"
+                toggleActions: "restart pause reverse pause"
             },
-            duration:0.3,
-            // scale: 0.7, // Scale down to create depth effect
-            opacity: 0, // Become very transparent
+            duration: 0.3,
+            // scale: 0.7,
+            opacity: 0,
             ease: "none"
         });
     },);
@@ -65,10 +81,7 @@ const ProjectsSection = () => {
             // ref={containerRef}
             className={styles.container}
         >
-            {/* Background overlay */}
             <div className={styles.backgroundOverlay} />
-
-            {/* LaserFlow Section - Extended height */}
             <div
                 // ref={laserRef}
                 className={styles.laserContainer}
@@ -86,11 +99,9 @@ const ProjectsSection = () => {
                     dpr={1}
                     // color="#FF79C6"
                     className="laserflow"
-                    style={{height:"300vh"}}
+                    style={{ height: "300vh" }}
                 />
             </div>
-
-            {/* PROJECTS Title - Will move downward with parallax */}
             <div className={styles.titleSection}>
                 <div className={styles.titleContainer + " projectTitle"}>
                     <h1 ref={titleRef} className={styles.title}>PROJECTS</h1>
@@ -99,16 +110,23 @@ const ProjectsSection = () => {
                     </p>
                 </div>
             </div>
-
-            {/* Projects Gallery Section */}
             <div className={styles.gallerySection}>
-                <div ref={galleryRef} className={styles.galleryContainer}>
-                    {/* Placeholder for horizontal scroll gallery */}
-                   
+                <div ref={galleryRef} className={styles.galleryWrapper}>
+                    <div className={styles.galleryHeight}>
+                        <CircularGallery
+                            ref={galleryCompRef}
+                            items={projectItems}
+                            bend={3}
+                            textColor="#BD93F9"
+                            borderRadius={0.05}
+                            font="bold 24px Figtree"
+                            itemWidth={900}
+                            itemHeight={900}
+                        />
+                    </div>
+                    <ControlWheel onRotate={handleRotate} size={400} />
                 </div>
             </div>
-
-            {/* Floating particles with layered parallax */}
             {[...Array(12)].map((_, i) => (
                 <div
                     key={i}

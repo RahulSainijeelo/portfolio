@@ -1,5 +1,6 @@
 .container {
-    height: 400vh; /* Ensure enough height */
+    height: 400vh;
+    /* Ensure enough height */
     position: relative;
     overflow: hidden;
     background: linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
@@ -22,7 +23,8 @@
     left: 50%;
     transform: translateX(-50%);
     width: 120%;
-    height: 130vh; /* Extended height for 2 scroll sections */
+    height: 130vh;
+    /* Extended height for 2 scroll sections */
     z-index: 2;
 }
 
@@ -51,7 +53,8 @@
     letter-spacing: 0.1em;
     font-family: inherit;
     text-transform: uppercase;
-    will-change: transform, opacity; /* Performance optimization */
+    will-change: transform, opacity;
+    /* Performance optimization */
     font-family: var(--font-flagfies);
 }
 
@@ -62,7 +65,8 @@
     line-height: 1.4;
     font-weight: 300;
     letter-spacing: 0.05em;
-    will-change: transform, opacity; /* Performance optimization */
+    will-change: transform, opacity;
+    /* Performance optimization */
 }
 
 /* Gallery Section - Positioned after title parallax */
@@ -73,6 +77,14 @@
     width: 100%;
     z-index: 10;
     padding: 0 2rem;
+}
+
+.galleryHeight {
+    height: 45vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
 }
 
 .galleryContainer {
@@ -87,7 +99,8 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 30px;
     padding: 4rem;
-    min-height: 80vh; /* Increased height */
+    min-height: 80vh;
+    /* Increased height */
 }
 
 .galleryContent {
@@ -126,7 +139,8 @@
 }
 
 .projectCard {
-    min-width: 320px; /* Slightly larger cards */
+    min-width: 320px;
+    /* Slightly larger cards */
     background: rgba(255, 121, 198, 0.1);
     border: 1px solid rgba(255, 121, 198, 0.3);
     border-radius: 20px;
@@ -221,55 +235,83 @@
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 1; }
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 1;
+    }
 }
 
 @keyframes float-0 {
-    0%, 100% { transform: translateY(0px) scale(1); }
-    50% { transform: translateY(-30px) scale(1.4); }
+
+    0%,
+    100% {
+        transform: translateY(0px) scale(1);
+    }
+
+    50% {
+        transform: translateY(-30px) scale(1.4);
+    }
 }
 
 @keyframes float-1 {
-    0%, 100% { transform: translateY(0px) scale(1); }
-    50% { transform: translateY(-25px) scale(0.9); }
+
+    0%,
+    100% {
+        transform: translateY(0px) scale(1);
+    }
+
+    50% {
+        transform: translateY(-25px) scale(0.9);
+    }
 }
 
 @keyframes float-2 {
-    0%, 100% { transform: translateY(0px) scale(1); }
-    50% { transform: translateY(-35px) scale(1.2); }
+
+    0%,
+    100% {
+        transform: translateY(0px) scale(1);
+    }
+
+    50% {
+        transform: translateY(-35px) scale(1.2);
+    }
 }
 
 @media (max-width: 768px) {
     .container {
         height: 350vh;
     }
-    
+
     .laserContainer {
         height: 180vh;
     }
-    
+
     .titleSection {
         top: 100vh;
     }
-    
+
     .gallerySection {
         top: 250vh;
         padding: 0 1rem;
     }
-    
+
     .title {
         font-size: clamp(4rem, 18vw, 8rem);
     }
-    
+
     .galleryPlaceholder {
         padding: 2rem;
     }
-    
+
     .placeholderProjects {
         gap: 1rem;
     }
-    
+
     .projectCard {
         min-width: 280px;
         padding: 2rem;
