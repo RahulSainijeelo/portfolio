@@ -15,7 +15,8 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  display: none; /* Start hidden */
+  display: none;
+  /* Start hidden */
   justify-content: center;
   align-items: center;
   padding: 2rem;
@@ -23,22 +24,28 @@
   opacity: 0;
 }
 
+
+
 /* Component Container Styling - Updated for animated components */
 .frameComponentContainer {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 400px; /* Bigger size for animated components */
-  min-height: 300px; /* Bigger height for animated components */
-  max-width: 500px; /* Prevent it from getting too big */
+  min-width: 400px;
+  /* Bigger size for animated components */
+  min-height: 300px;
+  /* Bigger height for animated components */
+  max-width: 500px;
+  /* Prevent it from getting too big */
 }
 
 /* Text Container Styling */
 .frameTextContainer {
   flex: 1;
   text-align: left;
-  max-width: 600px; /* Limit text width for better readability */
+  max-width: 600px;
+  /* Limit text width for better readability */
 }
 
 .frameReverse .frameTextContainer {
@@ -52,7 +59,7 @@
   line-height: 1.2;
   background: linear-gradient(135deg, #ffffff, #e0e0e0);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
   background-clip: text;
   position: relative;
   letter-spacing: -0.02em;
@@ -81,16 +88,45 @@
 .frame1 .frameTitle {
   background: linear-gradient(135deg, #00ff9d, #ffffff);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
   background-clip: text;
   font-weight: 700;
   font-size: clamp(2.5rem, 5vw, 4rem);
+  animation: flicker 1.5s infinite alternate;
+
+}
+
+@keyframes flicker {
+
+  0%,
+  18%,
+  22%,
+  25%,
+  53%,
+  57%,
+  100% {
+    text-shadow:
+      0 0 1px #fff,
+      0 0 2px #fff,
+      0 0 3px #fff,
+      0 0 4px #00ff9d,
+      0 0 5px #00ff9d,
+      0 0 6px #00ff9d;
+    opacity: 0.99;
+  }
+
+  20%,
+  24%,
+  55% {
+    text-shadow: none;
+    opacity: 0.9;
+  }
 }
 
 .frame2 .frameTitle {
   background: linear-gradient(135deg, #8a2be2, #ffffff);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
   background-clip: text;
   font-weight: 500;
 }
@@ -98,7 +134,7 @@
 .frame3 .frameTitle {
   background: linear-gradient(135deg, #00bcd4, #ffffff);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
   background-clip: text;
   font-weight: 600;
 }
@@ -106,7 +142,7 @@
 .frame4 .frameTitle {
   background: linear-gradient(135deg, #ff6b35, #ffffff);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
   background-clip: text;
   font-weight: 600;
 }
@@ -114,7 +150,7 @@
 .frame5 .frameTitle {
   background: linear-gradient(135deg, #ffd700, #ffed4a);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
   background-clip: text;
   font-weight: 700;
   text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
@@ -123,7 +159,7 @@
 .frame6 .frameTitle {
   background: linear-gradient(135deg, #10b981, #ffffff);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
   background-clip: text;
   font-weight: 600;
 }
@@ -131,7 +167,7 @@
 .frame7 .frameTitle {
   background: linear-gradient(135deg, #8a2be2, #00ff9d, #ffffff);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
   background-clip: text;
   font-weight: 700;
   font-size: clamp(2.5rem, 5vw, 4rem);
@@ -196,7 +232,7 @@
   /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); */
   background: linear-gradient(135deg, #00ff9d, #ffffff);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
   background-clip: text;
   text-transform: uppercase;
 }
@@ -240,7 +276,7 @@
     max-width: 1000px;
     gap: 3rem;
   }
-  
+
   .frameComponentContainer {
     min-width: 350px;
     min-height: 250px;
@@ -252,29 +288,29 @@
   .frame {
     padding: 1.5rem;
   }
-  
+
   .frameContent {
     flex-direction: column;
     gap: 2rem;
     text-align: center;
   }
-  
+
   .frameReverse .frameContent {
     flex-direction: column;
   }
-  
+
   .frameTextContainer,
   .frameReverse .frameTextContainer {
     text-align: center;
     max-width: 100%;
   }
-  
+
   .frameComponentContainer {
     min-width: 300px;
     min-height: 200px;
     max-width: 350px;
   }
-  
+
   .frameNumber {
     font-size: 0.9rem;
     margin-top: 1rem;
@@ -285,18 +321,18 @@
   .frame {
     padding: 1rem;
   }
-  
+
   .frameContent {
     gap: 1.5rem;
     padding: 0 1rem;
   }
-  
+
   .frameComponentContainer {
     min-width: 250px;
     min-height: 180px;
     max-width: 300px;
   }
-  
+
   .frameNumber {
     font-size: 0.8rem;
   }

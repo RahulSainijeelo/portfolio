@@ -17,21 +17,18 @@
 
 /* LaserFlow Section - Extended to cover 2 scroll sections */
 .laserContainer {
-    position: absolute;
+    position: relative;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
     width: 120%;
-    height: 200vh; /* Extended height for 2 scroll sections */
+    height: 130vh; /* Extended height for 2 scroll sections */
     z-index: 2;
 }
 
 /* PROJECTS Title Section - Positioned after LaserFlow */
 .titleSection {
-    position: absolute;
-    top: 50%; /* Position in middle initially */
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
     z-index: 3;
     text-align: center;
     width: 100%;
@@ -51,10 +48,11 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-shadow: 0 0 50px rgba(255, 121, 198, 0.5);
-    letter-spacing: -0.05em;
+    letter-spacing: 0.1em;
     font-family: inherit;
     text-transform: uppercase;
     will-change: transform, opacity; /* Performance optimization */
+    font-family: var(--font-flagfies);
 }
 
 .subtitle {
@@ -69,8 +67,8 @@
 
 /* Gallery Section - Positioned after title parallax */
 .gallerySection {
-    position: absolute;
-    top: 300vh; /* Position near bottom */
+    position: relative;
+    /* top: 300vh; /* Position near bottom */
     left: 0;
     width: 100%;
     z-index: 10;
@@ -140,7 +138,7 @@
 
 .projectCard::before {
     content: '';
-    position: absolute;
+    /* position: absolute; */
     top: 0;
     left: 0;
     right: 0;

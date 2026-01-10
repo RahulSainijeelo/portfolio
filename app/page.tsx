@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAnimationPreloader } from '@/hooks/useAnimationPreloader';
 import GreetingScreen from '@/components/GreetingScreen';
 import Header from '@/components/Header';
@@ -10,10 +10,12 @@ import SkillsSection from '@/components/SkillSection';
 // import ImageSequenceScroller from '@/components/ImageSequenceScroller';
 import {ReactLenis} from "lenis/react"
 import ProjectsSection from '@/components/ProjectsSection';
+import Orb from '@/components/Orb';
+import Galaxy from '@/components/Galaxy';
 const OtherComponent = () => {
   return (
     <div style={{
-      height: '100vh',
+      height: '200vh',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -21,20 +23,41 @@ const OtherComponent = () => {
       color: 'white',
       fontSize: '3rem'
     }}>
-      <p>This is the next section! 👋</p>
+     <Orb/>
+     {/* <Galaxy/> */}
     </div>
   );
 };
 
 export default function Home() {
   const [showGreeting, setShowGreeting] = useState<boolean>(true);
+  const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
   const { animationsReady } = useAnimationPreloader();
 
-  const handleGreetingComplete = (): void => {
-    if (animationsReady) {
-      setShowGreeting(false);
+  const handleGreetingComplete = useCallback((): void => {
+    if (animationsReady && !isTransitioning) {
+      setIsTransitioning(true);
+      
+      // Add a small delay to ensure smooth transition
+      setTimeout(() => {
+        setShowGreeting(false);
+        setIsTransitioning(false);
+      }, 500); // Adjust timing as needed
     }
-  };
+  }, [animationsReady, isTransitioning]);
+
+  // Force cleanup on component unmount
+  useEffect(() => {
+    return () => {
+      setShowGreeting(false);
+      setIsTransitioning(false);
+    };
+  }, []);
+
+  // Debug logging
+  useEffect(() => {
+    console.log('State:', { showGreeting, animationsReady, isTransitioning });
+  }, [showGreeting, animationsReady, isTransitioning]);
 
   return (
     <>
@@ -46,19 +69,12 @@ export default function Home() {
       ) : (
         <ReactLenis root>
           <main>
-          <Header logoText="RAHUL SAINI" />
-          <HeroSection />
-         
-          {/* <HeroAnimation/> */}
-          {/* <ProjectsTransition /> */}
-          <ProjectsSection/>
-          <OtherComponent/>
-          <OtherComponent/>
-
-          {/* <PortfolioSection />
-          <SkillsSection/> */}
-          <Footer />
-        </main>
+            <Header logoText="RAHUL SAINI" />
+            <HeroSection />
+            <ProjectsSection/>
+            <OtherComponent/>    
+            <Footer />
+          </main>
         </ReactLenis>
       )}
     </>
