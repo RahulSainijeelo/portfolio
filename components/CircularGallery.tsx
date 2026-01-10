@@ -1,5 +1,5 @@
 import { Camera, Mesh, Plane, Program, Renderer, Texture, Transform } from 'ogl';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 
 import './CircularGallery.css';
 
@@ -34,7 +34,7 @@ function getFontSize(font: string): number {
 function createTextTexture(
   gl: GL,
   text: string,
-  font: string = 'bold 30px monospace',
+  font: string = 'bold 30px Figtree',
   color: string = 'black'
 ): { texture: Texture; width: number; height: number } {
   const canvas = document.createElement('canvas');
@@ -154,6 +154,8 @@ interface MediaProps {
   textColor: string;
   borderRadius?: number;
   font?: string;
+  itemWidth?: number;
+  itemHeight?: number;
 }
 
 class Media {
@@ -172,6 +174,8 @@ class Media {
   textColor: string;
   borderRadius: number;
   font?: string;
+  itemWidth: number;
+  itemHeight: number;
   program!: Program;
   plane!: Mesh;
   title!: Title;
@@ -198,7 +202,9 @@ class Media {
     bend,
     textColor,
     borderRadius = 0,
-    font
+    font,
+    itemWidth = 700,
+    itemHeight = 900
   }: MediaProps) {
     this.geometry = geometry;
     this.gl = gl;
@@ -214,6 +220,8 @@ class Media {
     this.textColor = textColor;
     this.borderRadius = borderRadius;
     this.font = font;
+    this.itemWidth = itemWidth;
+    this.itemHeight = itemHeight;
     this.createShader();
     this.createMesh();
     this.createTitle();
@@ -364,8 +372,8 @@ class Media {
       }
     }
     this.scale = this.screen.height / 1500;
-    this.plane.scale.y = (this.viewport.height * (900 * this.scale)) / this.screen.height;
-    this.plane.scale.x = (this.viewport.width * (700 * this.scale)) / this.screen.width;
+    this.plane.scale.y = (this.viewport.height * (this.itemHeight * this.scale)) / this.screen.height;
+    this.plane.scale.x = (this.viewport.width * (this.itemWidth * this.scale)) / this.screen.width;
     this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
     this.padding = 2;
     this.width = this.plane.scale.x + this.padding;
@@ -382,6 +390,8 @@ interface AppConfig {
   font?: string;
   scrollSpeed?: number;
   scrollEase?: number;
+  itemWidth?: number;
+  itemHeight?: number;
 }
 
 class App {
@@ -424,7 +434,9 @@ class App {
       borderRadius = 0,
       font = 'bold 30px Figtree',
       scrollSpeed = 2,
-      scrollEase = 0.05
+      scrollEase = 0.05,
+      itemWidth = 700,
+      itemHeight = 900
     }: AppConfig
   ) {
     document.documentElement.classList.remove('no-js');
@@ -437,7 +449,7 @@ class App {
     this.createScene();
     this.onResize();
     this.createGeometry();
-    this.createMedias(items, bend, textColor, borderRadius, font);
+    this.createMedias(items, bend, textColor, borderRadius, font, itemWidth, itemHeight);
     this.update();
     this.addEventListeners();
   }
@@ -475,7 +487,9 @@ class App {
     bend: number = 1,
     textColor: string,
     borderRadius: number,
-    font: string
+    font: string,
+    itemWidth: number,
+    itemHeight: number
   ) {
     const defaultItems = [
       {
@@ -544,7 +558,9 @@ class App {
         bend,
         textColor,
         borderRadius,
-        font
+        font,
+        itemWidth,
+        itemHeight
       });
     });
   }
@@ -653,18 +669,36 @@ interface CircularGalleryProps {
   font?: string;
   scrollSpeed?: number;
   scrollEase?: number;
+  itemWidth?: number;
+  itemHeight?: number;
 }
 
-export default function CircularGallery({
+export interface CircularGalleryRef {
+  setScrollTarget: (delta: number) => void;
+}
+
+const CircularGallery = forwardRef<CircularGalleryRef, CircularGalleryProps>(({
   items,
   bend = 3,
   textColor = '#ffffff',
   borderRadius = 0.05,
   font = 'bold 30px Figtree',
   scrollSpeed = 2,
-  scrollEase = 0.05
-}: CircularGalleryProps) {
+  scrollEase = 0.05,
+  itemWidth = 700,
+  itemHeight = 900
+}, ref) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const appRef = useRef<App | null>(null);
+
+  useImperativeHandle(ref, () => ({
+    setScrollTarget: (delta: number) => {
+      if (appRef.current) {
+        appRef.current.scroll.target += delta;
+      }
+    }
+  }));
+
   useEffect(() => {
     if (!containerRef.current) return;
     const app = new App(containerRef.current, {
@@ -674,11 +708,17 @@ export default function CircularGallery({
       borderRadius,
       font,
       scrollSpeed,
-      scrollEase
+      scrollEase,
+      itemWidth,
+      itemHeight
     });
+    appRef.current = app;
     return () => {
       app.destroy();
     };
-  }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase]);
+  }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase, itemWidth, itemHeight]);
+
   return <div className="circular-gallery" ref={containerRef} />;
-}
+});
+
+export default CircularGallery;
