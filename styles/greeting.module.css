@@ -4,15 +4,12 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  z-index:1;
   padding: 2rem;
   background: transparent;
-  backdrop-filter: blur(2px);
+  overflow: hidden;
 }
 
 .overlay {
@@ -64,12 +61,20 @@
   text-align: right;
 }
 
+.indicatorContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .greetingText {
     font-size: clamp(2rem, 12vw, 4rem);
   }
-  
+
   .loadingIndicator {
     bottom: 20px;
     right: 20px;

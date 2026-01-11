@@ -8,7 +8,7 @@ import HeroSection from '@/components/HeroSection';
 import Footer from '@/components/Footer';
 import SkillsSection from '@/components/SkillSection';
 // import ImageSequenceScroller from '@/components/ImageSequenceScroller';
-import {ReactLenis} from "lenis/react"
+import { ReactLenis } from "lenis/react"
 import ProjectsSection from '@/components/ProjectsSection';
 import Orb from '@/components/Orb';
 import Galaxy from '@/components/Galaxy';
@@ -23,8 +23,8 @@ const OtherComponent = () => {
       color: 'white',
       fontSize: '3rem'
     }}>
-     <Orb/>
-     {/* <Galaxy/> */}
+      <Orb />
+      {/* <Galaxy/> */}
     </div>
   );
 };
@@ -32,51 +32,42 @@ const OtherComponent = () => {
 export default function Home() {
   const [showGreeting, setShowGreeting] = useState<boolean>(true);
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
-  const { animationsReady } = useAnimationPreloader();
 
   const handleGreetingComplete = useCallback((): void => {
-    if (animationsReady && !isTransitioning) {
-      setIsTransitioning(true);
-      
-      // Add a small delay to ensure smooth transition
-      setTimeout(() => {
-        setShowGreeting(false);
-        setIsTransitioning(false);
-      }, 500); // Adjust timing as needed
-    }
-  }, [animationsReady, isTransitioning]);
-
-  // Force cleanup on component unmount
-  useEffect(() => {
-    return () => {
+    setIsTransitioning(true);
+    // Smooth transition out
+    setTimeout(() => {
       setShowGreeting(false);
       setIsTransitioning(false);
-    };
+    }, 500);
   }, []);
 
-  // Debug logging
-  useEffect(() => {
-    console.log('State:', { showGreeting, animationsReady, isTransitioning });
-  }, [showGreeting, animationsReady, isTransitioning]);
-
   return (
-    <>
-      {showGreeting ? (
-        <GreetingScreen 
-          onComplete={handleGreetingComplete}
-          animationsReady={animationsReady}
-        />
-      ) : (
-        <ReactLenis root>
-          <main>
-            <Header logoText="RAHUL SAINI" />
-            <HeroSection />
-            <ProjectsSection/>
-            <OtherComponent/>    
-            <Footer />
-          </main>
-        </ReactLenis>
+    <main className="relative min-h-screen overflow-hidden bg-[#0A0A0A]">
+      {/* Greeting Screen - Always on top while active */}
+      {showGreeting && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 100,
+          pointerEvents: isTransitioning ? 'none' : 'auto'
+        }}>
+          <GreetingScreen onComplete={handleGreetingComplete} />
+        </div>
       )}
-    </>
+      <div style={{
+        opacity: showGreeting ? 0 : 1,
+        pointerEvents: showGreeting ? 'none' : 'auto',
+        transition: 'opacity 0.8s ease-in-out'
+      }}>
+        <ReactLenis root>
+          <Header logoText="RAHUL SAINI" />
+          <HeroSection />
+          <ProjectsSection />
+          {/* <OtherComponent /> */}
+          <Footer />
+        </ReactLenis>
+      </div>
+    </main>
   );
 }

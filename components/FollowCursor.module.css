@@ -1,0 +1,24 @@
+.cursor {
+    position: fixed;
+    top: -40px;
+    left: -40px;
+    width: 80px;
+    height: 80px;
+    background: rgba(189, 147, 249, 0.9);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 30px rgba(189, 147, 249, 0.5);
+    transition: opacity 0.3s ease, scale 0.3s ease;
+}
+
+.text {
+    color: #000;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    font-family: var(--font-primary);
+}

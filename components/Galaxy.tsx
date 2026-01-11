@@ -216,9 +216,9 @@ export default React.memo(function Galaxy({
 
   useEffect(() => {
     if (!ctnDom.current) return;
-    
+
     const ctn = ctnDom.current;
-    
+
     // Add delay and try-catch for WebGL initialization
     const timer = setTimeout(() => {
       try {
@@ -246,17 +246,22 @@ export default React.memo(function Galaxy({
         let program: Program;
 
         function resize() {
+          if (!ctn.offsetWidth || !ctn.offsetHeight) return;
           const scale = 1;
           renderer.setSize(ctn.offsetWidth * scale, ctn.offsetHeight * scale);
-          if (program) {
-            program.uniforms.uResolution.value = new Color(
+          if (program && program.uniforms.uResolution) {
+            program.uniforms.uResolution.value.set(
               gl.canvas.width,
               gl.canvas.height,
               gl.canvas.width / gl.canvas.height
             );
           }
         }
-        window.addEventListener('resize', resize, false);
+
+        const resizeObserver = new ResizeObserver(() => {
+          resize();
+        });
+        resizeObserver.observe(ctn);
         resize();
 
         const geometry = new Triangle(gl);
@@ -334,17 +339,17 @@ export default React.memo(function Galaxy({
         // Enhanced cleanup
         return () => {
           cancelAnimationFrame(animateId);
-          window.removeEventListener('resize', resize);
+          resizeObserver.disconnect();
           if (mouseInteraction) {
             ctn.removeEventListener('mousemove', handleMouseMove);
             ctn.removeEventListener('mouseleave', handleMouseLeave);
           }
-          
+
           // Proper cleanup
           if (ctn.contains(gl.canvas)) {
             ctn.removeChild(gl.canvas);
           }
-          
+
           const loseContext = gl.getExtension('WEBGL_lose_context');
           if (loseContext) {
             loseContext.loseContext();

@@ -16,6 +16,7 @@ import BlurText from "@/components/BlurText"
 import SplitText from './SplitText';
 import Orb from './Orb';
 import Galaxy from "./Galaxy"
+import Antigravity from "./animation/Antigravity"
 // Register plugins
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -93,7 +94,7 @@ const framesData: FrameData[] = [
     ,
     bgPhase: 'minimal',
     animatedCompo: <PathDrawing />,
-    componentSide: 'right'
+    componentSide: 'background'
   },
   {
     id: 'frame-3',
@@ -116,14 +117,14 @@ const framesData: FrameData[] = [
     text: 'Crafting seamless mobile apps with React Native.',
     bgPhase: 'wireframes',
     animatedCompo: <MotionPath />,
-    componentSide: 'right'
+    componentSide: 'background'
   },
   {
     id: 'frame-5',
     text: 'Exploring Blockchain — Solana & Ethereum dApps, Solidity contracts, audits.',
     bgPhase: 'nodes',
-    animatedCompo: <MagnetciGrid className='w-full h-full' />,
-    componentSide: 'left'
+    animatedCompo: <Antigravity />,
+    componentSide: 'background'
   },
   {
     id: 'frame-6',
@@ -142,11 +143,11 @@ const framesData: FrameData[] = [
 ];
 
 const backgroundPhases: Record<FrameData['bgPhase'], string> = {
-  minimal: '#0A0A0E',
-  wireframes: '#15141D',
-  nodes: '#1C1B26',
-  grid: '#22212D',
-  experience: '#282635'
+  minimal: '#030303',
+  wireframes: '#050505',
+  nodes: '#070707',
+  grid: '#090909',
+  experience: '#0B0B0B'
 };
 
 const HeroSection: React.FC = () => {
@@ -154,81 +155,71 @@ const HeroSection: React.FC = () => {
   const frameRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useGSAP(() => {
-    const DURATION_PER_FRAME = 90;
-    const totalDuration = framesData.length * DURATION_PER_FRAME;
+    const totalFrames = framesData.length;
+    const scrollDistance = totalFrames * 100; // 100vh per frame for spacing
 
-    // Initial setup - Hide all frames except first
     frameRefs.current.forEach((frame, index) => {
       if (frame) {
-        if (index === 0) {
-          gsap.set(frame, { opacity: 1, display: 'flex' });
-        } else {
-          gsap.set(frame, { opacity: 0, display: 'none' });
-        }
+        gsap.set(frame, {
+          opacity: index === 0 ? 1 : 0,
+          display: index === 0 ? 'flex' : 'none',
+          pointerEvents: index === 0 ? 'auto' : 'none'
+        });
       }
     });
 
-    // Set initial background color
     if (containerRef.current) {
       gsap.set(containerRef.current, {
         backgroundColor: backgroundPhases[framesData[0].bgPhase]
       });
     }
 
-    // Main timeline
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
         pin: true,
-        scrub: 0.8,
+        scrub: 1, // Slightly higher for smoother feel
         start: 'top top',
-        end: `+=${totalDuration}%`,
-        onUpdate: (self) => {
-          // Calculate which frame should be active based on progress
-          const progress = self.progress;
-          const activeFrameIndex = Math.min(
-            Math.floor(progress * framesData.length),
-            framesData.length - 1
-          );
-
-          // Show only the active frame
-          frameRefs.current.forEach((frame, index) => {
-            if (frame) {
-              if (index === activeFrameIndex) {
-                gsap.set(frame, { display: 'flex' });
-                gsap.to(frame, { opacity: 1, duration: 0.1 });
-              } else {
-                gsap.to(frame, {
-                  opacity: 0,
-                  duration: 0.1,
-                  onComplete: () => {
-                    gsap.set(frame, { display: 'none' });
-                  }
-                });
-              }
-            }
-          });
-
-          // Update background color
-          if (containerRef.current) {
-            const currentBgPhase = framesData[activeFrameIndex].bgPhase;
-            gsap.to(containerRef.current, {
-              backgroundColor: backgroundPhases[currentBgPhase],
-              duration: 0.3
-            });
-          }
+        end: `+=${scrollDistance}%`,
+        snap: {
+          snapTo: 1 / (totalFrames - 1),
+          duration: { min: 0.2, max: 0.5 },
+          delay: 0.1,
+          ease: 'power2.inOut'
         }
-      },
+      }
     });
 
-    // Add frame animations for smooth transitions
-    framesData.forEach((frame, index) => {
-      if (index === 0) return; // Skip first frame
+    framesData.forEach((_, index) => {
+      if (index === 0) return;
 
-      tl.addLabel(`frame-${index}`, index * DURATION_PER_FRAME);
+      const prevFrame = frameRefs.current[index - 1];
+      const currFrame = frameRefs.current[index];
+      const segmentStart = index - 1;
 
-      // Add a placeholder animation to maintain timeline structure
-      tl.to({}, { duration: 50 }, `frame-${index}`);
+      // Previous frame fade out
+      tl.to(prevFrame, {
+        opacity: 0,
+        duration: 0.5,
+      }, segmentStart);
+
+      // Previous frame cleanup - ensure it's hidden after fade
+      tl.set(prevFrame, { display: 'none', pointerEvents: 'none' }, segmentStart + 0.5);
+
+      // Current frame setup - show it before fade in
+      tl.set(currFrame, { display: 'flex', pointerEvents: 'auto' }, segmentStart + 0.1);
+
+      // Current frame fade in
+      tl.to(currFrame, {
+        opacity: 1,
+        duration: 0.5
+      }, segmentStart + 0.1);
+
+      // Background color transition
+      tl.to(containerRef.current, {
+        backgroundColor: backgroundPhases[framesData[index].bgPhase],
+        duration: 0.8
+      }, segmentStart);
     });
 
   }, { scope: containerRef }); // Scope to container for better performance

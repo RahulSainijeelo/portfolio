@@ -3,12 +3,18 @@
 
 @custom-variant dark (&:is(.dark *));
 
+:root {
+  --font-primary: 'AtAero-Regular', sans-serif;
+  --font-heading: 'Elianto-Regular', sans-serif;
+  --font-display: 'Kanopi-Regular', sans-serif;
+}
+
 body {
   cursor: url("https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png");
   background-color: black;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   display: none;
 }
 
@@ -29,4 +35,3 @@ body {
   src: url('/fonts/kanopibrazil-regular.otf') format('opentype');
   font-display: swap;
 }
-

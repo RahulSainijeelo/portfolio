@@ -3,7 +3,6 @@ import { animate } from 'animejs';
 import LoadingIndicator from './LoadingIndicator';
 import { GreetingScreenProps } from '../types';
 import styles from '@/styles/greeting.module.css';
-import Greet from './Greet';
 
 const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
   const textRef = useRef<HTMLHeadingElement>(null);
@@ -80,7 +79,7 @@ const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
               // Wait before next transition or completion
               setTimeout(() => {
                 resolve();
-              }, 1500);
+              }, 800);
             }
           });
         }
@@ -89,15 +88,27 @@ const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
   };
 
   const startAssetPreloading = async (): Promise<void> => {
+    const projectImages = [
+      'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80',
+      'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80',
+      'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80',
+      'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80',
+      'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80',
+      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
+      'https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800&q=80',
+      'https://images.unsplash.com/photo-1522252234503-e356532cafd5?w=800&q=80',
+    ];
+
     const assetsToLoad: string[] = [
-      '/images/hero-bg.jpg',
-      '/images/profile.jpg',
-      '/images/project1.jpg',
-      // Add more assets...
+      ...projectImages,
+      // Add more critical assets here if needed
     ];
 
     let loaded = 0;
     const total = assetsToLoad.length;
+
+    // Failsafe: if assets take more than 5s, mark as loaded anyway
+    const timeoutPromise = new Promise(resolve => setTimeout(resolve, 5000));
 
     const loadPromises = assetsToLoad.map((asset: string) => {
       return new Promise<void>((resolve) => {
@@ -115,42 +126,44 @@ const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
         img.src = asset;
       });
     });
-    // Wait for all assets and fonts to load
-    await Promise.all([...loadPromises]);
+
+    await Promise.race([
+      Promise.all(loadPromises),
+      timeoutPromise
+    ]);
 
     setAssetsLoaded(true);
   };
 
   const hideGreetingScreen = (): void => {
-    setTimeout(() => {
-      if (!containerRef.current) return;
+    if (!containerRef.current) {
+      onComplete();
+      return;
+    }
 
-      animate(containerRef.current, {
-        opacity: 0,
-        scale: 1.1,
-        duration: 400,
-        ease: 'inOut(2)',
-        onComplete: () => {
-          onComplete();
-        }
-      });
-    }, 200);
+    animate(containerRef.current, {
+      opacity: 0,
+      scale: 1.05,
+      duration: 600,
+      ease: 'inOut(2)',
+      onComplete: () => {
+        onComplete();
+      }
+    });
   };
 
   return (
-    <>
-      <div ref={containerRef} className={styles.greetingContainer}>
-        {/* <div className={styles.overlay}></div> */}
+    <div ref={containerRef} className={styles.greetingContainer}>
+      <div className={styles.content}>
+        <h1 ref={textRef} className={styles.greetingText}>
+          {currentText}
+        </h1>
+      </div>
 
-        <div className={styles.content}>
-          <h1 ref={textRef} className={styles.greetingText}>
-            {currentText}
-          </h1>
-        </div>
-
+      <div className={styles.indicatorContainer}>
         <LoadingIndicator progress={loadingProgress} />
       </div>
-    </>
+    </div>
   );
 };
 
