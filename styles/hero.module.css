@@ -22,6 +22,7 @@
   padding: 2rem;
   box-sizing: border-box;
   opacity: 0;
+  pointer-events: none;
 }
 
 
@@ -209,6 +210,7 @@
   height: 100%;
   z-index: 0;
   overflow: hidden;
+  opacity: 0.5;
 }
 
 .frameBackgroundContainer>* {

@@ -55,8 +55,6 @@ export default function Home() {
           <GreetingScreen onComplete={handleGreetingComplete} />
         </div>
       )}
-
-      {/* Main Content - Renders in background immediately */}
       <div style={{
         opacity: showGreeting ? 0 : 1,
         pointerEvents: showGreeting ? 'none' : 'auto',
@@ -66,7 +64,7 @@ export default function Home() {
           <Header logoText="RAHUL SAINI" />
           <HeroSection />
           <ProjectsSection />
-          <OtherComponent />
+          {/* <OtherComponent /> */}
           <Footer />
         </ReactLenis>
       </div>
