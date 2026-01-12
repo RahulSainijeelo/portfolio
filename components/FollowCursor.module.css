@@ -22,3 +22,9 @@
     letter-spacing: 0.1em;
     font-family: var(--font-primary);
 }
+
+@media (max-width: 768px) {
+    .cursor {
+        display: none !important;
+    }
+}
