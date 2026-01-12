@@ -67,10 +67,10 @@ const Bgs = () => {
 interface FrameData {
   id: string;
   text: string;
-  fancy?: any;
+  fancy?: any
   subtext?: string;
   bgPhase: 'minimal' | 'wireframes' | 'nodes' | 'grid' | 'experience';
-  videoUrl: string;
+  animatedCompo: any;
   componentSide: 'left' | 'right' | 'background';
 }
 
@@ -79,7 +79,7 @@ const framesData: FrameData[] = [
     id: 'frame-1',
     text: 'I am a Developer.',
     bgPhase: 'minimal',
-    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-abstract-modern-high-tech-background-27083-large.mp4',
+    animatedCompo: <Bgs />,
     componentSide: 'background'
   },
   {
@@ -90,9 +90,10 @@ const framesData: FrameData[] = [
       delay={150}
       animateBy="words"
       direction="top"
-    />,
+    />
+    ,
     bgPhase: 'minimal',
-    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-digital-circuit-moving-light-27084-large.mp4',
+    animatedCompo: <PathDrawing />,
     componentSide: 'background'
   },
   {
@@ -100,31 +101,43 @@ const framesData: FrameData[] = [
     text: '…to building sophisticated backends & services.',
     bgPhase: 'wireframes',
     fancy: <SplitText text='…to building sophisticated backends & services.'
+
+
+      // splitType="chars"
       from={{ opacity: 0, y: 40 }}
       to={{ opacity: 1, y: 0 }}
+    // threshold={0.1}
+    // rootMargin="-100px"
     />,
-    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-binary-code-of-a-computer-screen-27085-large.mp4',
+    animatedCompo: <Orb />,
     componentSide: 'background'
   },
   {
     id: 'frame-4',
     text: 'Crafting seamless mobile apps with React Native.',
     bgPhase: 'wireframes',
-    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-glowing-neon-circles-in-a-dark-abstract-background-27086-large.mp4',
+    animatedCompo: <MotionPath />,
     componentSide: 'background'
   },
   {
     id: 'frame-5',
     text: 'Exploring Blockchain — Solana & Ethereum dApps, Solidity contracts, audits.',
     bgPhase: 'nodes',
-    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-networking-nodes-in-blue-background-27087-large.mp4',
+    animatedCompo: <Antigravity />,
     componentSide: 'background'
   },
   {
     id: 'frame-6',
     text: 'DevOps. Problem solving. Turning errors into elegant solutions.',
     bgPhase: 'grid',
-    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-matrix-style-binary-code-digits-passing-27088-large.mp4',
+    animatedCompo: <Galaxy
+      mouseRepulsion={true}
+      mouseInteraction={true}
+      density={1.5}
+      glowIntensity={0.5}
+      saturation={0.8}
+      hueShift={240}
+    />,
     componentSide: 'background'
   },
 ];
@@ -140,12 +153,10 @@ const backgroundPhases: Record<FrameData['bgPhase'], string> = {
 const HeroSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const frameRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const [activeIndex, setActiveIndex] = React.useState(0);
 
   useGSAP(() => {
     const totalFrames = framesData.length;
-    const scrollDistance = totalFrames * 100;
+    const scrollDistance = totalFrames * 100; // 100vh per frame for spacing
 
     frameRefs.current.forEach((frame, index) => {
       if (frame) {
@@ -167,15 +178,9 @@ const HeroSection: React.FC = () => {
       scrollTrigger: {
         trigger: containerRef.current,
         pin: true,
-        scrub: 1,
+        scrub: 1, // Slightly higher for smoother feel
         start: 'top top',
         end: `+=${scrollDistance}%`,
-        onUpdate: (self) => {
-          const index = Math.round(self.progress * (totalFrames - 1));
-          if (index !== activeIndex) {
-            setActiveIndex(index);
-          }
-        },
         snap: {
           snapTo: 1 / (totalFrames - 1),
           duration: { min: 0.2, max: 0.5 },
@@ -192,72 +197,92 @@ const HeroSection: React.FC = () => {
       const currFrame = frameRefs.current[index];
       const segmentStart = index - 1;
 
+      // Previous frame fade out
       tl.to(prevFrame, {
         opacity: 0,
         duration: 0.5,
       }, segmentStart);
 
+      // Previous frame cleanup - ensure it's hidden after fade
       tl.set(prevFrame, { display: 'none', pointerEvents: 'none' }, segmentStart + 0.5);
+
+      // Current frame setup - show it before fade in
       tl.set(currFrame, { display: 'flex', pointerEvents: 'auto' }, segmentStart + 0.1);
 
+      // Current frame fade in
       tl.to(currFrame, {
         opacity: 1,
         duration: 0.5
       }, segmentStart + 0.1);
 
+      // Background color transition
       tl.to(containerRef.current, {
         backgroundColor: backgroundPhases[framesData[index].bgPhase],
         duration: 0.8
       }, segmentStart);
     });
 
-  }, [activeIndex]);
-
-  useEffect(() => {
-    videoRefs.current.forEach((video, index) => {
-      if (video) {
-        if (index === activeIndex) {
-          video.play().catch(() => { });
-        } else {
-          video.pause();
-        }
-      }
-    });
-  }, [activeIndex]);
+  }, { scope: containerRef }); // Scope to container for better performance
 
   const renderFrameContent = (frame: FrameData, index: number) => {
-    return (
-      <>
-        <div className={styles.frameBackgroundContainer}>
-          <video
-            ref={(el) => { videoRefs.current[index] = el; }}
-            src={frame.videoUrl}
-            muted
-            loop
-            playsInline
-            className={styles.heroBgVideo}
-          />
-          <div className={styles.videoOverlay} />
-        </div>
+    if (frame.componentSide === 'background') {
+      // Background component layout
+      return (
+        <>
+          {/* Background Component - Full Width */}
+          <div className={styles.frameBackgroundContainer}>
+            {frame.animatedCompo}
+          </div>
 
-        <div className={styles.frameTextOverlay}>
-          {frame.fancy ? (
-            <div className={styles.frameTitle}>
-              {frame.fancy}
-            </div>
-          ) : (
-            <h1 className={styles.frameTitle}>
-              {frame.text}
-            </h1>
-          )}
-          {frame.subtext && (
-            <p className={styles.frameSubtext}>
-              {frame.subtext}
-            </p>
-          )}
+          {/* Text Overlay */}
+          <div className={styles.frameTextOverlay}>
+            {frame.fancy ? (
+              <div className={styles.frameTitle}>
+                {frame.fancy}
+              </div>
+            ) : (
+              <h1 className={styles.frameTitle}>
+                {frame.text}
+              </h1>
+            )}
+            {frame.subtext && (
+              <p className={styles.frameSubtext}>
+                {frame.subtext}
+              </p>
+            )}
+          </div>
+        </>
+      );
+    } else {
+      // Side-by-side layout
+      return (
+        <div className={styles.frameContent}>
+          {/* Animated Component Container */}
+          <div className={styles.frameComponentContainer}>
+            {frame.animatedCompo}
+          </div>
+
+          {/* Text Container */}
+          <div className={styles.frameTextContainer}>
+            {frame.fancy ?
+              <div className={styles.frameTitle}>
+                {frame.fancy}
+              </div>
+
+              : (
+                <h1 className={styles.frameTitle}>
+                  {frame.text}
+                </h1>
+              )}
+            {frame.subtext && (
+              <p className={styles.frameSubtext}>
+                {frame.subtext}
+              </p>
+            )}
+          </div>
         </div>
-      </>
-    );
+      );
+    }
   };
 
   return (
