@@ -3,22 +3,45 @@
         "id": 1,
         "title": "React Dashboard",
         "description": "A comprehensive administrative dashboard built with React and TailwindCSS. Features real-time data visualization, user management, and customizable widgets.",
-        "longDescription": "This React Dashboard project showcases a modern approach to admin interfaces. It utilizes a modular architecture, leveraging React hooks and Context API for state management. The UI is built with TailwindCSS for rapid, consistent styling, and Recharts for interactive data visualization. Key features include a multi-layered sidebar, dynamic data tables with filtering and sorting, and a fully responsive layout optimized for all devices. The project also demonstrates best practices in frontend development, including component-based architecture and performance optimization.",
+        "longDescription": "This React Dashboard project showcases a modern approach to admin interfaces. It utilizes a modular architecture, leveraging React hooks and Context API for state management. Key features include a multi-layered sidebar, dynamic data tables with filtering and sorting, and a fully responsive layout optimized for all devices.",
         "thumbnail": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80",
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-futuristic-dashboard-32692-large.mp4",
+        "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
         "tags": [
             "React",
             "GSAP",
             "Three.js",
             "WebGL"
         ],
-        "link": "https://github.com"
+        "stack": [
+            {
+                "name": "React",
+                "logo": "https://cdn.simpleicons.org/react/61DAFB"
+            },
+            {
+                "name": "GSAP",
+                "logo": "https://cdn.simpleicons.org/greensock/88CE02"
+            },
+            {
+                "name": "Three.js",
+                "logo": "https://cdn.simpleicons.org/three.js/FFFFFF"
+            },
+            {
+                "name": "Tailwind",
+                "logo": "https://cdn.simpleicons.org/tailwindcss/06B6D4"
+            }
+        ],
+        "link": "https://github.com",
+        "sections": {
+            "challenges": "Optimizing real-time data flow for thousands of concurrent data points without compromising UI responsiveness was a major hurdle.",
+            "solutions": "Implemented specialized Web Workers to offload heavy computations and used memoization strategies with React to minimize re-renders.",
+            "outcome": "Achieved 60fps rendering even with high-frequency data updates, resulting in an 85% improvement in user interaction fluidity."
+        }
     },
     {
         "id": 2,
         "title": "Cloud API Services",
         "description": "Scalable RESTful API built with Node.js and Express, integrated with MongoDB. Optimized for high performance and secure data handling.",
-        "longDescription": "The Cloud API Services project focuses on providing a robust and scalable backend for modern web applications. Built on Node.js and Express.js, it handles millions of requests with ease. It features comprehensive API documentation using Swagger, JWT-based authentication for secure access, and integration with MongoDB for high-speed data storage and retrieval. The codebase follows a clean architecture pattern, ensuring maintainability and ease of extension for future features like real-time notifications via WebSockets.",
+        "longDescription": "The Cloud API Services project focuses on providing a robust and scalable backend for modern web applications. Built on Node.js and Express.js, it handles millions of requests with ease. It features comprehensive API documentation using Swagger, JWT-based authentication for secure access, and integration with MongoDB.",
         "thumbnail": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
         "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-man-working-on-his-computer-at-night-42261-large.mp4",
         "tags": [
@@ -27,13 +50,36 @@
             "MongoDB",
             "Cloud"
         ],
-        "link": "https://github.com"
+        "stack": [
+            {
+                "name": "Node.js",
+                "logo": "https://cdn.simpleicons.org/node.js/339933"
+            },
+            {
+                "name": "Express",
+                "logo": "https://cdn.simpleicons.org/express/FFFFFF"
+            },
+            {
+                "name": "MongoDB",
+                "logo": "https://cdn.simpleicons.org/mongodb/47A033"
+            },
+            {
+                "name": "Docker",
+                "logo": "https://cdn.simpleicons.org/docker/2496ED"
+            }
+        ],
+        "link": "https://github.com",
+        "sections": {
+            "challenges": "The system faced vertical scaling limitations during peak traffic bursts, leading to database connection timeouts.",
+            "solutions": "Migrated to a horizontally scalable microservices architecture with Redis-based caching and database indexing optimizations.",
+            "outcome": "Successfully reduced average latency by 40% and improved system availability to 99.9% during high-traffic events."
+        }
     },
     {
         "id": 3,
         "title": "Fintech App UI",
         "description": "A sleek and intuitive mobile interface for financial management. Focuses on user experience and visual clarity.",
-        "longDescription": "The Fintech App UI project is a deep dive into mobile UX design and implementation. Using React Native, I've created a series of interactive and visually stunning screens for money management. The app includes complex animation patterns using Reanimated, custom charts for spending analysis, and a seamless onboarding flow. The design system is strictly followed to maintain visual consistency across all modules, from transaction history to investment tracking.",
+        "longDescription": "The Fintech App UI project is a deep dive into mobile UX design and implementation. Using React Native, I've created a series of interactive and visually stunning screens for money management. The app includes complex animation patterns using Reanimated.",
         "thumbnail": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
         "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-top-view-of-a-smartphone-with-a-loading-screen-42353-large.mp4",
         "tags": [
@@ -42,13 +88,36 @@
             "Mobile",
             "Finance"
         ],
-        "link": "https://github.com"
+        "stack": [
+            {
+                "name": "React-Native",
+                "logo": "https://cdn.simpleicons.org/react/61DAFB"
+            },
+            {
+                "name": "Framer",
+                "logo": "https://cdn.simpleicons.org/framer/0055FF"
+            },
+            {
+                "name": "TypeScript",
+                "logo": "https://cdn.simpleicons.org/typescript/3178C6"
+            },
+            {
+                "name": "Expo",
+                "logo": "https://cdn.simpleicons.org/expo/FFFFFF"
+            }
+        ],
+        "link": "https://github.com",
+        "sections": {
+            "challenges": "Ensuring pixel-perfect consistency across both iOS and Android while maintaining high-performance fluid animations.",
+            "solutions": "Utilized React Native Reanimated for native-threaded animations and standardizing layout constants via a global theme provider.",
+            "outcome": "Recognized for exceptional UX, with a 4.8-star user rating and a significant increase in user retention rates."
+        }
     },
     {
         "id": 4,
         "title": "AI Platform Hub",
         "description": "An interactive hub for AI model management and data processing, featuring advanced visualization and real-time interaction.",
-        "longDescription": "The AI Platform Hub is designed for data scientists and AI engineers to manage their models efficiently. It integrates with various AI services to provide a centralized dashboard for monitoring performance and adjusting parameters in real-time. The platform features advanced data visualization using D3.js, allowing users to explore complex datasets with ease. The responsive design ensures that insights are accessible whether on a desktop or a tablet in the field.",
+        "longDescription": "The AI Platform Hub is designed for data scientists and AI engineers to manage their models efficiently. It integrates with various AI services to provide a centralized dashboard for monitoring performance.",
         "thumbnail": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
         "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-hands-of-a-man-working-on-a-computer-42345-large.mp4",
         "tags": [
@@ -57,6 +126,29 @@
             "Next.js",
             "D3.js"
         ],
-        "link": "https://github.com"
+        "stack": [
+            {
+                "name": "Next.js",
+                "logo": "https://cdn.simpleicons.org/nextdotjs/FFFFFF"
+            },
+            {
+                "name": "Python",
+                "logo": "https://cdn.simpleicons.org/python/3776AB"
+            },
+            {
+                "name": "PyTorch",
+                "logo": "https://cdn.simpleicons.org/pytorch/EE4C2C"
+            },
+            {
+                "name": "D3.js",
+                "logo": "https://cdn.simpleicons.org/d3dotjs/F9A03C"
+            }
+        ],
+        "link": "https://github.com",
+        "sections": {
+            "challenges": "Visualizing high-dimensional AI model weights in a way that remains intuitive and actionable for developers.",
+            "solutions": "Developed custom 3D visualization components using Three.js and D3-force simulations to represent neural network structures.",
+            "outcome": "Reduced model debugging time for end-users by over 50% and provided a unique, visual-first approach to model management."
+        }
     }
 ]
