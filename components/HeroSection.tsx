@@ -9,60 +9,58 @@ import UseTime from './animation/UseTime';
 import Cube from './Cube';
 import PathDrawing from './animation/PathDrawing';
 import MotionPath from './animation/MotionPath';
-import MagnetciGrid from './animation/MagneticGrid';
-import Hyperspeed from "@/components/Hyperspeed"
 import DecryptedText from "@/components/DecryptedText"
 import BlurText from "@/components/BlurText"
 import SplitText from './SplitText';
 import Orb from './Orb';
 import Galaxy from "./Galaxy"
-import Antigravity from "./animation/Antigravity"
+import useWindowSize from '@/hooks/useWindowSize';
+import { BackgroundLines } from './ui/background-lines';
+import { HoleBackground } from './animate-ui/components/backgrounds/hole';
+import { PixelatedCanvas } from './ui/pixelated-canvas';
+import VariableProximity from './VariableProximity';
+import ClickSpark from './ClickSpark';
+import Particles from './Particles';
+
 // Register plugins
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const Bgs = () => {
+  const { width, height } = useWindowSize();
+
+  // Handle SSR and initial load
+  if (typeof window === 'undefined') return null;
+
+  const currentWidth = width || window.innerWidth;
+  const currentHeight = height || window.innerHeight;
+  const isDesktop = currentWidth > 1024;
+
   return (
-    <Hyperspeed
-      effectOptions={{
-        onSpeedUp: () => { },
-        onSlowDown: () => { },
-        distortion: 'turbulentDistortion',
-        length: 400,
-        roadWidth: 10,
-        islandWidth: 2,
-        lanesPerRoad: 4,
-        fov: 90,
-        fovSpeedUp: 150,
-        speedUp: 2,
-        carLightsFade: 0.4,
-        totalSideLightSticks: 20,
-        lightPairsPerRoadWay: 40,
-        shoulderLinesWidthPercentage: 0.05,
-        brokenLinesWidthPercentage: 0.1,
-        brokenLinesLengthPercentage: 0.5,
-        lightStickWidth: [0.12, 0.5],
-        lightStickHeight: [1.3, 1.7],
-        movingAwaySpeed: [60, 80],
-        movingCloserSpeed: [-120, -160],
-        carLightsLength: [400 * 0.03, 400 * 0.2],
-        carLightsRadius: [0.05, 0.14],
-        carWidthPercentage: [0.3, 0.5],
-        carShiftX: [-0.8, 0.8],
-        carFloorSeparation: [0, 5],
-        colors: {
-          roadColor: 0x080808,
-          islandColor: 0x0a0a0a,
-          background: 0x000000,
-          shoulderLines: 0xFFFFFF,
-          brokenLines: 0xFFFFFF,
-          leftCars: [0xD856BF, 0x6750A2, 0xC247AC],
-          rightCars: [0x03B3C3, 0x0E5EA5, 0x324555],
-          sticks: 0x03B3C3,
-        }
-      }}
+    <PixelatedCanvas
+      src="https://assets.aceternity.com/manu-red.png"
+      width={currentWidth}
+      height={currentHeight}
+      cellSize={isDesktop ? 4 : 3}
+      dotScale={0.7}
+      shape="square"
+      backgroundColor="#000000"
+      dropoutStrength={0.4}
+      interactive
+      distortionStrength={3}
+      distortionRadius={80}
+      distortionMode="swirl"
+      followSpeed={0.2}
+      jitterStrength={4}
+      jitterSpeed={4}
+      sampleAverage
+      tintColor="#FFFFFF"
+      tintStrength={0.2}
+      objectFit={isDesktop ? "contain" : "cover"}
+      horizontalAlign={isDesktop ? "right" : "center"}
+      className="rounded-xl border border-neutral-800 shadow-lg"
     />
-  )
-}
+  );
+};
 
 interface FrameData {
   id: string;
@@ -77,7 +75,7 @@ interface FrameData {
 const framesData: FrameData[] = [
   {
     id: 'frame-1',
-    text: 'I am a Developer.',
+    text: 'I am a Rahul Saini.',
     bgPhase: 'minimal',
     animatedCompo: <Bgs />,
     componentSide: 'background'
@@ -93,7 +91,7 @@ const framesData: FrameData[] = [
     />
     ,
     bgPhase: 'minimal',
-    animatedCompo: <UseTime />,
+    animatedCompo: <div></div>,
     componentSide: 'background'
   },
   {
@@ -109,35 +107,29 @@ const framesData: FrameData[] = [
     // threshold={0.1}
     // rootMargin="-100px"
     />,
-    animatedCompo: <Orb />,
+    animatedCompo: <div></div>,
     componentSide: 'background'
   },
   {
     id: 'frame-4',
     text: 'Crafting seamless mobile apps with React Native.',
     bgPhase: 'wireframes',
-    animatedCompo: <MotionPath />,
+    animatedCompo: <div></div>,
     componentSide: 'background'
   },
   {
     id: 'frame-5',
     text: 'Exploring Blockchain — Solana & Ethereum dApps, Solidity contracts, audits.',
-    bgPhase: 'nodes',
-    animatedCompo: <Antigravity />,
+    bgPhase: 'wireframes',
+    animatedCompo: <div></div>,
     componentSide: 'background'
   },
   {
     id: 'frame-6',
     text: 'DevOps. Problem solving. Turning errors into elegant solutions.',
     bgPhase: 'grid',
-    animatedCompo: <Galaxy
-      mouseRepulsion={true}
-      mouseInteraction={true}
-      density={1.5}
-      glowIntensity={0.5}
-      saturation={0.8}
-      hueShift={240}
-    />,
+    // fancy: ,
+    animatedCompo: <BackgroundLines className="flex items-center justify-center w-full flex-col px-4" >""</BackgroundLines>,
     componentSide: 'background'
   },
 ];
@@ -214,6 +206,7 @@ const HeroSection: React.FC = () => {
       if (frame) {
         gsap.set(frame, {
           opacity: index === 0 ? 1 : 0,
+          visibility: index === 0 ? 'visible' : 'hidden',
           display: index === 0 ? 'flex' : 'none',
           pointerEvents: index === 0 ? 'auto' : 'none'
         });
@@ -236,9 +229,11 @@ const HeroSection: React.FC = () => {
         onUpdate: (self) => {
           const progress = self.progress;
           const index = Math.round(progress * (totalFrames - 1));
-          if (index !== activeFrameIndex) {
-            setActiveFrameIndex(index);
-          }
+          // Use functional update to avoid stale closure dependency on activeFrameIndex
+          setActiveFrameIndex(prev => {
+            if (prev !== index) return index;
+            return prev;
+          });
         },
         snap: {
           snapTo: 1 / (totalFrames - 1),
@@ -259,32 +254,33 @@ const HeroSection: React.FC = () => {
       // Previous frame transition: Fade out + Scale up (zoom out effect)
       tl.to(prevFrame, {
         opacity: 0,
-        scale: 1.05, // Slightly less zoom for smoother feel
+        scale: 1.05,
         y: -30,
         duration: 0.6,
         ease: 'power2.inOut'
       }, segmentStart);
 
-      // Previous frame cleanup
-      tl.set(prevFrame, { display: 'none', pointerEvents: 'none', scale: 1, y: 0 }, segmentStart + 0.6);
+      // Previous frame cleanup - synchronized at 0.5 to match state change
+      tl.set(prevFrame, { display: 'none', visibility: 'hidden', pointerEvents: 'none', scale: 1, y: 0 }, segmentStart + 0.5);
 
-      // Current frame setup: Start slightly scaled down and below
+      // Current frame setup - synchronized at 0.5 to match state change
       tl.set(currFrame, {
         display: 'flex',
+        visibility: 'visible',
         pointerEvents: 'auto',
         scale: 0.98,
         y: 30,
         opacity: 0
-      }, segmentStart + 0.1);
+      }, segmentStart + 0.5);
 
-      // Current frame transition - Ensuring text is fully visible and background is transparent
+      // Current frame transition
       tl.to(currFrame, {
         opacity: 1,
         scale: 1,
         y: 0,
-        duration: 0.6,
+        duration: 0.5,
         ease: 'power2.out'
-      }, segmentStart + 0.2);
+      }, segmentStart + 0.5);
 
       // Background color transition
       tl.to(containerRef.current, {
@@ -301,17 +297,26 @@ const HeroSection: React.FC = () => {
       ref={containerRef}
       className={styles.heroContainer}
     >
-      {framesData.map((frame, index) => (
-        <HeroFrame
-          key={frame.id}
-          frame={frame}
-          index={index}
-          isActive={activeFrameIndex === index}
-          frameRef={(el) => {
-            frameRefs.current[index] = el;
-          }}
-        />
-      ))}
+      <ClickSpark
+        sparkColor='#fff'
+        sparkSize={10}
+        sparkRadius={15}
+        sparkCount={8}
+        duration={400}
+
+      >
+        {framesData.map((frame, index) => (
+          <HeroFrame
+            key={frame.id}
+            frame={frame}
+            index={index}
+            isActive={activeFrameIndex === index}
+            frameRef={(el) => {
+              frameRefs.current[index] = el;
+            }}
+          />
+        ))}
+      </ClickSpark>
     </div>
   );
 };

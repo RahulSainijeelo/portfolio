@@ -45,7 +45,7 @@ importers:
         specifier: ^1.0.11
         version: 1.0.11
       postprocessing:
-        specifier: ^6.37.8
+        specifier: ^6.36.0
         version: 6.37.8(three@0.167.1)
       react:
         specifier: 19.1.0
