@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -93,7 +93,7 @@ const framesData: FrameData[] = [
     />
     ,
     bgPhase: 'minimal',
-    animatedCompo: <PathDrawing />,
+    animatedCompo: <UseTime />,
     componentSide: 'background'
   },
   {
@@ -142,21 +142,73 @@ const framesData: FrameData[] = [
   },
 ];
 
-const backgroundPhases: Record<FrameData['bgPhase'], string> = {
-  minimal: '#030303',
-  wireframes: '#050505',
-  nodes: '#070707',
-  grid: '#090909',
-  experience: '#0B0B0B'
-};
+const HeroFrame = React.memo(({ frame, index, isActive, frameRef }: {
+  frame: FrameData;
+  index: number;
+  isActive: boolean;
+  frameRef: (el: HTMLDivElement | null) => void;
+}) => {
+  const isBackground = frame.componentSide === 'background';
+  const isRight = frame.componentSide === 'right';
+
+  return (
+    <div
+      ref={frameRef}
+      className={`${styles.frame} ${styles[`frame${index + 1}`]} ${isRight ? styles.frameReverse : ''
+        } ${isBackground ? styles.frameBackground : ''
+        }`}
+    >
+      {isBackground ? (
+        <>
+          <div className={styles.frameBackgroundContainer}>
+            {isActive && frame.animatedCompo}
+          </div>
+          <div className={styles.frameTextOverlay}>
+            {frame.fancy ? (
+              <div className={styles.frameTitle}>{frame.fancy}</div>
+            ) : (
+              <h1 className={styles.frameTitle}>{frame.text}</h1>
+            )}
+            {frame.subtext && <p className={styles.frameSubtext}>{frame.subtext}</p>}
+          </div>
+        </>
+      ) : (
+        <div className={styles.frameContent}>
+          <div className={styles.frameComponentContainer}>
+            {isActive && frame.animatedCompo}
+          </div>
+          <div className={styles.frameTextContainer}>
+            {frame.fancy ? (
+              <div className={styles.frameTitle}>{frame.fancy}</div>
+            ) : (
+              <h1 className={styles.frameTitle}>{frame.text}</h1>
+            )}
+            {frame.subtext && <p className={styles.frameSubtext}>{frame.subtext}</p>}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+});
+
+HeroFrame.displayName = 'HeroFrame';
 
 const HeroSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const frameRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [activeFrameIndex, setActiveFrameIndex] = useState<number>(0);
+
+  const backgroundPhases = useMemo(() => ({
+    minimal: '#030303',
+    wireframes: '#050505',
+    nodes: '#070707',
+    grid: '#090909',
+    experience: '#0B0B0B'
+  }), []);
 
   useGSAP(() => {
     const totalFrames = framesData.length;
-    const scrollDistance = totalFrames * 100; // 100vh per frame for spacing
+    const scrollDistance = totalFrames * 100;
 
     frameRefs.current.forEach((frame, index) => {
       if (frame) {
@@ -178,9 +230,16 @@ const HeroSection: React.FC = () => {
       scrollTrigger: {
         trigger: containerRef.current,
         pin: true,
-        scrub: 1, // Slightly higher for smoother feel
+        scrub: 0.8, // More responsive feel
         start: 'top top',
         end: `+=${scrollDistance}%`,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const index = Math.round(progress * (totalFrames - 1));
+          if (index !== activeFrameIndex) {
+            setActiveFrameIndex(index);
+          }
+        },
         snap: {
           snapTo: 1 / (totalFrames - 1),
           duration: { min: 0.2, max: 0.5 },
@@ -197,23 +256,35 @@ const HeroSection: React.FC = () => {
       const currFrame = frameRefs.current[index];
       const segmentStart = index - 1;
 
-      // Previous frame fade out
+      // Previous frame transition: Fade out + Scale up (zoom out effect)
       tl.to(prevFrame, {
         opacity: 0,
-        duration: 0.5,
+        scale: 1.05, // Slightly less zoom for smoother feel
+        y: -30,
+        duration: 0.6,
+        ease: 'power2.inOut'
       }, segmentStart);
 
-      // Previous frame cleanup - ensure it's hidden after fade
-      tl.set(prevFrame, { display: 'none', pointerEvents: 'none' }, segmentStart + 0.5);
+      // Previous frame cleanup
+      tl.set(prevFrame, { display: 'none', pointerEvents: 'none', scale: 1, y: 0 }, segmentStart + 0.6);
 
-      // Current frame setup - show it before fade in
-      tl.set(currFrame, { display: 'flex', pointerEvents: 'auto' }, segmentStart + 0.1);
+      // Current frame setup: Start slightly scaled down and below
+      tl.set(currFrame, {
+        display: 'flex',
+        pointerEvents: 'auto',
+        scale: 0.98,
+        y: 30,
+        opacity: 0
+      }, segmentStart + 0.1);
 
-      // Current frame fade in
+      // Current frame transition - Ensuring text is fully visible and background is transparent
       tl.to(currFrame, {
         opacity: 1,
-        duration: 0.5
-      }, segmentStart + 0.1);
+        scale: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power2.out'
+      }, segmentStart + 0.2);
 
       // Background color transition
       tl.to(containerRef.current, {
@@ -224,66 +295,6 @@ const HeroSection: React.FC = () => {
 
   }, { scope: containerRef }); // Scope to container for better performance
 
-  const renderFrameContent = (frame: FrameData, index: number) => {
-    if (frame.componentSide === 'background') {
-      // Background component layout
-      return (
-        <>
-          {/* Background Component - Full Width */}
-          <div className={styles.frameBackgroundContainer}>
-            {frame.animatedCompo}
-          </div>
-
-          {/* Text Overlay */}
-          <div className={styles.frameTextOverlay}>
-            {frame.fancy ? (
-              <div className={styles.frameTitle}>
-                {frame.fancy}
-              </div>
-            ) : (
-              <h1 className={styles.frameTitle}>
-                {frame.text}
-              </h1>
-            )}
-            {frame.subtext && (
-              <p className={styles.frameSubtext}>
-                {frame.subtext}
-              </p>
-            )}
-          </div>
-        </>
-      );
-    } else {
-      // Side-by-side layout
-      return (
-        <div className={styles.frameContent}>
-          {/* Animated Component Container */}
-          <div className={styles.frameComponentContainer}>
-            {frame.animatedCompo}
-          </div>
-
-          {/* Text Container */}
-          <div className={styles.frameTextContainer}>
-            {frame.fancy ?
-              <div className={styles.frameTitle}>
-                {frame.fancy}
-              </div>
-
-              : (
-                <h1 className={styles.frameTitle}>
-                  {frame.text}
-                </h1>
-              )}
-            {frame.subtext && (
-              <p className={styles.frameSubtext}>
-                {frame.subtext}
-              </p>
-            )}
-          </div>
-        </div>
-      );
-    }
-  };
 
   return (
     <div
@@ -291,17 +302,15 @@ const HeroSection: React.FC = () => {
       className={styles.heroContainer}
     >
       {framesData.map((frame, index) => (
-        <div
+        <HeroFrame
           key={frame.id}
-          ref={(el: HTMLDivElement | null) => {
+          frame={frame}
+          index={index}
+          isActive={activeFrameIndex === index}
+          frameRef={(el) => {
             frameRefs.current[index] = el;
           }}
-          className={`${styles.frame} ${styles[`frame${index + 1}`]} ${frame.componentSide === 'right' ? styles.frameReverse : ''
-            } ${frame.componentSide === 'background' ? styles.frameBackground : ''
-            }`}
-        >
-          {renderFrameContent(frame, index)}
-        </div>
+        />
       ))}
     </div>
   );
