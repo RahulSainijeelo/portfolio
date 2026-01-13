@@ -10,12 +10,21 @@
 }
 
 body {
-  cursor: url("https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png");
   background-color: black;
+  color: white;
+  margin: 0;
+  padding: 0;
 }
 
+/* Hide scrollbar for Chrome, Safari and Opera */
 ::-webkit-scrollbar {
   display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 @font-face {

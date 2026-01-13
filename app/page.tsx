@@ -4,10 +4,8 @@ import { useAnimationPreloader } from '@/hooks/useAnimationPreloader';
 import GreetingScreen from '@/components/GreetingScreen';
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
-// import PortfolioSection from '@/components/PortfolioSection';
 import Footer from '@/components/Footer';
 import SkillsSection from '@/components/SkillSection';
-// import ImageSequenceScroller from '@/components/ImageSequenceScroller';
 import { ReactLenis } from "lenis/react"
 import ProjectsSection from '@/components/ProjectsSection';
 import Orb from '@/components/Orb';
@@ -43,7 +41,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#0A0A0A]">
+    <main className="relative min-h-screen bg-[#0A0A0A]">
       {/* Greeting Screen - Always on top while active */}
       {showGreeting && (
         <div style={{
@@ -60,7 +58,14 @@ export default function Home() {
         pointerEvents: showGreeting ? 'none' : 'auto',
         transition: 'opacity 0.8s ease-in-out'
       }}>
-        <ReactLenis root>
+        <ReactLenis root options={{
+          lerp: 0.1,
+          duration: 1.2,
+          smoothWheel: true,
+          wheelMultiplier: 1,
+          touchMultiplier: 2,
+          syncTouch: true,
+        }}>
           <Header logoText="RAHUL SAINI" />
           <HeroSection />
           <ProjectsSection />

@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 .heroContainer {
-  height: 100vh;
+  height: 100dvh;
   width: 100%;
   position: relative;
   overflow: hidden;
   font-family: var(--font-body);
   color: #ffffff;
   transition: background-color 0.5s ease;
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
 }
 
 .frame {
@@ -19,7 +19,7 @@
   /* Start hidden */
   justify-content: center;
   align-items: center;
-  padding: 2rem;
+  padding: 1rem;
   box-sizing: border-box;
   opacity: 0;
   pointer-events: none;
@@ -33,12 +33,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 400px;
-  /* Bigger size for animated components */
-  min-height: 300px;
-  /* Bigger height for animated components */
-  max-width: 500px;
-  /* Prevent it from getting too big */
+  min-width: 300px;
+  min-height: 250px;
+  max-width: 90vw;
 }
 
 /* Text Container Styling */

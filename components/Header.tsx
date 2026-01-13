@@ -28,7 +28,7 @@ export default function Header({ logoText }: HeaderProps) {
   }, []);
 
   const handleScroll = useCallback(() => {
-    const scrolled = window.scrollY > 100;
+    const scrolled = window.scrollY > 50;
 
     if (scrolled !== isScrolled) {
       setIsScrolled(scrolled);
@@ -100,7 +100,7 @@ export default function Header({ logoText }: HeaderProps) {
   }, [isScrolled]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 

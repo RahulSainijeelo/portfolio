@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { BloomEffect, EffectComposer, EffectPass, RenderPass, SMAAEffect, SMAAPreset } from 'postprocessing';
 
 import './Hyperspeed.css';
 
-const Hyperspeed = ({
+const Hyperspeed = React.memo(({
   effectOptions = {
     onSpeedUp: () => { },
     onSlowDown: () => { },
@@ -17,8 +17,8 @@ const Hyperspeed = ({
     fovSpeedUp: 150,
     speedUp: 2,
     carLightsFade: 0.4,
-    totalSideLightSticks: 20,
-    lightPairsPerRoadWay: 40,
+    totalSideLightSticks: 10,
+    lightPairsPerRoadWay: 20,
     shoulderLinesWidthPercentage: 0.05,
     brokenLinesWidthPercentage: 0.1,
     brokenLinesLengthPercentage: 0.5,
@@ -429,29 +429,9 @@ const Hyperspeed = ({
 
       initPasses() {
         this.renderPass = new RenderPass(this.scene, this.camera);
-        this.bloomPass = new EffectPass(
-          this.camera,
-          new BloomEffect({
-            luminanceThreshold: 0.2,
-            luminanceSmoothing: 0,
-            resolutionScale: 1
-          })
-        );
-
-        const smaaPass = new EffectPass(
-          this.camera,
-          new SMAAEffect({
-            preset: SMAAPreset.MEDIUM,
-            searchImage: SMAAEffect.searchImageDataURL,
-            areaImage: SMAAEffect.areaImageDataURL
-          })
-        );
-        this.renderPass.renderToScreen = false;
-        this.bloomPass.renderToScreen = false;
-        smaaPass.renderToScreen = true;
+        // Bloom and SMAA are heavy on GPU, disabling for performance
+        this.renderPass.renderToScreen = true;
         this.composer.addPass(this.renderPass);
-        this.composer.addPass(this.bloomPass);
-        this.composer.addPass(smaaPass);
       }
 
       loadAssets() {
@@ -590,7 +570,10 @@ const Hyperspeed = ({
         }
 
         window.removeEventListener('resize', this.onWindowResize.bind(this));
-        if (this.container) {
+        if (this.container && this.renderer.domElement) {
+          if (this.container.contains(this.renderer.domElement)) {
+            this.container.removeChild(this.renderer.domElement);
+          }
           this.container.removeEventListener('mousedown', this.onMouseDown);
           this.container.removeEventListener('mouseup', this.onMouseUp);
           this.container.removeEventListener('mouseout', this.onMouseUp);
@@ -1120,6 +1103,8 @@ const Hyperspeed = ({
   }, [effectOptions]);
 
   return <div ref={hyperspeed} style={{ width: '100%', height: '100%' }}></div>;
-};
+});
+
+Hyperspeed.displayName = 'Hyperspeed';
 
 export default Hyperspeed;

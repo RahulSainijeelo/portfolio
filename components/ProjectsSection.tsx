@@ -77,15 +77,15 @@ const ProjectsSection = () => {
                 scrollTrigger: {
                     trigger: trigger,
                     pin: true,
-                    scrub: 1,
+                    scrub: 1.2, // Slightly more lerp
                     start: "top top",
-                    end: () => `+=${gallery.scrollWidth}`,
+                    end: () => `+=${totalWidth}`, // Use totalWidth for precise ending
                     invalidateOnRefresh: true,
                 }
             });
 
             tl.to(gallery, {
-                x: -totalWidth - 100, // Small buffer
+                x: -totalWidth,
                 ease: "none",
             });
 
