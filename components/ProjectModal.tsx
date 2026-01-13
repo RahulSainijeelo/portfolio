@@ -49,9 +49,9 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose })
             lenis?.stop();
             document.body.style.overflow = 'hidden';
 
-            // Create audio instance - Using a reliable chime sound
-            audioInstanceRef.current = new Audio("https://cdn.pixabay.com/audio/2021/08/04/audio_06d8a30b73.mp3");
-            audioInstanceRef.current.volume = 0.4;
+            // Create audio instance - Using a tech-inspired "mission start" sound
+            audioInstanceRef.current = new Audio("https://cdn.pixabay.com/audio/2022/03/10/audio_c330f69165.mp3");
+            audioInstanceRef.current.volume = 0.3;
 
             const playSound = () => {
                 if (audioInstanceRef.current) {
@@ -127,6 +127,14 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose })
         setMousePos({ x: e.clientX, y: e.clientY });
     };
 
+    const handleClose = () => {
+        // Play exit sound
+        const audio = new Audio("https://cdn.pixabay.com/audio/2022/01/18/audio_d0c6ff1300.mp3");
+        audio.volume = 0.4;
+        audio.play().catch(() => { });
+        onClose();
+    };
+
     if (!project) return null;
 
     return (
@@ -138,7 +146,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose })
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         className={styles.backdrop}
-                        onClick={onClose}
+                        onClick={handleClose}
                     />
 
                     <AnimatePresence>
@@ -179,7 +187,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose })
                             <div className={styles.cornerB} />
                             <div className={styles.cornerL} />
 
-                            <button className={styles.closeButton} onClick={onClose}>
+                            <button className={styles.closeButton} onClick={handleClose}>
                                 <span className={styles.closeText}>EXIT_MISSION</span>
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <line x1="18" y1="6" x2="6" y2="18"></line>

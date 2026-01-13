@@ -9,6 +9,7 @@ import projectsData from '@/data/projects.json';
 import ProjectModal from './ProjectModal';
 import FollowCursor from './FollowCursor';
 import { motion, AnimatePresence } from 'motion/react';
+import ClickSpark from './ClickSpark';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -45,6 +46,11 @@ const ProjectsSection = () => {
     }, []);
 
     const openModal = (project: Project) => {
+        // Play game-like sound on click
+        const audio = new Audio("https://cdn.pixabay.com/audio/2022/03/15/audio_5072775f0f.mp3");
+        audio.volume = 0.5;
+        audio.play().catch(() => { });
+
         setSelectedProject(project);
         setIsModalOpen(true);
     };
@@ -103,104 +109,119 @@ const ProjectsSection = () => {
             });
         });
 
+        mm.add("(max-width: 768px)", () => {
+            const cards = gsap.utils.toArray<HTMLElement>(`.${styles.projectCard}`);
+            cards.forEach((card, i) => {
+                ScrollTrigger.create({
+                    trigger: card,
+                    start: "top center",
+                    end: "bottom center",
+                    onEnter: () => setActiveIndex(i),
+                    onEnterBack: () => setActiveIndex(i),
+                });
+            });
+        });
+
         return () => mm.revert();
     }, { scope: containerRef });
 
     return (
         <div ref={containerRef} className={styles.container}>
-            <div className={styles.introSection}>
-                <div className={styles.introContent}>
-                    <h1 className={styles.mainTitle}>SELECTED WORKS</h1>
-                    <p className={styles.mainSubTitle}>
-                        A CURATED COLLECTION OF DIGITAL EXPERIENCES AND INNOVATIVE SOLUTIONS CRAFTED TO PUSH THE BOUNDARIES OF MODERN WEB DEVELOPMENT.
-                    </p>
-                </div>
-            </div>
+            <ClickSpark
+                sparkColor='#fff'
+                sparkSize={10}
+                sparkRadius={15}
+                sparkCount={8}
+                duration={400}
 
-            <div
-                ref={triggerRef}
-                className={styles.horizontalTrigger}
-                onMouseEnter={() => setIsHovering(true)}
-                onMouseLeave={() => setIsHovering(false)}
             >
-                <div ref={galleryRef} className={styles.horizontalGallery}>
-                    {projectsData.map((project: Project, idx: number) => (
-                        <div
-                            key={project.id}
-                            className={`${styles.projectCard} ${activeIndex === idx ? styles.activeCard : ''}`}
-                            onClick={() => openModal(project)}
-                        >
-                            <div className={styles.videoWrapper}>
-                                {project.videoUrl && (
-                                    <video
-                                        src={project.videoUrl}
-                                        autoPlay={!isModalOpen}
-                                        loop
-                                        muted
-                                        playsInline
-                                        className={styles.cardVideo}
-                                        ref={(el) => {
-                                            if (el) {
-                                                if (isModalOpen) el.pause();
-                                                else el.play().catch(() => { });
-                                            }
-                                        }}
-                                    />
-                                )}
-                                <div className={styles.videoOverlay} />
-
-
-                            </div>
-                            {isMounted && isSectionInView && !isModalOpen && (
-                                <div className={styles.dynamicInfoPanel}>
-                                    <AnimatePresence mode="wait">
-                                        <motion.div
-                                            key={activeIndex}
-                                            initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
-                                            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                                            exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
-                                            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                                            className={styles.infoContent}
-                                        >
-                                            <h2 className={styles.activeTitle}>{projectsData[activeIndex]?.title}</h2>
-                                            <p className={styles.activeDesc}>{projectsData[activeIndex]?.description}</p>
-                                        </motion.div>
-                                    </AnimatePresence>
-                                </div>
-                            )}
-                            {/* Mobile View Content */}
-                            <div className={styles.mobileContent}>
-                                <h3 className={styles.mobileTitle}>{project.title}</h3>
-                                <p className={styles.mobileDescription}>{project.description}</p>
-                            </div>
-
-                            {/* Desktop Reveal Content (Simplified because of InfoPanel) */}
-                            <div className={styles.desktopReveal}>
-                                <span className={styles.revealTitle}>{project.title}</span>
-                            </div>
-                        </div>
-                    ))}
+                <div className={styles.introSection}>
+                    <div className={styles.introContent}>
+                        <h1 className={styles.mainTitle}>SELECTED WORKS</h1>
+                        <p className={styles.mainSubTitle}>
+                            A CURATED COLLECTION OF DIGITAL EXPERIENCES AND INNOVATIVE SOLUTIONS CRAFTED TO PUSH THE BOUNDARIES OF MODERN WEB DEVELOPMENT.
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            <FollowCursor visible={isHovering} text="SCROLL >" />
-
-            <ProjectModal
-                project={selectedProject}
-                isOpen={isModalOpen}
-                onClose={closeModal}
-            />
-
-            {[...Array(6)].map((_, i) => (
                 <div
-                    key={i}
-                    className={`${styles.particle} ${styles[`particle-${i % 3}`]}`}
-                    style={{
-                        left: `${20 + i * 15}%`,
-                        top: `${40 + (i % 3) * 20}%`,
-                    }}
+                    ref={triggerRef}
+                    className={styles.horizontalTrigger}
+                    onMouseEnter={() => setIsHovering(true)}
+                    onMouseLeave={() => setIsHovering(false)}
+                >
+                    <div ref={galleryRef} className={styles.horizontalGallery}>
+                        {projectsData.map((project: Project, idx: number) => (
+                            <div
+                                key={project.id}
+                                className={`${styles.projectCard} ${activeIndex === idx ? styles.activeCard : ''}`}
+                                onClick={() => openModal(project)}
+                            >
+                                <div className={styles.videoWrapper}>
+                                    {project.videoUrl && (
+                                        <video
+                                            src={project.videoUrl}
+                                            autoPlay={false}
+                                            loop
+                                            muted
+                                            playsInline
+                                            className={styles.cardVideo}
+                                            ref={(el) => {
+                                                if (el) {
+                                                    const isFocused = isSectionInView && !isModalOpen && activeIndex === idx;
+                                                    if (isFocused) {
+                                                        el.play().catch(() => { });
+                                                    } else {
+                                                        el.pause();
+                                                    }
+                                                }
+                                            }}
+                                        />
+                                    )}
+                                    <div className={styles.videoOverlay} />
+
+
+                                </div>
+
+                                {/* Info Panel - Now inside the card */}
+                                <div className={styles.persistentInfoPanel} style={{ opacity: activeIndex === idx ? 1 : 0, transition: 'opacity 0.5s ease' }}>
+                                    <div className={styles.panelContent}>
+                                        <div className={styles.panelIndex}>
+                                            <span className={styles.currentIndex}>{String(idx + 1).padStart(2, '0')}</span>
+                                            <div className={styles.panelDivider} />
+                                            <span className={styles.totalCount}>{String(projectsData.length).padStart(2, '0')}</span>
+                                        </div>
+                                        <div className={styles.panelMainInfo}>
+                                            <h3 className={styles.panelTitle}>{project.title}</h3>
+                                            <p className={styles.panelDesc}>{project.description}</p>
+                                        </div>
+                                        <div className={styles.panelIndicator}>
+                                            <div className={styles.pulseDot} />
+                                            <span>LIVE</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Mobile View Content */}
+                                <div className={styles.mobileContent}>
+                                    <h3 className={styles.mobileTitle}>{project.title}</h3>
+                                    <p className={styles.mobileDescription}>{project.description}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+
+                <FollowCursor visible={isHovering} text="SCROLL >" />
+
+                <ProjectModal
+                    project={selectedProject}
+                    isOpen={isModalOpen}
+                    onClose={closeModal}
                 />
-            ))}
+
+            </ClickSpark>
         </div>
     );
 };

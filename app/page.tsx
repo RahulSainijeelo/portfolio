@@ -10,19 +10,24 @@ import { ReactLenis } from "lenis/react"
 import ProjectsSection from '@/components/ProjectsSection';
 import Orb from '@/components/Orb';
 import Galaxy from '@/components/Galaxy';
+import PixelBlast from '@/components/PixelBlast';
+import Particles from '@/components/Particles';
+import ClickSpark from '@/components/ClickSpark';
 const OtherComponent = () => {
   return (
-    <div style={{
-      height: '200vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#1a1a1a',
-      color: 'white',
-      fontSize: '3rem'
-    }}>
-      <Orb />
-      {/* <Galaxy/> */}
+    <div style={{ width: '100%', height: '600px', position: 'relative' }}>
+
+      <Particles
+        particleColors={['#ffffff', '#ffffff']}
+        particleCount={200}
+        particleSpread={10}
+        speed={0.1}
+        particleBaseSize={100}
+        moveParticlesOnHover={true}
+        alphaParticles={false}
+        disableRotation={false}
+      />
+
     </div>
   );
 };
@@ -69,7 +74,19 @@ export default function Home() {
           <Header logoText="RAHUL SAINI" />
           <HeroSection />
           <ProjectsSection />
-          {/* <OtherComponent /> */}
+          {/* <ClickSpark
+            sparkColor='#fff'
+            sparkSize={10}
+            sparkRadius={15}
+            sparkCount={8}
+            duration={400}
+
+          >
+
+
+            <OtherComponent />
+
+          </ClickSpark> */}
           <Footer />
         </ReactLenis>
       </div>
