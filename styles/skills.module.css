@@ -1,76 +1,261 @@
 .skillsSection {
   min-height: 100vh;
-  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-  padding: 4rem 0;
+  background: #000;
+  padding: 4rem 2% 8rem 2%;
   position: relative;
+  overflow: hidden;
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Monaco, Consolas, 'DejaVu Sans Mono', monospace;
+  color: #fff;
+}
+
+/* Blueprint Grid Background */
+.bgElements {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(189, 147, 249, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(189, 147, 249, 0.08) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: center;
+  z-index: 0;
+}
+
+.bgElements::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 20%, #000 90%);
+}
+
+.scanline {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+      transparent 50%,
+      rgba(189, 147, 249, 0.03) 50%);
+  background-size: 100% 4px;
+  z-index: 1;
+  pointer-events: none;
+  animation: scanlineMove 8s linear infinite;
+}
+
+@keyframes scanlineMove {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 0 100%;
+  }
+}
+
+/* HUD Top Header */
+.hudHeader {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto 3rem auto;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(189, 147, 249, 0.3);
+  background: rgba(189, 147, 249, 0.05);
+  position: relative;
+  z-index: 10;
+}
+
+.hudHeaderLeft {
+  display: flex;
+  flex-direction: column;
+}
+
+.hudStatus {
+  font-size: 0.7rem;
+  color: #bd93f9;
+  letter-spacing: 0.3em;
+  font-weight: 900;
+}
+
+.hudTitle {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.hudHeaderRight {
+  display: flex;
+  gap: 2rem;
+  font-size: 0.7rem;
+  color: #bd93f9;
+  font-weight: 700;
 }
 
 .container {
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 0 2rem;
-}
-
-.sectionTitle {
-  font-size: 3rem;
-  font-weight: 700;
-  text-align: center;
-  color: white;
-  margin-bottom: 3rem;
-  background: linear-gradient(45deg, #8a2be2, #00ff9d);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.skillsGrid {
+  position: relative;
+  z-index: 5;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: 320px 1fr 380px;
   gap: 2rem;
-  margin-top: 2rem;
+  min-height: 600px;
 }
 
-.skillCategory {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 2rem;
-  border-radius: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
-}
-
-.skillCategory:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(138, 43, 226, 0.3);
-  transform: translateY(-5px);
-}
-
-.categoryTitle {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: white;
-  margin-bottom: 1rem;
-  border-bottom: 2px solid #00ff9d;
-  padding-bottom: 0.5rem;
-}
-
-.skillsList {
+/* HUD Sidebar */
+.sidebar {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+  flex-direction: column;
+  gap: 1rem;
+  background: rgba(189, 147, 249, 0.05);
+  padding: 1.5rem;
+  border: 1px solid rgba(189, 147, 249, 0.2);
+  border-radius: 0.5rem;
+  height: fit-content;
 }
 
-.skillTag {
-  background: linear-gradient(45deg, rgba(138, 43, 226, 0.2), rgba(0, 255, 157, 0.2));
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+.moduleButton {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(189, 147, 249, 0.3);
+  padding: 1.25rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.moduleButton:hover {
+  background: rgba(189, 147, 249, 0.15);
+  border-color: #bd93f9;
+}
+
+.moduleButton.active {
+  background: #bd93f9;
+  border-color: #fff;
+}
+
+.moduleID {
+  font-size: 0.6rem;
+  color: #bd93f9;
+  font-weight: 900;
+}
+
+.moduleButton.active .moduleID {
+  color: #000;
+}
+
+.moduleName {
+  font-size: 1rem;
+  color: #fff;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.moduleButton.active .moduleName {
+  color: #000;
+}
+
+/* Main Matrix Area */
+.mainDisplay {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(189, 147, 249, 0.2);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 500px;
+}
+
+.skillsMatrix {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  padding: 2rem;
+}
+
+.skillEntry {
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.1);
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.skillTag:hover {
-  background: linear-gradient(45deg, rgba(138, 43, 226, 0.4), rgba(0, 255, 157, 0.4));
-  transform: translateY(-2px);
+.skillEntry:hover,
+.skillEntry.active {
+  color: #bd93f9;
+  transform: translateX(20px);
+}
+
+/* Detail Panel */
+.detailPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  background: rgba(189, 147, 249, 0.05);
+  border: 1px solid rgba(189, 147, 249, 0.3);
+  border-radius: 0.5rem;
+}
+
+.specHeader {
+  border-bottom: 2px solid #bd93f9;
+  padding-bottom: 1rem;
+}
+
+.specTitle {
+  font-size: 0.7rem;
+  font-weight: 900;
+  color: #bd93f9;
+  text-transform: uppercase;
+}
+
+.specDesc {
+  font-size: 0.9rem;
+  color: #fff;
+  opacity: 0.7;
+  line-height: 1.5;
+}
+
+.specValue {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.toolItem {
+  font-size: 0.8rem;
+  color: #bd93f9;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(189, 147, 249, 0.2);
+  padding: 0.5rem 0;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .sidebar {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .moduleButton {
+    min-width: 250px;
+  }
 }
