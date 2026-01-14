@@ -74,7 +74,14 @@ const SectionTransition = () => {
             ease: "power2.out"
         }, 0.6);
 
-        // 3. Brightness pulse
+        // 3. Fade out video immediately after flash peak
+        tl.to(videoWrapperRef.current, {
+            opacity: 0,
+            duration: 0.2,
+            ease: "power2.inOut"
+        }, 0.6);
+
+        // 4. Brightness pulse
         tl.to(videoWrapperRef.current, {
             filter: "brightness(2) contrast(1.5) saturate(2)",
             duration: 0.2,

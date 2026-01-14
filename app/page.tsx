@@ -76,6 +76,7 @@ export default function Home() {
           <HeroSection />
           <SectionTransition />
           <ProjectsSection />
+          <SkillsSection />
           {/* <ClickSpark
             sparkColor='#fff'
             sparkSize={10}
