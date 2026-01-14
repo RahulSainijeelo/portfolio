@@ -75,7 +75,7 @@ interface FrameData {
 const framesData: FrameData[] = [
   {
     id: 'frame-1',
-    text: 'I am a Rahul Saini.',
+    text: 'I am Rahul Saini.',
     bgPhase: 'minimal',
     animatedCompo: <Bgs />,
     componentSide: 'background'
