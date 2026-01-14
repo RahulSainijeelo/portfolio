@@ -13,6 +13,7 @@ import Galaxy from '@/components/Galaxy';
 import PixelBlast from '@/components/PixelBlast';
 import Particles from '@/components/Particles';
 import ClickSpark from '@/components/ClickSpark';
+import SectionTransition from '@/components/SectionTransition';
 const OtherComponent = () => {
   return (
     <div style={{ width: '100%', height: '600px', position: 'relative' }}>
@@ -73,6 +74,7 @@ export default function Home() {
         }}>
           <Header logoText="RAHUL SAINI" />
           <HeroSection />
+          <SectionTransition />
           <ProjectsSection />
           {/* <ClickSpark
             sparkColor='#fff'

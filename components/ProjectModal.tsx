@@ -216,7 +216,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose })
                                         >
                                             {project.title}
                                         </motion.h1>
-                                        <motion.div
+                                        {/* <motion.div
                                             initial={{ y: 20, opacity: 0 }}
                                             animate={{ y: 0, opacity: 1 }}
                                             transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -224,7 +224,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose })
                                         >
                                             <span className={styles.statusDot} />
                                             PROJECT_LIVE
-                                        </motion.div>
+                                        </motion.div> */}
                                     </div>
                                 </div>
 
