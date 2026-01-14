@@ -32,7 +32,7 @@ interface ContributionStats {
     longestStreak: number;
 }
 
-const USERNAME = "rahulsainijeelo";
+const USERNAME = "RahulSainijeelo";
 
 export default function GithubSection() {
     const [repos, setRepos] = useState<Repo[]>([]);
@@ -42,46 +42,51 @@ export default function GithubSection() {
     const sectionRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
-        async function fetchData() {
+        async function fetchRepos() {
             try {
-                const [reposRes, userRes, contribRes] = await Promise.all([
-                    fetch(`https://api.github.com/users/${USERNAME}/repos?sort=stars&per_page=6`),
-                    fetch(`https://api.github.com/users/${USERNAME}`),
-                    fetch(`https://github-contributions-api.deno.dev/${USERNAME}.json`)
-                ]);
-
-                const reposData = await reposRes.json();
-                const userData = await userRes.json();
-                const contribData = await contribRes.json();
-
-                if (Array.isArray(reposData)) {
-                    setRepos(reposData);
-                }
-
-                setStats({
-                    public_repos: userData.public_repos,
-                    followers: userData.followers,
-                    following: userData.following,
-                    total_stars: Array.isArray(reposData) ? reposData.reduce((acc: number, repo: Repo) => acc + repo.stargazers_count, 0) : 0
-                });
-
-                if (contribData && (contribData.total || contribData.streak)) {
-                    setContributions({
-                        total: contribData.total?.lastYear || 0,
-                        currentStreak: contribData.streak?.current || 0,
-                        longestStreak: contribData.streak?.best || 0
-                    });
-                }
-            } catch (error) {
-                console.error("GitHub Fetch Error:", error);
-            } finally {
-                setLoading(false);
-            }
+                const res = await fetch(`https://api.github.com/users/${USERNAME}/repos?sort=stars&per_page=6`);
+                const data = await res.json();
+                if (Array.isArray(data)) setRepos(data);
+            } catch (e) { console.error("Repo Fetch Error", e); }
         }
 
-        fetchData();
+        async function fetchUser() {
+            try {
+                const res = await fetch(`https://api.github.com/users/${USERNAME}`);
+                const data = await res.json();
+                setStats({
+                    public_repos: data.public_repos,
+                    followers: data.followers,
+                    following: data.following,
+                    total_stars: 0 // Will be updated by repos
+                });
+            } catch (e) { console.error("User Fetch Error", e); }
+        }
+
+        async function fetchContribs() {
+            try {
+                const res = await fetch(`https://github-contributions-api.deno.dev/${USERNAME}.json`);
+                const data = await res.json();
+                if (data && (data.total || data.streak)) {
+                    setContributions({
+                        total: data.total?.lastYear || 0,
+                        currentStreak: data.streak?.current || 0,
+                        longestStreak: data.streak?.best || 0
+                    });
+                }
+            } catch (e) { console.error("Contrib Fetch Error", e); }
+        }
+
+        async function init() {
+            setLoading(true);
+            await Promise.allSettled([fetchRepos(), fetchUser(), fetchContribs()]);
+            setLoading(false);
+        }
+
+        init();
     }, []);
 
+    /*
     useGSAP(() => {
         if (loading || !sectionRef.current) return;
 
@@ -115,6 +120,7 @@ export default function GithubSection() {
             }, "-=0.4");
 
     }, [loading]);
+    */
 
     return (
         <section ref={sectionRef} id="github" className={styles.githubSection}>
