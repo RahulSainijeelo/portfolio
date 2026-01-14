@@ -14,6 +14,7 @@ import PixelBlast from '@/components/PixelBlast';
 import Particles from '@/components/Particles';
 import ClickSpark from '@/components/ClickSpark';
 import SectionTransition from '@/components/SectionTransition';
+import GithubSection from '@/components/GithubSection';
 const OtherComponent = () => {
   return (
     <div style={{ width: '100%', height: '600px', position: 'relative' }}>
@@ -90,6 +91,7 @@ export default function Home() {
             <OtherComponent />
 
           </ClickSpark> */}
+          <GithubSection />
           <Footer />
         </ReactLenis>
       </div>
