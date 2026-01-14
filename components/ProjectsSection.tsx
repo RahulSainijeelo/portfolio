@@ -47,8 +47,8 @@ const ProjectsSection = () => {
 
     const openModal = (project: Project) => {
         // Play game-like sound on click
-        const audio = new Audio("https://cdn.pixabay.com/audio/2022/03/15/audio_5072775f0f.mp3");
-        audio.volume = 0.5;
+        const audio = new Audio("/sounds/open2.mp3");
+        audio.volume = 0.7;
         audio.play().catch(() => { });
 
         setSelectedProject(project);
@@ -137,7 +137,7 @@ const ProjectsSection = () => {
             >
                 <div className={styles.introSection}>
                     <div className={styles.introContent}>
-                        <h1 className={styles.mainTitle}>SELECTED WORKS</h1>
+                        <h1 className={styles.mainTitle}>SELECTED PROJECTS</h1>
                         <p className={styles.mainSubTitle}>
                             A CURATED COLLECTION OF DIGITAL EXPERIENCES AND INNOVATIVE SOLUTIONS CRAFTED TO PUSH THE BOUNDARIES OF MODERN WEB DEVELOPMENT.
                         </p>

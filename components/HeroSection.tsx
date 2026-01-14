@@ -223,13 +223,12 @@ const HeroSection: React.FC = () => {
       scrollTrigger: {
         trigger: containerRef.current,
         pin: true,
-        scrub: 0.8, // More responsive feel
+        scrub: 0.8,
         start: 'top top',
         end: `+=${scrollDistance}%`,
         onUpdate: (self) => {
           const progress = self.progress;
           const index = Math.round(progress * (totalFrames - 1));
-          // Use functional update to avoid stale closure dependency on activeFrameIndex
           setActiveFrameIndex(prev => {
             if (prev !== index) return index;
             return prev;

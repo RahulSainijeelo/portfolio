@@ -19,7 +19,7 @@
 }
 
 .mainTitle {
-    font-size: clamp(4rem, 12vw, 15rem);
+    font-size: clamp(2rem, 11vw, 12rem);
     font-weight: 900;
     line-height: 0.9;
     color: #fff;

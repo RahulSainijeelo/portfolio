@@ -49,34 +49,10 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose })
             lenis?.stop();
             document.body.style.overflow = 'hidden';
 
-            // Create audio instance - Using a tech-inspired "mission start" sound
-            audioInstanceRef.current = new Audio("https://cdn.pixabay.com/audio/2022/03/10/audio_c330f69165.mp3");
-            audioInstanceRef.current.volume = 0.3;
-
-            const playSound = () => {
-                if (audioInstanceRef.current) {
-                    audioInstanceRef.current.currentTime = 0;
-                    audioInstanceRef.current.play().catch(() => {
-                        console.log("Autoplay blocked, waiting for interaction");
-                    });
-                }
-            };
-
-            const timer = setTimeout(playSound, 200);
-            return () => {
-                clearTimeout(timer);
-                if (audioInstanceRef.current) {
-                    audioInstanceRef.current.pause();
-                    audioInstanceRef.current = null;
-                }
-            }
+            // Removed open sound logic as requested
         } else {
             lenis?.start();
             document.body.style.overflow = 'unset';
-            if (audioInstanceRef.current) {
-                audioInstanceRef.current.pause();
-                audioInstanceRef.current = null;
-            }
         }
     }, [isOpen, lenis]);
 
@@ -129,7 +105,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose })
 
     const handleClose = () => {
         // Play exit sound
-        const audio = new Audio("https://cdn.pixabay.com/audio/2022/01/18/audio_d0c6ff1300.mp3");
+        const audio = new Audio("/sounds/pop.mp3");
         audio.volume = 0.4;
         audio.play().catch(() => { });
         onClose();
@@ -167,14 +143,23 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose })
                     </AnimatePresence>
 
                     <motion.div
-                        initial={{ opacity: 0, scale: 1.1, filter: 'blur(20px)' }}
+                        initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{
                             opacity: 1,
                             scale: 1,
-                            filter: 'blur(0px)',
-                            transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
+                            y: 0,
+                            transition: {
+                                duration: 0.8,
+                                ease: [0.16, 1, 0.3, 1],
+                                staggerChildren: 0.1
+                            }
                         }}
-                        exit={{ opacity: 0, scale: 1.1, filter: 'blur(20px)' }}
+                        exit={{
+                            opacity: 0,
+                            scale: 0.95,
+                            y: 20,
+                            transition: { duration: 0.4, ease: "easeIn" }
+                        }}
                         className={styles.modal}
                         onClick={(e) => {
                             e.stopPropagation();
@@ -188,7 +173,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose })
                             <div className={styles.cornerL} />
 
                             <button className={styles.closeButton} onClick={handleClose}>
-                                <span className={styles.closeText}>EXIT_MISSION</span>
+                                <span className={styles.closeText}>CLOSE</span>
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <line x1="18" y1="6" x2="6" y2="18"></line>
                                     <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -224,21 +209,21 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose })
 
                                     <div className={styles.heroInfo}>
                                         <motion.h1
-                                            initial={{ x: -50, opacity: 0 }}
-                                            animate={{ x: 0, opacity: 1 }}
-                                            transition={{ delay: 0.3 }}
+                                            initial={{ y: 30, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                                             className={styles.title}
                                         >
                                             {project.title}
                                         </motion.h1>
                                         <motion.div
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            transition={{ delay: 0.5 }}
+                                            initial={{ y: 20, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                            transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                                             className={styles.statusBadge}
                                         >
                                             <span className={styles.statusDot} />
-                                            MISSION_ACTIVE
+                                            PROJECT_LIVE
                                         </motion.div>
                                     </div>
                                 </div>
@@ -280,7 +265,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose })
 
                                     <div className={styles.actionFooter}>
                                         <a href={project.link} target="_blank" rel="noopener noreferrer" className={styles.gameButton}>
-                                            INITIALIZE_LINK
+                                            VIEW_PROJECT
                                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                                                 <polyline points="15 3 21 3 21 9"></polyline>
