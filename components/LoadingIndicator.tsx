@@ -19,7 +19,7 @@ const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({ progress }) => {
     if (circleRef.current) {
       const circumference = 2 * Math.PI * 20; // radius = 20
       const strokeDashoffset = circumference - (progress / 100) * circumference;
-      
+
       animate(circleRef.current, {
         strokeDashoffset: strokeDashoffset,
         duration: 500,
@@ -56,7 +56,7 @@ const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({ progress }) => {
           }}
         />
       </svg>
-      <span ref={progressRef} className={styles.progressText}>0</span>%
+      {/* <span ref={progressRef} className={styles.progressText}>0</span>% */}
     </div>
   );
 };

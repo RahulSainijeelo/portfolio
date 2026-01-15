@@ -1,93 +1,48 @@
 import { useEffect, useRef, useState } from 'react';
-import { animate } from 'animejs';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 import LoadingIndicator from './LoadingIndicator';
 import { GreetingScreenProps } from '../types';
 import styles from '@/styles/greeting.module.css';
 
-const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
+const USERNAME = "RahulSainijeelo";
+
+// CONFIGURATION: Adjust these to change the speed of the greeting sequence
+const GREETING_SPEED = {
+  STAY_DURATION: 0.1,
+  IN_DURATION: 0.1,
+  OUT_DURATION: 0.1,
+  PAUSE_BETWEEN: 15
+};
+
+export default function GreetingScreen({ onComplete }: GreetingScreenProps) {
   const textRef = useRef<HTMLHeadingElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [currentText, setCurrentText] = useState<string>('Hi,');
+  const [currentText, setCurrentText] = useState<string>('Hello');
   const [loadingProgress, setLoadingProgress] = useState<number>(0);
-  const [animationComplete, setAnimationComplete] = useState<boolean>(false);
   const [assetsLoaded, setAssetsLoaded] = useState<boolean>(false);
+  const [sequenceComplete, setSequenceComplete] = useState<boolean>(false);
 
-  const greetingTexts: string[] = [
-    'Hi',
-    'Nice to meet You',
-    // 'Let\'s create something amazing'
-  ];
-
+  // Scroll Lock implementation
   useEffect(() => {
-    // Start both processes simultaneously
-    startAnimationSequence();
-    startAssetPreloading();
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
   }, []);
 
-  // Check if both animation and assets are complete
+  const greetings = [
+    "Hello",
+    "Namaste",
+    "Ciao",
+    "Konnichiwa",
+    "Nǐ hǎo",
+  ];
+
+  const [greetingIndex, setGreetingIndex] = useState(0);
+
+  // Asset preloading logic (keeping existing asset list)
   useEffect(() => {
-    if (animationComplete && assetsLoaded) {
-      hideGreetingScreen();
-    }
-  }, [animationComplete, assetsLoaded]);
-
-  const startAnimationSequence = async (): Promise<void> => {
-    if (!textRef.current) return;
-
-    // Wait for initial display
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Run through all text sequences
-    for (let i = 1; i < greetingTexts.length; i++) {
-      await animateTextTransition(i);
-    }
-
-    // Animation sequence complete
-    setAnimationComplete(true);
-  };
-
-  const animateTextTransition = (index: number): Promise<void> => {
-    return new Promise((resolve) => {
-      if (!textRef.current) {
-        resolve();
-        return;
-      }
-
-      // Fade out current text
-      animate(textRef.current, {
-        opacity: 0,
-        y: -20,
-        duration: 800,
-        ease: 'inOut(2)',
-        onComplete: () => {
-          // Update text content
-          setCurrentText(greetingTexts[index]);
-
-          // Fade in new text
-          if (!textRef.current) {
-            resolve();
-            return;
-          }
-
-          animate(textRef.current, {
-            opacity: 1,
-            y: 0,
-            duration: 800,
-            ease: 'inOut(2)',
-            delay: 200,
-            onComplete: () => {
-              // Wait before next transition or completion
-              setTimeout(() => {
-                resolve();
-              }, 800);
-            }
-          });
-        }
-      });
-    });
-  };
-
-  const startAssetPreloading = async (): Promise<void> => {
     const projectImages = [
       'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80',
       'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80',
@@ -99,72 +54,95 @@ const GreetingScreen: React.FC<GreetingScreenProps> = ({ onComplete }) => {
       'https://images.unsplash.com/photo-1522252234503-e356532cafd5?w=800&q=80',
     ];
 
-    const assetsToLoad: string[] = [
-      ...projectImages,
-      // Add more critical assets here if needed
-    ];
-
     let loaded = 0;
-    const total = assetsToLoad.length;
+    const total = projectImages.length;
+    const timeout = setTimeout(() => setAssetsLoaded(true), 5000);
 
-    // Failsafe: if assets take more than 5s, mark as loaded anyway
-    const timeoutPromise = new Promise(resolve => setTimeout(resolve, 5000));
-
-    const loadPromises = assetsToLoad.map((asset: string) => {
-      return new Promise<void>((resolve) => {
-        const img = new Image();
-        img.onload = () => {
-          loaded++;
-          setLoadingProgress((loaded / total) * 100);
-          resolve();
-        };
-        img.onerror = () => {
-          loaded++;
-          setLoadingProgress((loaded / total) * 100);
-          resolve();
-        };
-        img.src = asset;
-      });
+    projectImages.forEach(src => {
+      const img = new Image();
+      img.onload = img.onerror = () => {
+        loaded++;
+        setLoadingProgress((loaded / total) * 100);
+        if (loaded === total) {
+          clearTimeout(timeout);
+          setAssetsLoaded(true);
+        }
+      };
+      img.src = src;
     });
 
-    await Promise.race([
-      Promise.all(loadPromises),
-      timeoutPromise
-    ]);
+    return () => clearTimeout(timeout);
+  }, []);
 
-    setAssetsLoaded(true);
-  };
+  // Kinetic Typography Animation logic
+  useGSAP(() => {
+    if (sequenceComplete) return;
 
-  const hideGreetingScreen = (): void => {
-    if (!containerRef.current) {
-      onComplete();
-      return;
-    }
+    const chars = textRef.current?.querySelectorAll(`.${styles.char}`);
+    if (!chars || chars.length === 0) return;
 
-    animate(containerRef.current, {
-      opacity: 0,
-      scale: 1.05,
-      duration: 600,
-      ease: 'inOut(2)',
+    const tl = gsap.timeline({
       onComplete: () => {
-        onComplete();
+        if (greetingIndex < greetings.length - 1) {
+          setTimeout(() => {
+            setGreetingIndex(prev => prev + 1);
+            setCurrentText(greetings[greetingIndex + 1]);
+          }, GREETING_SPEED.PAUSE_BETWEEN);
+        } else {
+          setSequenceComplete(true);
+        }
       }
     });
-  };
+
+    tl.to(chars, {
+      y: 0,
+      stagger: 0.02,
+      duration: GREETING_SPEED.IN_DURATION,
+      ease: "power4.out"
+    })
+      .to(chars, {
+        y: "-110%",
+        stagger: 0.01,
+        duration: GREETING_SPEED.OUT_DURATION,
+        ease: "power4.in",
+        delay: GREETING_SPEED.STAY_DURATION
+      });
+
+  }, [greetingIndex, sequenceComplete]);
+
+  // Final exit transition
+  useEffect(() => {
+    if (sequenceComplete && assetsLoaded) {
+      gsap.to(containerRef.current, {
+        opacity: 0,
+        y: -50,
+        duration: 0.8,
+        ease: "power3.inOut",
+        onComplete: onComplete
+      });
+    }
+  }, [sequenceComplete, assetsLoaded, onComplete]);
 
   return (
     <div ref={containerRef} className={styles.greetingContainer}>
+      <div className={styles.aura} />
+
       <div className={styles.content}>
         <h1 ref={textRef} className={styles.greetingText}>
-          {currentText}
+          {currentText.split('').map((char, i) => (
+            <span key={`${greetingIndex}-${i}`} className={styles.char}>
+              {char === ' ' ? '\u00A0' : char}
+            </span>
+          ))}
         </h1>
       </div>
 
       <div className={styles.indicatorContainer}>
-        <LoadingIndicator progress={loadingProgress} />
+        <div className={styles.loadingWrapper}>
+          <div className={styles.progressVal}>{Math.round(loadingProgress)}%</div>
+          <LoadingIndicator progress={loadingProgress} />
+        </div>
       </div>
     </div>
   );
 };
-
-export default GreetingScreen;
