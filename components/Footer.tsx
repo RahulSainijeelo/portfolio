@@ -47,7 +47,7 @@ export default function Footer() {
               <span>© COPYRIGHT 2025 RAHUL SAINI</span>
               <span>ALL RIGHT RESERVED</span>
             </div>
-            
+
             <div className={styles.location}>
               <span>NEW DELHI</span>
               <span>INDIA</span>
