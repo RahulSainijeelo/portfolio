@@ -10,7 +10,7 @@ import ProjectModal from './ProjectModal';
 import FollowCursor from './FollowCursor';
 import { motion, AnimatePresence } from 'motion/react';
 import ClickSpark from './ClickSpark';
-
+import SplitText from './SplitText';
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 interface Project {
