@@ -5,7 +5,7 @@
         "description": "A comprehensive administrative dashboard built with React and TailwindCSS. Features real-time data visualization, user management, and customizable widgets.",
         "longDescription": "This React Dashboard project showcases a modern approach to admin interfaces. It utilizes a modular architecture, leveraging React hooks and Context API for state management. Key features include a multi-layered sidebar, dynamic data tables with filtering and sorting, and a fully responsive layout optimized for all devices.",
         "thumbnail": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80",
-        "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
         "tags": [
             "React",
             "GSAP",
