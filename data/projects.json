@@ -5,7 +5,7 @@
         "description": "A comprehensive administrative dashboard built with React and TailwindCSS. Features real-time data visualization, user management, and customizable widgets.",
         "longDescription": "This React Dashboard project showcases a modern approach to admin interfaces. It utilizes a modular architecture, leveraging React hooks and Context API for state management. Key features include a multi-layered sidebar, dynamic data tables with filtering and sorting, and a fully responsive layout optimized for all devices.",
         "thumbnail": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80",
-        "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "videoUrl": "https://pub-88542caeb82a4635aa980b4aeb205cb5.r2.dev/portfolio/only.mkv",
         "tags": [
             "React",
             "GSAP",
@@ -43,7 +43,7 @@
         "description": "Scalable RESTful API built with Node.js and Express, integrated with MongoDB. Optimized for high performance and secure data handling.",
         "longDescription": "The Cloud API Services project focuses on providing a robust and scalable backend for modern web applications. Built on Node.js and Express.js, it handles millions of requests with ease. It features comprehensive API documentation using Swagger, JWT-based authentication for secure access, and integration with MongoDB.",
         "thumbnail": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-man-working-on-his-computer-at-night-42261-large.mp4",
+        "videoUrl": "https://pub-88542caeb82a4635aa980b4aeb205cb5.r2.dev/portfolio/kurukshetra.mkv",
         "tags": [
             "Node.js",
             "Express",
@@ -81,7 +81,7 @@
         "description": "A sleek and intuitive mobile interface for financial management. Focuses on user experience and visual clarity.",
         "longDescription": "The Fintech App UI project is a deep dive into mobile UX design and implementation. Using React Native, I've created a series of interactive and visually stunning screens for money management. The app includes complex animation patterns using Reanimated.",
         "thumbnail": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-top-view-of-a-smartphone-with-a-loading-screen-42353-large.mp4",
+        "videoUrl": "https://pub-88542caeb82a4635aa980b4aeb205cb5.r2.dev/portfolio/con-soul.mkv",
         "tags": [
             "React Native",
             "UI/UX",
@@ -119,7 +119,7 @@
         "description": "An interactive hub for AI model management and data processing, featuring advanced visualization and real-time interaction.",
         "longDescription": "The AI Platform Hub is designed for data scientists and AI engineers to manage their models efficiently. It integrates with various AI services to provide a centralized dashboard for monitoring performance.",
         "thumbnail": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
-        "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-hands-of-a-man-working-on-a-computer-42345-large.mp4",
+        "videoUrl": "https://pub-88542caeb82a4635aa980b4aeb205cb5.r2.dev/portfolio/somu.mkv",
         "tags": [
             "AI",
             "Visualization",
@@ -149,6 +149,46 @@
             "challenges": "Visualizing high-dimensional AI model weights in a way that remains intuitive and actionable for developers.",
             "solutions": "Developed custom 3D visualization components using Three.js and D3-force simulations to represent neural network structures.",
             "outcome": "Reduced model debugging time for end-users by over 50% and provided a unique, visual-first approach to model management."
+        }
+    },
+    {
+        "id": 5,
+        "title": "AI Platform Hubs",
+        "description": "An interactive hub for AI model management and data processing, featuring advanced visualization and real-time interaction.",
+        "longDescription": "The AI Platform Hub is designed for data scientists and AI engineers to manage their models efficiently. It integrates with various AI services to provide a centralized dashboard for monitoring performance.",
+        "thumbnail": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+        "videoUrl": "https://pub-88542caeb82a4635aa980b4aeb205cb5.r2.dev/portfolio/ticker.mkv",
+        "tags": [
+            "AI",
+            "Visualization",
+            "Next.js",
+            "D3.js"
+        ],
+        "stack": [
+            {
+                "name": "Next.js",
+                "logo": "https://cdn.simpleicons.org/nextdotjs/FFFFFF"
+            },
+            {
+                "name": "Python",
+                "logo": "https://cdn.simpleicons.org/python/3776AB"
+            },
+            {
+                "name": "PyTorch",
+                "logo": "https://cdn.simpleicons.org/pytorch/EE4C2C"
+            },
+            {
+                "name": "D3.js",
+                "logo": "https://cdn.simpleicons.org/d3dotjs/F9A03C"
+            }
+        ],
+        "link": "https://github.com",
+        "sections": {
+            "challenges": "Visualizing high-dimensional AI model weights in a way that remains intuitive and actionable for developers.",
+            "solutions": "Developed custom 3D visualization components using Three.js and D3-force simulations to represent neural network structures.",
+            "outcome": "Reduced model debugging time for end-users by over 50% and provided a unique, visual-first approach to model management.",
+            "something": "asdfasf."
+            
         }
     }
 ]

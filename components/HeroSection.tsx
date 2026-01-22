@@ -21,7 +21,7 @@ import { PixelatedCanvas } from './ui/pixelated-canvas';
 import VariableProximity from './VariableProximity';
 import ClickSpark from './ClickSpark';
 import Particles from './Particles';
-
+import wolf from "../app/wolf.jpg"
 // Register plugins
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -37,7 +37,7 @@ const Bgs = () => {
 
   return (
     <PixelatedCanvas
-      src="https://assets.aceternity.com/manu-red.png"
+      src={wolf.src}
       width={currentWidth}
       height={currentHeight}
       cellSize={isDesktop ? 4 : 3}
