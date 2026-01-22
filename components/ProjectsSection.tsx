@@ -8,7 +8,6 @@ import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import projectsData from '@/data/projects.json';
 import ProjectModal from './ProjectModal';
 import FollowCursor from './FollowCursor';
-import { motion, AnimatePresence } from 'motion/react';
 import ClickSpark from './ClickSpark';
 import SplitText from './SplitText';
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -26,6 +25,7 @@ interface Project {
     sections?: {
         challenges: string;
         solutions: string;
+        features: string;
         outcome: string;
     };
 }
@@ -126,7 +126,7 @@ const ProjectsSection = () => {
     }, { scope: containerRef });
 
     return (
-        <div ref={containerRef} className={styles.container}>
+        <section ref={containerRef} id="projects" className={styles.container}>
             <ClickSpark
                 sparkColor='#fff'
                 sparkSize={10}
@@ -137,9 +137,9 @@ const ProjectsSection = () => {
             >
                 <div className={styles.introSection}>
                     <div className={styles.introContent}>
-                        <h1 className={styles.mainTitle}>SELECTED PROJECTS</h1>
+                        <h2 className={styles.mainTitle}>SELECTED PROJECTS</h2>
                         <p className={styles.mainSubTitle}>
-                            A CURATED COLLECTION OF DIGITAL EXPERIENCES AND INNOVATIVE SOLUTIONS CRAFTED TO PUSH THE BOUNDARIES OF MODERN WEB DEVELOPMENT.
+                         What I’ve been up to lately.
                         </p>
                     </div>
                 </div>
@@ -222,7 +222,7 @@ const ProjectsSection = () => {
                 />
 
             </ClickSpark>
-        </div>
+        </section>
     );
 };
 

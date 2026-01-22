@@ -5,30 +5,19 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import styles from '@/styles/hero.module.css';
-import UseTime from './animation/UseTime';
-import Cube from './Cube';
-import PathDrawing from './animation/PathDrawing';
-import MotionPath from './animation/MotionPath';
-import DecryptedText from "@/components/DecryptedText"
 import BlurText from "@/components/BlurText"
 import SplitText from './SplitText';
-import Orb from './Orb';
-import Galaxy from "./Galaxy"
 import useWindowSize from '@/hooks/useWindowSize';
 import { BackgroundLines } from './ui/background-lines';
-import { HoleBackground } from './animate-ui/components/backgrounds/hole';
-import { PixelatedCanvas } from './ui/pixelated-canvas';
-import VariableProximity from './VariableProximity';
 import ClickSpark from './ClickSpark';
-import Particles from './Particles';
+import { HoleBackground } from './animate-ui/components/backgrounds/hole';
 
-// Register plugins
+
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const Bgs = () => {
   const { width, height } = useWindowSize();
 
-  // Handle SSR and initial load
   if (typeof window === 'undefined') return null;
 
   const currentWidth = width || window.innerWidth;
@@ -36,29 +25,9 @@ const Bgs = () => {
   const isDesktop = currentWidth > 1024;
 
   return (
-    <PixelatedCanvas
-      src="https://assets.aceternity.com/manu-red.png"
-      width={currentWidth}
-      height={currentHeight}
-      cellSize={isDesktop ? 4 : 3}
-      dotScale={0.7}
-      shape="square"
-      backgroundColor="#000000"
-      dropoutStrength={0.4}
-      interactive
-      distortionStrength={3}
-      distortionRadius={80}
-      distortionMode="swirl"
-      followSpeed={0.2}
-      jitterStrength={4}
-      jitterSpeed={4}
-      sampleAverage
-      tintColor="#FFFFFF"
-      tintStrength={0.2}
-      objectFit={isDesktop ? "contain" : "cover"}
-      horizontalAlign={isDesktop ? "right" : "center"}
-      className="rounded-xl border border-neutral-800 shadow-lg"
-    />
+    <div className='flex absolute'>
+      <HoleBackground />
+    </div>
   );
 };
 
@@ -158,8 +127,10 @@ const HeroFrame = React.memo(({ frame, index, isActive, frameRef }: {
           <div className={styles.frameTextOverlay}>
             {frame.fancy ? (
               <div className={styles.frameTitle}>{frame.fancy}</div>
-            ) : (
+            ) : index === 0 ? (
               <h1 className={styles.frameTitle}>{frame.text}</h1>
+            ) : (
+              <h2 className={styles.frameTitle}>{frame.text}</h2>
             )}
             {frame.subtext && <p className={styles.frameSubtext}>{frame.subtext}</p>}
           </div>
@@ -172,8 +143,10 @@ const HeroFrame = React.memo(({ frame, index, isActive, frameRef }: {
           <div className={styles.frameTextContainer}>
             {frame.fancy ? (
               <div className={styles.frameTitle}>{frame.fancy}</div>
-            ) : (
+            ) : index === 0 ? (
               <h1 className={styles.frameTitle}>{frame.text}</h1>
+            ) : (
+              <h2 className={styles.frameTitle}>{frame.text}</h2>
             )}
             {frame.subtext && <p className={styles.frameSubtext}>{frame.subtext}</p>}
           </div>
@@ -294,6 +267,7 @@ const HeroSection: React.FC = () => {
   return (
     <div
       ref={containerRef}
+      id="home"
       className={styles.heroContainer}
     >
       <ClickSpark

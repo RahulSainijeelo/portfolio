@@ -10,6 +10,7 @@ import ProjectsSection from '@/components/ProjectsSection';
 import SectionTransition from '@/components/SectionTransition';
 import GithubSection from '@/components/GithubSection';
 
+
 export default function Home() {
   const [showGreeting, setShowGreeting] = useState<boolean>(true);
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);

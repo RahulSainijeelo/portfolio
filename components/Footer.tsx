@@ -2,7 +2,7 @@ import styles from '@/styles/footer.module.css';
 
 export default function Footer() {
   return (
-    <footer className={styles.footer}>
+    <footer id="contact" className={styles.footer}>
       <div className={styles.footerContent}>
         {/* Main CTA Section */}
         {/* <div className={styles.ctaSection}>
@@ -18,7 +18,9 @@ export default function Footer() {
             <h3 className={styles.columnTitle}>GO DEEPER</h3>
             <div className={styles.linkDivider}></div>
             <nav className={styles.linksList}>
-              <a href="#about" className={styles.link}>About</a>
+              <a href="#projects" className={styles.link}>Projects</a>
+              <a href="#skills" className={styles.link}>Skills</a>
+              <a href="#portfolio" className={styles.link}>Portfolio</a>
             </nav>
           </div>
 

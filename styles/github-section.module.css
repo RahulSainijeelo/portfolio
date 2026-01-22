@@ -50,7 +50,7 @@
 }
 
 .header::before {
-    content: 'INTEL_UPLINK_ESTABLISHED';
+    content: 'GITHUB_UPLINK_ESTABLISHED';
     position: absolute;
     top: -10px;
     left: 20px;
@@ -299,6 +299,330 @@
     }
 }
 
+/* Profile Card */
+.profileContainer {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.profileCard {
+    background: rgba(0, 255, 255, 0.03);
+    border: 1px solid rgba(0, 255, 255, 0.15);
+    padding: 2rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.avatarWrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid #00ffff;
+    z-index: 2;
+    position: relative;
+}
+
+.avatarRing {
+    position: absolute;
+    inset: -5px;
+    border: 1px dashed rgba(0, 255, 255, 0.5);
+    border-radius: 50%;
+    animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.profileInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.profileStats {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.miniStat {
+    display: flex;
+    flex-direction: column;
+}
+
+.miniStatValue {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: #fff;
+}
+
+.miniStatLabel {
+    font-size: 0.6rem;
+    color: #00ffff;
+    letter-spacing: 0.1em;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.nameRow {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+}
+
+.userName {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #fff;
+}
+
+.userLogin {
+    font-size: 0.9rem;
+    color: #00ffff;
+    opacity: 0.7;
+}
+
+.userBio {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+    max-width: 500px;
+}
+
+.profileActions {
+    margin-top: 1rem;
+}
+
+.followButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #00ffff;
+    color: #000;
+    padding: 0.6rem 1.5rem;
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    transition: all 0.3s ease;
+}
+
+.followButton:hover {
+    background: transparent;
+    color: #00ffff;
+    box-shadow: inset 0 0 0 1px #00ffff, 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+/* Streak Cards */
+.streakGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.streakCard {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(0, 255, 255, 0.1);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+}
+
+.streakIcon {
+    font-size: 2rem;
+}
+
+.streakData {
+    display: flex;
+    flex-direction: column;
+}
+
+.streakValue {
+    font-size: 2rem;
+    font-weight: 950;
+    color: #fff;
+    line-height: 1;
+}
+
+.streakLabel {
+    font-size: 0.6rem;
+    color: #00ffff;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+}
+
+.currentStreak { border-left: 3px solid #ffaa00; }
+.maxStreak { border-left: 3px solid #00ffff; }
+
+/* Contribution Graph */
+.graphContainer {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(0, 255, 255, 0.1);
+    padding: 2rem;
+    margin-bottom: 3rem;
+    border-radius: 4px;
+}
+
+.graphHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.graphTitle {
+    font-size: 0.75rem;
+    color: #00ffff;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+}
+
+.graphLegend {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    opacity: 0.6;
+}
+
+.legendScale {
+    display: flex;
+    gap: 4px;
+}
+
+.legendScale div {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+}
+
+.calendarWrapper {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 255, 255, 0.2) transparent;
+}
+
+.calendarWrapper::-webkit-scrollbar {
+    height: 4px;
+}
+
+.calendarWrapper::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+.calendar {
+    display: flex;
+    gap: 4px;
+    min-width: max-content;
+}
+
+.week {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.day {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.05);
+    transition: transform 0.2s ease;
+}
+
+.day:hover {
+    transform: scale(1.2);
+    z-index: 10;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.level0 { background: rgba(255, 255, 255, 0.05); }
+.level1 { background: #004d4d; }
+.level2 { background: #008080; }
+.level3 { background: #00b3b3; }
+.level4 { background: #00ffff; box-shadow: 0 0 5px rgba(0, 255, 255, 0.5); }
+
+.monthRow {
+    display: flex;
+    margin-bottom: 0.5rem;
+    height: 1.5rem;
+    position: relative;
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.monthLabel {
+    position: absolute;
+    white-space: nowrap;
+}
+
+.loading {
+    padding: 4rem;
+    text-align: center;
+    color: #00ffff;
+    letter-spacing: 0.5em;
+    font-size: 0.8rem;
+    border: 1px dashed rgba(0, 255, 255, 0.2);
+    background: rgba(0, 255, 255, 0.02);
+}
+
+.calendar {
+    display: flex;
+    gap: 4px;
+    width: max-content;
+}
+
+.week {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.day {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.day.none { background: rgba(255, 255, 255, 0.05); }
+.day.first_quartile { background: rgba(0, 255, 255, 0.2); }
+.day.second_quartile { background: rgba(0, 255, 255, 0.4); }
+.day.third_quartile { background: rgba(0, 255, 255, 0.7); }
+.day.fourth_quartile { background: #00ffff; box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
+
+/* Legend Scale Colors */
+.level0 { background: rgba(255, 255, 255, 0.05); width: 12px; height: 12px; border-radius: 2px; }
+.level1 { background: rgba(0, 255, 255, 0.2); width: 12px; height: 12px; border-radius: 2px; }
+.level2 { background: rgba(0, 255, 255, 0.4); width: 12px; height: 12px; border-radius: 2px; }
+.level3 { background: rgba(0, 255, 255, 0.7); width: 12px; height: 12px; border-radius: 2px; }
+.level4 { background: #00ffff; width: 12px; height: 12px; border-radius: 2px; }
+
+@media (max-width: 1024px) {
+    .profileContainer {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 768px) {
     .header {
         flex-direction: column;
@@ -317,5 +641,18 @@
 
     .reposGrid {
         grid-template-columns: 1fr;
+    }
+
+    .streakGrid {
+        grid-template-columns: 1fr;
+    }
+    
+    .profileCard {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .nameRow {
+        justify-content: center;
     }
 }

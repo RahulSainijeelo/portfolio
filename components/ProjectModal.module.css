@@ -301,28 +301,117 @@
 .mainDesc {
     grid-column: span 2;
     background: rgba(189, 147, 249, 0.05);
-    padding: 3rem;
+    padding: 1.5rem;
     border-radius: 1.5rem;
     border: 1px solid rgba(189, 147, 249, 0.1);
     margin-bottom: 2rem;
 }
 
+.overviewBox {
+    border-left: 4px solid #bd93f9;
+}
+
+.overviewBox .textLine::before { color: #bd93f9; }
+
 .detailBox {
     background: rgba(255, 255, 255, 0.03);
-    padding: 2.5rem;
+    padding: 1.5rem;
     border-radius: 1.5rem;
     border: 1px solid rgba(255, 255, 255, 0.07);
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     display: flex;
     flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.challengesBox {
+    border-left: 4px solid #ff5555;
+    background: linear-gradient(135deg, rgba(255, 85, 85, 0.05) 0%, rgba(255, 255, 255, 0.03) 100%);
+}
+
+.challengesBox .subHeader {
+    color: #ff5555;
+}
+.challengesBox .subHeader::after {
+    background: linear-gradient(to right, rgba(255, 85, 85, 0.3), transparent);
+}
+
+.solutionsBox {
+    border-left: 4px solid #50fa7b;
+    background: linear-gradient(135deg, rgba(80, 250, 123, 0.05) 0%, rgba(255, 255, 255, 0.03) 100%);
+}
+
+.solutionsBox .subHeader {
+    color: #50fa7b;
+}
+.solutionsBox .subHeader::after {
+    background: linear-gradient(to right, rgba(80, 250, 123, 0.3), transparent);
+}
+
+.featuresBox {
+    border-left: 4px solid #8be9fd;
+    background: linear-gradient(135deg, rgba(139, 233, 253, 0.05) 0%, rgba(255, 255, 255, 0.03) 100%);
+}
+
+.featuresBox .subHeader {
+    color: #8be9fd;
+}
+.featuresBox .subHeader::after {
+    background: linear-gradient(to right, rgba(139, 233, 253, 0.3), transparent);
+}
+
+.outcomeBox {
+    border-left: 4px solid #f1fa8c;
+    background: linear-gradient(135deg, rgba(241, 250, 140, 0.05) 0%, rgba(255, 255, 255, 0.03) 100%);
+}
+
+.outcomeBox .subHeader {
+    color: #f1fa8c;
+}
+.outcomeBox .subHeader::after {
+    background: linear-gradient(to right, rgba(241, 250, 140, 0.3), transparent);
 }
 
 .detailBox:hover {
     background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(189, 147, 249, 0.3);
     transform: translateY(-5px);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
+
+.challengesBox:hover { border-color: #ff5555; box-shadow: 0 0 30px rgba(255, 85, 85, 0.15); }
+.solutionsBox:hover { border-color: #50fa7b; box-shadow: 0 0 30px rgba(80, 250, 123, 0.15); }
+.featuresBox:hover { border-color: #8be9fd; box-shadow: 0 0 30px rgba(139, 233, 253, 0.15); }
+.outcomeBox:hover { border-color: #f1fa8c; box-shadow: 0 0 30px rgba(241, 250, 140, 0.15); }
+
+.sentenceList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.textLine {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+    font-family: var(--font-primary);
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.textLine::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    opacity: 0.5;
+    font-size: 0.8rem;
+    top: 0.2rem;
+}
+
+.challengesBox .textLine::before { color: #ff5555; }
+.solutionsBox .textLine::before { color: #50fa7b; }
+.featuresBox .textLine::before { color: #8be9fd; }
+.outcomeBox .textLine::before { color: #f1fa8c; }
 
 .actionFooter {
     margin-top: 6rem;
@@ -352,6 +441,12 @@
     color: #fff;
     transform: translateY(-5px);
     box-shadow: 0 20px 40px rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+   .scrollContent {
+        padding: 3rem 5% 4rem 5%;
+    }
 }
 
 @media (max-width: 1024px) {

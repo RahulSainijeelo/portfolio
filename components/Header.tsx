@@ -123,7 +123,7 @@ export default function Header({ logoText }: HeaderProps) {
           </div>
         </div>
         <nav ref={navigationRef} className={styles.navigation}>
-          <a href="#about" className={styles.nameBox}>About</a>
+          <a href="#contact" className={styles.nameBox}>About</a>
           <a href="#contact" className={styles.nameBox}>Contact</a>
         </nav>
       </div>
