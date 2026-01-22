@@ -8,7 +8,6 @@ import ScrollTrigger from 'gsap/dist/ScrollTrigger';
 import projectsData from '@/data/projects.json';
 import ProjectModal from './ProjectModal';
 import FollowCursor from './FollowCursor';
-import { motion, AnimatePresence } from 'motion/react';
 import ClickSpark from './ClickSpark';
 import SplitText from './SplitText';
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -140,7 +139,7 @@ const ProjectsSection = () => {
                     <div className={styles.introContent}>
                         <h2 className={styles.mainTitle}>SELECTED PROJECTS</h2>
                         <p className={styles.mainSubTitle}>
-                            A CURATED COLLECTION OF DIGITAL EXPERIENCES AND INNOVATIVE SOLUTIONS CRAFTED TO PUSH THE BOUNDARIES OF MODERN WEB DEVELOPMENT.
+                            A CURATED COLLECTION OF DIGITAL EXPERIENCES AND INNOVATIVE SOLUTIONS CRAFTED TO PUSH THE BOUNDARIES OF MODERN Application Development.
                         </p>
                     </div>
                 </div>

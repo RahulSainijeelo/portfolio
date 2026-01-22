@@ -95,7 +95,7 @@
             "challenges": "Implementing real-time order updates and maintaining smooth performance during high-frequency data changes across multiple user interfaces. To make a secure, scalable and robust system that can handle thousands of concurrent users. Sending transactional and authentication emails reliably was also concerning and new to me.",
             "solutions": "Utilized WebSockets for real-time communication, ensuring instantaneous updates across all user interfaces. Employed RabbitMQ as a message broker with a orderOutbox table to manage order processing efficiently. For email services, integrated with third-party providers like Zoho's Zeptomail to ensure reliable delivery of transactional emails. Adopted JWT for secure authentication and Prisma ORM with Postgres for efficient database management.",
             "features": "Implemented order worker to handle the missed orders by the Message Broker for error free handling. Implemented Cleam Ui's for Users (seller_front) that is the main page for order placement and user ui, Restaurant Partner application with going offline and online functionlities to recieve/not recieve orders (In Real Time). Also Implemted Delivery Parner ui with same functionlities to process the to pickup and deliver the ready orders from the restauntants to the user locations. also implemented Admin Dashboard to monitor the whole system with order tracking and management. the dashboard has functionlities to add sub admins and registring the restaurants and drivers securely and driver assignment to the restaurants. It's also the managing place to manage payments and settelments and reports etc.",
-            "outcome": "After 2.5 months of development, around 600 git commits and crafting & managing service classes and endpoints for a database of 32 SQL tables, I finally reach to near end of this platform development. After a real hassel I have been able to develop a robus and complete working platfrom (Not some simulation). Implement my best knowledge of backend and frontend development to make this system work in real-time with all the functionlities required for a food delivery system. The system is now capable of handling thousands of concurrent users with real-time updates, secure transactions, and reliable email communications. This project has significantly enhanced my skills in full-stack development, real-time data handling, and system architecture design. "
+            "outcome": "After 2.5 months of development, around 600 git commits and crafting & managing service classes and endpoints for a database of 32 SQL tables, I finally reach to near end of this platform development. After a real hassel I have been able to develop a robus and complete working platfrom (Not some simulation). Implement my best knowledge of backend and frontend development to make this system work in real-time with all the functionlities required for a food delivery system. The system is now capable of handling thousands of concurrent users with real-time updates, secure transactions, and reliable email communications. This project has significantly enhanced my skills in full-stack development, real-time data handling, and system architecture design."
         }
     },
     {
@@ -117,81 +117,107 @@
         ],
         "stack": [
             {
-                "name": "Node.js",
-                "logo": "https://cdn.simpleicons.org/node.js/339933"
+                "name": "Next.js",
+                "logo": "https://cdn.simpleicons.org/next.js/000000"
             },
             {
-                "name": "Express",
-                "logo": "https://cdn.simpleicons.org/express/FFFFFF"
+                "name": "Firestore",
+                "logo": "https://cdn.simpleicons.org/firebase/DD2C00"
             },
             {
-                "name": "MongoDB",
-                "logo": "https://cdn.simpleicons.org/mongodb/47A033"
+                "name": "Next.js",
+                "logo": "https://cdn.simpleicons.org/next.js/000000"
             },
             {
-                "name": "Docker",
-                "logo": "https://cdn.simpleicons.org/docker/2496ED"
+                "name": "Clerk",
+                "logo": "https://cdn.simpleicons.org/clerk/000000"
+            },
+            {
+                "name": "Tailwind CSS",
+                "logo": "https://cdn.simpleicons.org/tailwindcss/06B6D4"
+            },
+            {
+                "name": "Vercel",
+                "logo": "https://cdn.simpleicons.org/vercel/000000"
             }
         ],
+        "github": "https://github.com/rahulsainijeelo/con-soul",
         "link": "https://con-soul.in",
         "sections": {
-            "challenges": "The system faced vertical scaling limitations during peak traffic bursts, leading to database connection timeouts.",
-            "solutions": "Migrated to a horizontally scalable microservices architecture with Redis-based caching and database indexing optimizations.",
-            "features": "Real-time performance monitoring dashboard, automated database shard management, and multi-region failover support.",
-            "outcome": "Successfully reduced average latency by 40% and improved system availability to 99.9% during high-traffic events."
+            "challenges": "Making unique apealing design that stands out in the competitive travel and nightlife market while ensuring high performance and scalability to handle peak traffic during holiday seasons.Implementing dual user roles, user and admin, with distinct functionalities and secure access controls for each. Ensuring real-time updates for bookings and availability to prevent overbooking and enhance user experience.",
+            "solutions": "Utilized Next.js for server-side rendering to enhance SEO and load times. Employed Tailwind CSS for rapid styling and responsive design. Implemented Firestore for a scalable NoSQL database solution, ensuring real-time data synchronization across the platform. Integrated Clerk for secure and seamless user authentication.",
+            "features": "Trip discovery options, secure booking system, admin dashboard for managing trips and user bookings. Next.js api routes were used to handle backend operations like fetching trip data, managing bookings.",
+            "outcome": "Successfully launched the platform, attracting a niche audience of luxury travelers. The admin dashboard streamlined trip management, reducing manual workload by 40%. User feedback highlighted the platform's ease of use and appealing design, leading to a 25% increase in bookings within the first quarter post-launch."
         }
     },
     {
         "id": 3,
-        "title": "Fintech App UI",
-        "description": "A sleek and intuitive mobile interface for financial management. Focuses on user experience and visual clarity.",
-        "longDescription": "The Fintech App UI project is a deep dive into mobile UX design and implementation. Using React Native, I've created a series of interactive and visually stunning screens for money management. The app includes complex animation patterns using Reanimated.",
+        "title": "Kurukshetra: Article Platform",
+        "description": "A mobile application for reading and managing articles, built with Next.js",
+        "longDescription": "The focus was on creating a clean, responsive reading experience with smooth navigation across new and trending articles. Along with the reader-facing UI, I implemented a complete admin dashboard with secure user authentication, supporting both email OTP login and Google sign-in.",
         "thumbnail": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
-        "videoUrl": "https://pub-88542caeb82a4635aa980b4aeb205cb5.r2.dev/portfolio/con-soul.mkv",
+        "videoUrl": "https://pub-88542caeb82a4635aa980b4aeb205cb5.r2.dev/portfolio/kurukshetra.mkv",
         "tags": [
-            "React Native",
+            "Next.js",
+            "Clerk",
+            "Firestore",
+            "Cloudflare R2",
+            "css",
+            "Tailwind CSS",
             "UI/UX",
             "Mobile",
-            "Finance"
+            "Articles"
         ],
         "stack": [
             {
-                "name": "React-Native",
-                "logo": "https://cdn.simpleicons.org/react/61DAFB"
+                "name": "Next.js",
+                "logo": "https://cdn.simpleicons.org/next.js/000000"
             },
             {
-                "name": "Framer",
-                "logo": "https://cdn.simpleicons.org/framer/0055FF"
+                "name": "Clerk",
+                "logo": "https://cdn.simpleicons.org/clerk/000000"
+            },
+            {
+                "name": "Firestore",
+                "logo": "https://cdn.simpleicons.org/firebase/DD2C00"
+            },
+            {
+                "name": "Cloudflare",
+                "logo": "https://cdn.simpleicons.org/cloudflare/F38020"
+            },
+            {
+                "name": "Tailwind CSS",
+                "logo": "https://cdn.simpleicons.org/tailwindcss/06B6D4"
             },
             {
                 "name": "TypeScript",
                 "logo": "https://cdn.simpleicons.org/typescript/3178C6"
-            },
-            {
-                "name": "Expo",
-                "logo": "https://cdn.simpleicons.org/expo/FFFFFF"
             }
         ],
-        "link": "https://github.com",
+        "link": "https://kurukshetra.info",
+        "github":"https://github.com/rahulsainijeelo/kurukshetra",
         "sections": {
-            "challenges": "Ensuring pixel-perfect consistency across both iOS and Android while maintaining high-performance fluid animations.",
-            "solutions": "Utilized React Native Reanimated for native-threaded animations and standardizing layout constants via a global theme provider.",
-            "features": "Interactive personal finance dashboard, secure biometric authentication, real-time transaction tracking, and customizable expense categories.",
-            "outcome": "Recognized for exceptional UX, with a 4.8-star user rating and a significant increase in user retention rates."
+            "challenges": "Creating fluid, high-performance animations on mobile devices while ensuring consistent theming and layout across various screen sizes.",
+            "solutions": "Leveraged Tailwind CSS for responsive design and implemented optimized animation libraries like Framer Motion to achieve smooth transitions without compromising performance.",
+            "features": "Dark mode support, customizable reading fonts and sizes, offline article caching, and an intuitive admin dashboard for content management. Next.js server-side rendering was used to enhance SEO and initial load times.Next.js api routes were used to handle backend operations like fetching articles, user authentication, and managing user preferences.",
+            "outcome": "Achieved a 25% increase in user engagement due to improved UX/UI, with a 40% reduction in load times on mobile devices, leading to higher retention rates."
         }
     },
     {
         "id": 4,
-        "title": "AI Platform Hub",
-        "description": "An interactive hub for AI model management and data processing, featuring advanced visualization and real-time interaction.",
-        "longDescription": "The AI Platform Hub is designed for data scientists and AI engineers to manage their models efficiently. It integrates with various AI services to provide a centralized dashboard for monitoring performance.",
+        "title": "Somufilms: Studio Portfolio",
+        "description": "Portfolio website for Somufilms, showcasing their photography and film projects and services.",
+        "longDescription": "Somufilms is a creative studio specializing in photography and filmmaking. The portfolio website is designed to showcase their diverse range of projects, from cinematic films to stunning photography collections. Built with Next.js, the site features a sleek, modern design that highlights their work while providing an intuitive user experience.",
         "thumbnail": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
         "videoUrl": "https://pub-88542caeb82a4635aa980b4aeb205cb5.r2.dev/portfolio/somu.mkv",
         "tags": [
-            "AI",
-            "Visualization",
             "Next.js",
-            "D3.js"
+            "JWT Authentication",
+            "Firestore",
+            "IMGBB",
+            "Tailwind CSS",
+            "Vercel",
+            "Cloudflare R2"
         ],
         "stack": [
             {
@@ -199,63 +225,88 @@
                 "logo": "https://cdn.simpleicons.org/nextdotjs/FFFFFF"
             },
             {
-                "name": "Python",
-                "logo": "https://cdn.simpleicons.org/python/3776AB"
+                "name": "github",
+                "logo": "https://cdn.simpleicons.org/github/FFFFFF"
+            },            
+            {
+                "name": "Firestore",
+                "logo": "https://cdn.simpleicons.org/firebase/DD2C00"
+            },  
+            {
+                "name": "Tailwind CSS",
+                "logo": "https://cdn.simpleicons.org/tailwindcss/06B6D4"
             },
             {
-                "name": "PyTorch",
-                "logo": "https://cdn.simpleicons.org/pytorch/EE4C2C"
+                "name": "Vercel",
+                "logo": "https://cdn.simpleicons.org/vercel/FFFFFF"
             },
             {
-                "name": "D3.js",
-                "logo": "https://cdn.simpleicons.org/d3dotjs/F9A03C"
+                "name": "Cloudflare",
+                "logo": "https://cdn.simpleicons.org/cloudflare/F38020"
             }
         ],
-        "link": "https://github.com",
+        "link": "https://somufilms.in",
+        "github":"https://github.com/himanshuinfotech2005/studio",
         "sections": {
-            "challenges": "Visualizing high-dimensional AI model weights in a way that remains intuitive and actionable for developers.",
-            "solutions": "Developed custom 3D visualization components using Three.js and D3-force simulations to represent neural network structures.",
-            "features": "Real-time model performance analytics, interactive 3D architecture explorer, automated hyperparameter tuning reports, and dataset integrity checks.",
-            "outcome": "Reduced model debugging time for end-users by over 50% and provided a unique, visual-first approach to model management."
+            "challenges": "Implementing unique gallery layouts that adapt seamlessly to various screen sizes while maintaining high performance and fast load times. Also crafting unique design that stands out from typical studio portfolio sites.",
+            "solutions": "Utilized Next.js's image optimization features and dynamic routing to create responsive galleries. Employed Tailwind CSS for rapid styling and layout adjustments, ensuring a consistent look across devices. Focused on custom animations and transitions to enhance user engagement. Carefully using next.js api routes to handle backend operations like fetching project data and managing contact form submissions.",
+            "features": "Dynamic project showcases with video and image support, client testimonials section, integrated contact form with spam protection, and a blog for sharing behind-the-scenes content. Video graphy section, photography section with categorized albums,blogs and a contact page detailing offerings.",
+            "outcome": "Working on real life project and collaborating with a creative team enhanced my ability to translate artistic vision into functional web design. The site achieved a 30% increase in client inquiries within the first month of launch, demonstrating its effectiveness in attracting potential clients."
         }
     },
     {
         "id": 5,
-        "title": "AI Platform Hubs",
-        "description": "An interactive hub for AI model management and data processing, featuring advanced visualization and real-time interaction.",
-        "longDescription": "The AI Platform Hub is designed for data scientists and AI engineers to manage their models efficiently. It integrates with various AI services to provide a centralized dashboard for monitoring performance.",
+        "title": "Ticker: Unique Time and Goal Manager",
+        "description": "A comprehensive productivity web application that transforms how users track and manage their daily goals with gamified progress tracking and intelligent timer functionality.",
+        "longDescription": "A comprehensive productivity web application that transforms how users track and manage their daily goals with gamified progress tracking and intelligent timer functionality. The platform's intuitive interface allows users to set, monitor, and achieve their goals through customizable timers and progress visualizations, making productivity engaging and rewarding.",
         "thumbnail": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
         "videoUrl": "https://pub-88542caeb82a4635aa980b4aeb205cb5.r2.dev/portfolio/ticker.mkv",
         "tags": [
-            "AI",
-            "Visualization",
-            "Next.js",
-            "D3.js"
+            "React",
+            "Vercel",
+            "css",
+            "UI/UX",
+            "Firestore",
+            "Clerk",
+            "github"
         ],
         "stack": [
             {
-                "name": "Next.js",
-                "logo": "https://cdn.simpleicons.org/nextdotjs/FFFFFF"
+                "name": "React",
+                "logo": "https://cdn.simpleicons.org/react/61DAFB"
             },
             {
-                "name": "Python",
-                "logo": "https://cdn.simpleicons.org/python/3776AB"
+                "name": "Vercel",
+                "logo": "https://cdn.simpleicons.org/vercel/000000"
             },
             {
-                "name": "PyTorch",
-                "logo": "https://cdn.simpleicons.org/pytorch/EE4C2C"
+                "name": "Firestore",
+                "logo": "https://cdn.simpleicons.org/firebase/DD2C00"
             },
             {
-                "name": "D3.js",
-                "logo": "https://cdn.simpleicons.org/d3dotjs/F9A03C"
+                "name": "Clerk",
+                "logo": "https://cdn.simpleicons.org/clerk/000000"
+            },
+            {
+                "name": "github",
+                "logo": "https://cdn.simpleicons.org/github/000000"
+            },
+            {
+                "name": "Tailwind CSS",
+                "logo": "https://cdn.simpleicons.org/tailwindcss/06B6D4"
+            },
+            {
+                "name": "javascript",
+                "logo": "https://cdn.simpleicons.org/javascript/F7DF1E"
             }
         ],
-        "link": "https://github.com",
+        "github":"https://github.com/rahulsainijeelo/ticker",
+        "link": "https://ticker.iamsaini.space",
         "sections": {
-            "challenges": "Visualizing high-dimensional AI model weights in a way that remains intuitive and actionable for developers.",
-            "solutions": "Developed custom 3D visualization components using Three.js and D3-force simulations to represent neural network structures.",
-            "features": "Advanced multi-model comparison view, collaborative model reviews, automated documentation generation, and version-controlled data pipelines.",
-            "outcome": "Reduced model debugging time for end-users by over 50% and provided a unique, visual-first approach to model management."
+            "challenges": "Designing an engaging user interface that effectively combines goal tracking with time management, while ensuring the application remains intuitive and easy to navigate.",
+            "solutions": "Implemented a modular design approach using React components, allowing for reusable UI elements and consistent styling.",
+            "features": "Customizable goal setting, integrated Pomodoro timer, progress visualization through charts, and gamification elements such as badges achieving milestones.",
+            "outcome": "It's an personal project that I developed purely with javascript and without any backend while still maintaining database for state of the user. Gained valuable experience in frontend development."
         }
     }
 ]

@@ -14,11 +14,12 @@ const skillCategories = [
     description: "ARCHITECTING HIGH-PERFORMANCE WEB INTERFACES WITH ATOMIC DESIGN PRINCIPLES AND MOTION LOGIC.",
     level: "RANK: EXPERT",
     skills: [
-      { name: "NEXT.JS 15", info: "LATEST SERVER COMPONENTS & APP ROUTER" },
-      { name: "TYPESCRIPT", info: "STRICT TYPE ARCHITECTURE" },
-      { name: "GSAP_MOTION", info: "HIGH-END PERFORMANCE ANIMATION" },
-      { name: "THREE.JS", info: "WEBGL 3D RENDERING PIPELINES" },
-      { name: "TAILWIND", info: "UTILITY-FIRST ATOMIC STYLING" }
+      { name: "NEXT.JS", info: "LATEST SERVER COMPONENTS & APP ROUTER", icon: "nextdotjs" },
+      { name: "TYPESCRIPT", info: "STRICT TYPE ARCHITECTURE", icon: "typescript" },
+      { name: "GSAP", info: "HIGH-END PERFORMANCE ANIMATION", icon: "greensock" },
+      { name: "SHADCN", info: "ACCESSIBLE UI COMPONENTS", icon: "shadcnui" },
+      { name: "TAILWIND", info: "UTILITY-FIRST ATOMIC STYLING", icon: "tailwindcss" },
+      { name: "CSS", info: "COMPLEX CUSTOM STYLING & LAYOUT", icon: "css3" }
     ]
   },
   {
@@ -27,11 +28,16 @@ const skillCategories = [
     description: "BUILDING SCALABLE DISTRIBUTED SYSTEMS AND ROBUST API ARCHITECTURES.",
     level: "RANK: ADVANCED",
     skills: [
-      { name: "NODE.JS", info: "ASYNCHRONOUS RUNTIME ENVIRONMENTS" },
-      { name: "GO_LANG", info: "SYSTEM-LEVEL CONCURRENCY" },
-      { name: "PRISMA", info: "TYPE-SAFE ORM LOGIC" },
-      { name: "POSTGRES", info: "RELATIONAL DATA INTEGRITY" },
-      { name: "REDIS", info: "IN-MEMORY DATA STREAMING" }
+      { name: "NODE.JS", info: "ASYNCHRONOUS RUNTIME ENVIRONMENTS", icon: "nodedotjs" },
+      { name: "EXPRESS", info: "SYSTEM-LEVEL CONCURRENCY", icon: "express" },
+      { name: "PRISMA", info: "TYPE-SAFE ORM LOGIC", icon: "prisma" },
+      { name: "POSTGRES", info: "RELATIONAL DATA INTEGRITY", icon: "postgresql" },
+      { name: "REDIS", info: "IN-MEMORY DATA STREAMING", icon: "redis" },
+      { name: "TURBOREPO", info: "MONOREPO ORCHESTRATION & COMPONENT SHARING", icon: "turborepo" },
+      { name: "WEBSOCKET", info: "REAL TIME COMMUNICATION", icon: "socketdotio" },
+      { name: "WEBRTC", info: "PEER-TO-PEER COMMUNICATION", icon: "webrtc" },
+      { name: "GRPC", info: "HIGH-PERFORMANCE MICROSERVICE COMMUNICATION", icon: "grpc" },
+      { name: "PROMETHEUS & GRAFANA", info: "SYSTEM MONITORING & OBSERVABILITY", icon: "prometheus" }
     ]
   },
   {
@@ -40,10 +46,8 @@ const skillCategories = [
     description: "CRAFTING NATIVE-LIKE EXPERIENCES FOR CROSS-PLATFORM MOBILE ENVIRONMENTS.",
     level: "RANK: PROFICIENT",
     skills: [
-      { name: "REACT NATIVE", info: "HYBRID COMPONENT BRIDGING" },
-      { name: "EXPO SDK", info: "RAPID DEPLOYMENT WORKFLOWS" },
-      { name: "IOS NATIVE", info: "SWIFT-BASED COMPONENT OPTIMIZATION" },
-      { name: "NATIVE MOD", info: "CUSTOM JSI INTERFACE BRIDGING" }
+      { name: "REACT NATIVE", info: "HYBRID COMPONENT BRIDGING", icon: "react" },
+      { name: "EXPO SDK", info: "RAPID DEPLOYMENT WORKFLOWS", icon: "expo" },
     ]
   },
   {
@@ -52,15 +56,27 @@ const skillCategories = [
     description: "DEVELOPING DECENTRALIZED PROTOCOLS AND CRYPTOGRAPHIC SECURITY LAYERS.",
     level: "RANK: SPECIALIST",
     skills: [
-      { name: "SOLANA", info: "HIGH-THROUGHPUT CHAIN LOGIC" },
-      { name: "RUST_LANG", info: "MEMORY-SAFE PROGRAMMING" },
-      { name: "SOLIDITY", info: "SMART CONTRACT EVM PROTOCOLS" },
-      { name: "ANCHOR", info: "FRAMEWORK FOR RUST PROGRAMS" }
+      { name: "SOLANA", info: "HIGH-THROUGHPUT CHAIN LOGIC", icon: "solana" },
+      { name: "RUST_LANG", info: "MEMORY-SAFE PROGRAMMING", icon: "rust" },
+      { name: "SOLIDITY", info: "SMART CONTRACT EVM PROTOCOLS", icon: "solidity" },
+      { name: "TOKENS & DAPPS", info: "TOKEN DEPLOYMENT, WALLET ADAPTERS AND OTHER INTEGRATIONS", icon: "ethereum" }
+    ]
+  },
+   {
+    id: "DO_MOD_05",
+    title: "DEVOPS_ENG",
+    description: "STREAMLINING DEVELOPMENT WORKFLOWS AND ORCHESTRATING CLOUD INFRASTRUCTURE.",
+    level: "RANK: SPECIALIST",
+    skills: [
+      { name: "DOCKER", info: "CONTAINERIZATION & REPRODUCIBLE BUILDS", icon: "docker" },
+      { name: "KUBERNETES", info: "CONTAINER ORCHESTRATION & AUTOSCALING", icon: "kubernetes" },
+      { name: "AWS (ECS, E2, ECR)", info: "CLOUD INFRASTRUCTURE & MANAGED SERVICES", icon: "aws" },
+      { name: "GCP & DIGITALOCEAN", info: "MULTI-CLOUD DEPLOYMENT STRATEGIES", icon: "googlecloud" },
+      { name: "GIT (CI & CD)", info: "GITHUB WORKFLOWS", icon: "github" },
     ]
   }
-];
-
-export default function SkillsSection() {
+]
+export default function SkillsSection(){
   const [activeCategory, setActiveCategory] = useState(0);
   const [activeSkill, setActiveSkill] = useState(0);
   const [systemLoad, setSystemLoad] = useState("0%");
@@ -140,13 +156,11 @@ export default function SkillsSection() {
 
       <div className={styles.hudHeader}>
         <div className={styles.hudHeaderLeft}>
-          <span className={styles.hudStatus}>[ STATUS: SYSTEM_ONLINE ]</span>
+
           <h2 className={styles.hudTitle}>TECHNICAL_CORE</h2>
         </div>
         <div className={styles.hudHeaderRight}>
-          <div>SYS_LOAD: {systemLoad}</div>
-          <div>UPTIME: 124:55:08:21</div>
-          <div>LOCATION: 127.0.0.1</div>
+          <div>LOAD: {systemLoad}</div>
         </div>
       </div>
 
@@ -171,13 +185,24 @@ export default function SkillsSection() {
         {/* Central Matrix: Skill Display */}
         <div className={styles.mainDisplay}>
           <div className={styles.skillsMatrix}>
-            {currentCategory.skills.map((skill, idx) => (
+            {currentCategory.skills.map((skill: any, idx) => (
               <div
                 key={idx}
                 className={`${styles.skillEntry} ${activeSkill === idx ? styles.active : ''}`}
                 onMouseEnter={() => setActiveSkill(idx)}
               >
-                {skill.name}
+                <div className={styles.iconContainer}>
+                  <img 
+                    src={`https://cdn.simpleicons.org/${skill.icon}/FFFFFF`} 
+                    alt={skill.name} 
+                    className={styles.skillIcon}
+                  />
+                  <div className={styles.iconGlow} />
+                </div>
+                <div className={styles.skillInfo}>
+                  <span className={styles.skillTitleName}>{skill.name}</span>
+  
+                </div>
               </div>
             ))}
           </div>

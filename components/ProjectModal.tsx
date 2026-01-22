@@ -21,6 +21,7 @@ interface Project {
     tags: string[];
     link: string;
     stack?: { name: string; logo: string }[];
+    github?:string;
     sections?: {
         challenges: string;
         solutions: string;
@@ -241,34 +242,54 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose })
                                     )}
 
                                     <div className={styles.gridDetails}>
-                                        <div className={styles.mainDesc}>
+                                        <div className={`${styles.mainDesc} ${styles.overviewBox}`}>
                                             <h3 className={styles.subHeader}>OVERVIEW</h3>
-                                            <p className={styles.text}>{project.longDescription}</p>
+                                            <div className={styles.sentenceList}>
+                                                {project.longDescription.split(/(?<=[.!?])\s+/).map((sentence, i) => (
+                                                    <p key={i} className={styles.textLine}>{sentence.trim()}</p>
+                                                ))}
+                                            </div>
                                         </div>
 
                                         {project.sections && (
                                             <>
-                                                <div className={styles.detailBox}>
+                                                <div className={`${styles.detailBox} ${styles.challengesBox}`}>
                                                     <h3 className={styles.subHeader}>CHALLENGES</h3>
-                                                    <p className={styles.text}>{project.sections.challenges}</p>
+                                                    <div className={styles.sentenceList}>
+                                                        {project.sections.challenges.split(/(?<=[.!?])\s+/).map((sentence, i) => (
+                                                            <p key={i} className={styles.textLine}>{sentence.trim()}</p>
+                                                        ))}
+                                                    </div>
                                                 </div>
-                                                <div className={styles.detailBox}>
+                                                <div className={`${styles.detailBox} ${styles.solutionsBox}`}>
                                                     <h3 className={styles.subHeader}>SOLUTIONS</h3>
-                                                    <p className={styles.text}>{project.sections.solutions}</p>
+                                                    <div className={styles.sentenceList}>
+                                                        {project.sections.solutions.split(/(?<=[.!?])\s+/).map((sentence, i) => (
+                                                            <p key={i} className={styles.textLine}>{sentence.trim()}</p>
+                                                        ))}
+                                                    </div>
                                                 </div>
-                                                <div className={styles.detailBox}>
+                                                <div className={`${styles.detailBox} ${styles.featuresBox}`}>
                                                     <h3 className={styles.subHeader}>FEATURES</h3>
-                                                    <p className={styles.text}>{project.sections.features}</p>
+                                                    <div className={styles.sentenceList}>
+                                                        {project.sections.features.split(/(?<=[.!?])\s+/).map((sentence, i) => (
+                                                            <p key={i} className={styles.textLine}>{sentence.trim()}</p>
+                                                        ))}
+                                                    </div>
                                                 </div>
-                                                <div className={styles.detailBox}>
+                                                <div className={`${styles.detailBox} ${styles.outcomeBox}`}>
                                                     <h3 className={styles.subHeader}>OUTCOME</h3>
-                                                    <p className={styles.text}>{project.sections.outcome}</p>
+                                                    <div className={styles.sentenceList}>
+                                                        {project.sections.outcome.split(/(?<=[.!?])\s+/).map((sentence, i) => (
+                                                            <p key={i} className={styles.textLine}>{sentence.trim()}</p>
+                                                        ))}
+                                                    </div>
                                                 </div>
                                             </>
                                         )}
                                     </div>
 
-                                    <div className={styles.actionFooter}>
+                                    <div className={styles.actionFooter + " flex flex-col md:flex-row gap-2 justify-center"}>
                                         <a href={project.link} target="_blank" rel="noopener noreferrer" className={styles.gameButton}>
                                             VIEW_PROJECT
                                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -277,6 +298,13 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose })
                                                 <line x1="10" y1="14" x2="21" y2="3"></line>
                                             </svg>
                                         </a>
+                                        {project.github &&
+                                            (
+                                                <a href={project.github} target="_blank" rel="noopener noreferrer" className={styles.gameButton +" ml-2 max-w-[150px]"}>
+                                                    <img width={50} height={50} src="https://cdn.simpleicons.org/github/000000" alt="github" />
+                                                </a>
+                                            )
+                                        }
                                     </div>
                                 </div>
                             </div>
