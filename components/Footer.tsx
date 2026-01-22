@@ -15,12 +15,9 @@ export default function Footer() {
         {/* Navigation Links */}
         <div className={styles.linksSection}>
           <div className={styles.linkColumn}>
-            <h3 className={styles.columnTitle}>GO DEEPER</h3>
-            <div className={styles.linkDivider}></div>
             <nav className={styles.linksList}>
               <a href="#projects" className={styles.link}>Projects</a>
               <a href="#skills" className={styles.link}>Skills</a>
-              <a href="#portfolio" className={styles.link}>Portfolio</a>
             </nav>
           </div>
 
@@ -28,16 +25,16 @@ export default function Footer() {
             <h3 className={styles.columnTitle}>SOCIAL</h3>
             <div className={styles.linkDivider}></div>
             <nav className={styles.linksList}>
-              <a href="https://instagram.com" className={styles.link} target="_blank" rel="noopener noreferrer">Instagram</a>
-              <a href="https://twitter.com" className={styles.link} target="_blank" rel="noopener noreferrer">X</a>
+              <a href="https://www.linkedin.com/in/r-rahul-s-saini/" className={styles.link} target="_blank" rel="noopener noreferrer">Linkedin</a>
+              <a href="https://x.com/Rahul1962" className={styles.link} target="_blank" rel="noopener noreferrer">X</a>
             </nav>
           </div>
 
           <div className={styles.linkColumn}>
-            <h3 className={styles.columnTitle}>WANT TO SEE OUR WORK?</h3>
+            <h3 className={styles.columnTitle}>WANT TO SEE MY WORK?</h3>
             <div className={styles.linkDivider}></div>
-            <a href="mailto:rahulsaini.dev@gmail.com" className={styles.emailLink}>
-              rahulsaini.dev@gmail.com
+            <a href="mailto:rahulsainijeelo@gmail.com" className={styles.emailLink}>
+              rahulsainijeelo@gmail.com
             </a>
           </div>
         </div>
@@ -46,17 +43,16 @@ export default function Footer() {
         <div className={styles.footerBottom}>
           <div className={styles.footerInfo}>
             <div className={styles.copyright}>
-              <span>© COPYRIGHT 2025 RAHUL SAINI</span>
+              <span>© COPYRIGHT 2026 RAHUL SAINI</span>
               <span>ALL RIGHT RESERVED</span>
             </div>
 
             <div className={styles.location}>
-              <span>NEW DELHI</span>
               <span>INDIA</span>
             </div>
 
             <div className={styles.tagline}>
-              WE COULD JUST SAY YOU UP ////////////////////////////////
+              I COULD JUST SAY YOU UP ////////////////////////////////
             </div>
           </div>
 

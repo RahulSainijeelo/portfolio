@@ -63,10 +63,15 @@ function HoleBackground({
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
-    stateRef.current.rect = { width: rect.width, height: rect.height };
+    
+    // Fallback to window size if component is hidden or starting up
+    const w = rect.width || window.innerWidth;
+    const h = rect.height || window.innerHeight;
+    
+    stateRef.current.rect = { width: w, height: h };
     stateRef.current.render = {
-      width: rect.width,
-      height: rect.height,
+      width: w,
+      height: h,
       dpi: window.devicePixelRatio || 1,
     };
     canvas.width = stateRef.current.render.width * stateRef.current.render.dpi;
@@ -77,15 +82,17 @@ function HoleBackground({
   const setDiscs = React.useCallback(() => {
     const { width, height } = stateRef.current.rect;
     stateRef.current.discs = [];
+    const isMobile = width < 768;
+
     stateRef.current.startDisc = {
       x: width * 0.5,
-      y: height * 0.45,
-      w: width * 0.75,
-      h: height * 0.7,
+      y: isMobile ? height * 0.75 : height * 0.45,
+      w: isMobile ? width * 0.8 : width * 0.75,
+      h: isMobile ? height * 0.25 : height * 0.7,
     };
     stateRef.current.endDisc = {
       x: width * 0.5,
-      y: height * 0.95,
+      y: isMobile ? height * 0.98 : height * 0.95,
       w: 0,
       h: 0,
     };
@@ -290,14 +297,21 @@ function HoleBackground({
     }
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+    
+    // Clear using physical pixels
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
     ctx.save();
+    // Use high DPI scaling for everything
     ctx.scale(stateRef.current.render.dpi, stateRef.current.render.dpi);
+    
     moveItems();
     drawDiscs(ctx);
     drawParticles(ctx);
+    drawLines(ctx); // Drawn within scaled context for maximum sharpness
+    
     ctx.restore();
-    drawLines(ctx); // Draw lines outside scaled context for pixel-perfect mapping
+    
     animationFrameIdRef.current = requestAnimationFrame(tick);
   }, [moveItems, drawDiscs, drawLines, drawParticles]);
 
@@ -313,6 +327,18 @@ function HoleBackground({
     if (!canvas) return;
     init();
     tick();
+
+    const resizeObserver = new ResizeObserver(() => {
+      setSize();
+      setDiscs();
+      setLines();
+      setParticles();
+    });
+
+    if (canvas.parentElement) {
+      resizeObserver.observe(canvas.parentElement);
+    }
+
     const handleResize = () => {
       setSize();
       setDiscs();
@@ -321,6 +347,7 @@ function HoleBackground({
     };
     window.addEventListener('resize', handleResize);
     return () => {
+      resizeObserver.disconnect();
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameIdRef.current);
     };
@@ -331,10 +358,14 @@ function HoleBackground({
       data-slot="hole-background"
       className={cn(
         'relative size-full overflow-hidden',
-        'before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:block before:size-[140%] before:[background:radial-gradient(ellipse_at_50%_55%,transparent_10%,black_50%)] before:[transform:translate3d(-50%,-50%,0)]',
-        'after:content-[""] after:absolute after:z-[5] after:top-1/2 after:left-1/2 after:block after:size-full after:[background:radial-gradient(ellipse_at_50%_75%,#a900ff_20%,transparent_75%)] after:[transform:translate3d(-50%,-50%,0)] after:mix-blend-overlay',
+        'before:content-[""] before:absolute before:top-1/2 before:left-1/2 before:block before:size-[140%] before:[background:radial-gradient(ellipse_at_50%_var(--hole-y,55%),transparent_10%,black_50%)] before:[transform:translate3d(-50%,-50%,0)]',
+        'after:content-[""] after:absolute after:z-[5] after:top-1/2 after:left-1/2 after:block after:size-full after:[background:radial-gradient(ellipse_at_50%_var(--glow-y,75%),#a900ff_20%,transparent_75%)] after:[transform:translate3d(-50%,-50%,0)] after:mix-blend-overlay',
         className,
       )}
+      style={{
+        '--hole-y': typeof window !== 'undefined' && window.innerWidth < 768 ? '80%' : '55%',
+        '--glow-y': typeof window !== 'undefined' && window.innerWidth < 768 ? '85%' : '75%',
+      } as React.CSSProperties}
       {...props}
     >
       {children}

@@ -26,52 +26,40 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen bg-[#0A0A0A]">
-      {/* Greeting Screen - Always on top while active */}
-      {showGreeting && (
-        <div style={{
-          position: 'fixed',
-          inset: 0,
-          zIndex: 100,
-          pointerEvents: isTransitioning ? 'none' : 'auto'
-        }}>
-          <GreetingScreen onComplete={handleGreetingComplete} />
-        </div>
-      )}
-      <div style={{
-        opacity: showGreeting ? 0 : 1,
-        pointerEvents: showGreeting ? 'none' : 'auto',
-        transition: 'opacity 0.8s ease-in-out'
+      <ReactLenis root options={{
+        lerp: 0.1,
+        duration: 1.2,
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 2,
+        syncTouch: true,
       }}>
-        <ReactLenis root options={{
-          lerp: 0.1,
-          duration: 1.2,
-          smoothWheel: true,
-          wheelMultiplier: 1,
-          touchMultiplier: 2,
-          syncTouch: true,
+        {/* Greeting Screen - Always on top while active */}
+        {showGreeting && (
+          <div style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 100,
+            pointerEvents: isTransitioning ? 'none' : 'auto'
+          }}>
+            <GreetingScreen onComplete={handleGreetingComplete} />
+          </div>
+        )}
+
+        <div style={{
+          opacity: showGreeting ? 0 : 1,
+          pointerEvents: showGreeting ? 'none' : 'auto',
+          transition: 'opacity 0.8s ease-in-out'
         }}>
           <Header logoText="RAHUL SAINI" />
           <HeroSection />
           <SectionTransition />
           <ProjectsSection />
           <SkillsSection />
-          {/* <ClickSpark
-            sparkColor='#fff'
-            sparkSize={10}
-            sparkRadius={15}
-            sparkCount={8}
-            duration={400}
-
-          >
-
-
-            <OtherComponent />
-
-          </ClickSpark> */}
           <GithubSection />
           <Footer />
-        </ReactLenis>
-      </div>
+        </div>
+      </ReactLenis>
     </main>
   );
 }

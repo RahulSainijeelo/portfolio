@@ -25,8 +25,8 @@ const Bgs = () => {
   const isDesktop = currentWidth > 1024;
 
   return (
-    <div className='flex absolute'>
-      <HoleBackground />
+    <div className='absolute inset-0 w-full h-full'>
+      <HoleBackground className="w-full h-full" />
     </div>
   );
 };
@@ -158,10 +158,19 @@ const HeroFrame = React.memo(({ frame, index, isActive, frameRef }: {
 
 HeroFrame.displayName = 'HeroFrame';
 
+// CONFIG: Tweak these to control scroll sensitivity
+const HERO_SCROLL_CONFIG = {
+  DESKTOP_SCRUB: 0.8,
+  MOBILE_SCRUB: 0, // Lower is more responsive
+  DESKTOP_DISTANCE_FACTOR: 100, // % of viewport height per frame
+  MOBILE_DISTANCE_FACTOR: 35    // Reduced for mobile to make it feel "lighter"
+};
+
 const HeroSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const frameRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeFrameIndex, setActiveFrameIndex] = useState<number>(0);
+  const { width } = useWindowSize();
 
   const backgroundPhases = useMemo(() => ({
     minimal: '#030303',
@@ -172,8 +181,12 @@ const HeroSection: React.FC = () => {
   }), []);
 
   useGSAP(() => {
+    const isMobile = window.innerWidth < 768;
     const totalFrames = framesData.length;
-    const scrollDistance = totalFrames * 100;
+    
+    // Calculate distance based on device type
+    const factor = isMobile ? HERO_SCROLL_CONFIG.MOBILE_DISTANCE_FACTOR : HERO_SCROLL_CONFIG.DESKTOP_DISTANCE_FACTOR;
+    const scrollDistance = totalFrames * factor;
 
     frameRefs.current.forEach((frame, index) => {
       if (frame) {
@@ -196,7 +209,7 @@ const HeroSection: React.FC = () => {
       scrollTrigger: {
         trigger: containerRef.current,
         pin: true,
-        scrub: 0.8,
+        scrub: isMobile ? HERO_SCROLL_CONFIG.MOBILE_SCRUB : HERO_SCROLL_CONFIG.DESKTOP_SCRUB,
         start: 'top top',
         end: `+=${scrollDistance}%`,
         onUpdate: (self) => {

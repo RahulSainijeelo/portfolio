@@ -1,0 +1,193 @@
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.2rem;
+}
+
+.modalContent {
+    background: #050505;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    padding: 3rem;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 255, 255, 0.1);
+}
+
+.modalContent::before {
+    content: 'COMMUNICATION_LINK_PENDING';
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    background: #000;
+    padding: 0 10px;
+    font-size: 0.7rem;
+    color: #00ffff;
+    letter-spacing: 0.2em;
+    font-weight: 900;
+}
+
+.closeButton {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    color: #00ffff;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.closeButton:hover {
+    background: rgba(0, 255, 255, 0.1);
+    border-color: #00ffff;
+    transform: rotate(90deg);
+}
+
+.header {
+    margin-bottom: 2.5rem;
+}
+
+.greeting {
+    font-size: 2.5rem;
+    font-weight: 950;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 1rem;
+}
+
+.subtext {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.05em;
+    font-family: ui-monospace, 'Cascadia Code', monospace;
+}
+
+.linksGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.contactLink {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.contactLink:hover {
+    background: rgba(0, 255, 255, 0.05);
+    border-color: #00ffff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.contactLink::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #00ffff;
+    transition: width 0.3s ease;
+}
+
+.contactLink:hover::after {
+    width: 100%;
+}
+
+.iconWrapper {
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00ffff;
+}
+
+.linkInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.linkLabel {
+    font-size: 0.65rem;
+    color: rgba(0, 255, 255, 0.6);
+    font-weight: 900;
+    letter-spacing: 0.1em;
+}
+
+.linkValue {
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.resumeButton {
+    grid-column: span 2;
+    background: #00ffff;
+    color: #000;
+    text-align: center;
+    justify-content: center;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: none;
+}
+
+.resumeButton:hover {
+    background: #fff;
+    color: #000;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+}
+
+.resumeButton .iconWrapper {
+    background: rgba(0, 0, 0, 0.1);
+    color: #000;
+}
+
+.statusLine {
+    margin-top: 2rem;
+    font-size: 0.6rem;
+    color: rgba(0, 255, 255, 0.3);
+    border-top: 1px solid rgba(0, 255, 255, 0.1);
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+    .contactLink{
+    padding: 0.7rem;
+    }
+    .linksGrid {
+        grid-template-columns: 1fr;
+    }
+    .resumeButton {
+        grid-column: span 1;
+    }
+    .modalContent {
+        padding: 2rem;
+    }
+}

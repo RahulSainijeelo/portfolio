@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import styles from '@/styles/header.module.css';
 import { animate, createTimeline } from 'animejs';
+import ContactModal from './ContactModal';
 
 interface HeaderProps {
   logoText: string;
@@ -14,12 +15,13 @@ export default function Header({ logoText }: HeaderProps) {
   const initialsRef = useRef<HTMLDivElement>(null);
   const navigationRef = useRef<HTMLElement>(null);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   useEffect(() => {
     if (headerRef.current) {
       animate(headerRef.current, {
         opacity: [0, 1],
-        translateY: [-50, 0],
+        // translateY: [-50, 0],
         duration: 1000,
         easing: 'easeOutExpo',
         delay: 200,
@@ -123,10 +125,16 @@ export default function Header({ logoText }: HeaderProps) {
           </div>
         </div>
         <nav ref={navigationRef} className={styles.navigation}>
-          <a href="#contact" className={styles.nameBox}>About</a>
-          <a href="#contact" className={styles.nameBox}>Contact</a>
+          <button 
+            onClick={() => setIsContactOpen(true)} 
+            className={styles.nameBox}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', font: 'inherit', color: 'inherit' }}
+          >
+            Contact
+          </button>
         </nav>
       </div>
+      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </header>
   );
 }

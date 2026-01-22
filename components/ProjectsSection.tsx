@@ -83,7 +83,7 @@ const ProjectsSection = () => {
                 scrollTrigger: {
                     trigger: trigger,
                     pin: true,
-                    scrub: 1.2, // Slightly more lerp
+                    scrub: 0, // Slightly more lerp
                     start: "top top",
                     end: () => `+=${totalWidth}`, // Use totalWidth for precise ending
                     invalidateOnRefresh: true,
@@ -206,6 +206,13 @@ const ProjectsSection = () => {
                                 <div className={styles.mobileContent}>
                                     <h3 className={styles.mobileTitle}>{project.title}</h3>
                                     <p className={styles.mobileDescription}>{project.description}</p>
+                                    <div className={styles.mobileBtn}>
+                                        <span>VIEW MORE</span>
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                                            <polyline points="7 7 17 7 17 17"></polyline>
+                                        </svg>
+                                    </div>
                                 </div>
                             </div>
                         ))}
