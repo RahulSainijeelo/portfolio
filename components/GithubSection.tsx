@@ -45,6 +45,7 @@ interface ContributionStats {
 }
 
 const USERNAME = "RahulSainijeelo";
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 export default function GithubSection() {
     const [repos, setRepos] = useState<Repo[]>([]);
@@ -83,7 +84,7 @@ export default function GithubSection() {
             try {
                 const res = await fetch(`https://github-contributions-api.deno.dev/${USERNAME}.json`);
                 const data = await res.json();
-                
+
                 // Calculate streaks from the contributions array if not provided
                 let allDays: ContributionDay[] = [];
                 if (data.contributions) {
@@ -97,7 +98,7 @@ export default function GithubSection() {
                 // Simple streak calculation (descending order)
                 const today = new Date().toISOString().split('T')[0];
                 const sortedDays = [...allDays].sort((a, b) => b.date.localeCompare(a.date));
-                
+
                 let foundToday = false;
                 for (const day of sortedDays) {
                     if (day.contributionCount > 0) {
@@ -133,14 +134,17 @@ export default function GithubSection() {
         init();
     }, []);
 
-    /*
     useGSAP(() => {
         if (loading || !sectionRef.current) return;
+
+        // Force a refresh of ScrollTrigger because the dynamic content 
+        // changed the height of the page
+        setTimeout(() => ScrollTrigger.refresh(), 100);
 
         const timeline = gsap.timeline({
             scrollTrigger: {
                 trigger: sectionRef.current,
-                start: "top 75%",
+                start: "top 80%",
                 toggleActions: "play none none reverse"
             }
         });
@@ -151,6 +155,25 @@ export default function GithubSection() {
             duration: 1,
             ease: "power3.out"
         })
+            .from(`.${styles.profileCard}`, {
+                x: -30,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            }, "-=0.6")
+            .from(`.${styles.streakCard}`, {
+                x: 30,
+                opacity: 0,
+                stagger: 0.1,
+                duration: 0.8,
+                ease: "power2.out"
+            }, "-=0.8")
+            .from(`.${styles.graphContainer}`, {
+                y: 20,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            }, "-=0.4")
             .from(`.${styles.statItem}`, {
                 y: 20,
                 opacity: 0,
@@ -161,13 +184,40 @@ export default function GithubSection() {
             .from(`.${styles.repoCard}`, {
                 y: 30,
                 opacity: 0,
-                stagger: 0.05,
+                stagger: 0.1,
                 duration: 0.8,
+                clearProps: "all",
                 ease: "power2.out"
             }, "-=0.4");
 
     }, [loading]);
-    */
+
+    // Helper to get month labels for the contribution graph
+    const renderMonthLabels = () => {
+        if (!contributions?.calendar) return null;
+        const labels: { month: string, index: number }[] = [];
+        contributions.calendar.forEach((week, i) => {
+            const date = new Date(week[0].date);
+            const month = MONTHS[date.getMonth()];
+            if (labels.length === 0 || labels[labels.length - 1].month !== month) {
+                labels.push({ month, index: i });
+            }
+        });
+
+        return (
+            <div className={styles.monthRow}>
+                {labels.map((label, i) => (
+                    <span
+                        key={i}
+                        className={styles.monthLabel}
+                        style={{ left: `${label.index * 16}px` }} // 12px box + 4px gap
+                    >
+                        {label.month}
+                    </span>
+                ))}
+            </div>
+        );
+    };
 
     return (
         <section ref={sectionRef} id="github" className={styles.githubSection}>
@@ -197,15 +247,25 @@ export default function GithubSection() {
                                 </div>
                                 <p className={styles.userBio}>{stats.bio}</p>
                                 <div className={styles.profileActions}>
-                                    <a 
-                                        href={`https://github.com/${USERNAME}`} 
-                                        target="_blank" 
-                                        rel="noopener noreferrer" 
+                                    <a
+                                        href={`https://github.com/${USERNAME}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         className={styles.followButton}
                                     >
                                         FOLLOW_ON_GITHUB
                                         <ExternalLink size={14} />
                                     </a>
+                                </div>
+                                <div className={styles.profileStats}>
+                                    <div className={styles.miniStat}>
+                                        <span className={styles.miniStatValue}>{stats?.followers || "0"}</span>
+                                        <span className={styles.miniStatLabel}>FOLLOWERS</span>
+                                    </div>
+                                    <div className={styles.miniStat}>
+                                        <span className={styles.miniStatValue}>{stats?.public_repos || "0"}</span>
+                                        <span className={styles.miniStatLabel}>REPOSITORIES</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -213,14 +273,12 @@ export default function GithubSection() {
                         {/* Stylish Streaks */}
                         <div className={styles.streakGrid}>
                             <div className={`${styles.streakCard} ${styles.currentStreak}`}>
-                                <div className={styles.streakIcon}>🔥</div>
                                 <div className={styles.streakData}>
                                     <span className={styles.streakValue}>{contributions?.currentStreak || 0}</span>
                                     <span className={styles.streakLabel}>CURRENT_STREAK</span>
                                 </div>
                             </div>
                             <div className={`${styles.streakCard} ${styles.maxStreak}`}>
-                                <div className={styles.streakIcon}>⚡</div>
                                 <div className={styles.streakData}>
                                     <span className={styles.streakValue}>{contributions?.longestStreak || 0}</span>
                                     <span className={styles.streakLabel}>MAX_STREAK</span>
@@ -245,14 +303,22 @@ export default function GithubSection() {
                             </div>
                             <span>More</span>
                         </div>
+
+                        <div className={styles.miniStat}>
+                            <span className={styles.miniStatValue} style={{ textAlign: 'right' }}>
+                                {contributions?.total || "0"}
+                            </span>
+                            <span className={styles.miniStatLabel}>YEAR_CONTRIBUTIONS</span>
+                        </div>
                     </div>
                     <div className={styles.calendarWrapper}>
+                        {renderMonthLabels()}
                         <div className={styles.calendar}>
                             {contributions?.calendar.map((week, wIdx) => (
                                 <div key={wIdx} className={styles.week}>
                                     {week.map((day, dIdx) => (
-                                        <div 
-                                            key={dIdx} 
+                                        <div
+                                            key={dIdx}
                                             className={`${styles.day} ${styles[day.contributionLevel.toLowerCase()]}`}
                                             title={`${day.contributionCount} contributions on ${day.date}`}
                                         />
@@ -262,37 +328,6 @@ export default function GithubSection() {
                         </div>
                     </div>
                 </div>
-
-                {/* Advanced Stats Grid */}
-                <div className={styles.statsGrid}>
-                    <div className={styles.statItem}>
-                        <span className={styles.statLabel}>CONTRIBUTIONS_L-YEAR</span>
-                        <span className={styles.statValue}>
-                            {contributions?.total || "---"}
-                        </span>
-                    </div>
-                    <div className={styles.statItem}>
-                        <span className={styles.statLabel}>CURRENT_STREAK</span>
-                        <span className={styles.statValue}>
-                            {contributions?.currentStreak || "0"} <span className={styles.label} style={{ fontSize: '0.6rem', marginBottom: 0 }}>DAYS</span>
-                        </span>
-                    </div>
-                    <div className={styles.statItem}>
-                        <span className={styles.statLabel}>BEST_STREAK</span>
-                        <span className={styles.statValue}>
-                            {contributions?.longestStreak || "0"} <span className={styles.label} style={{ fontSize: '0.6rem', marginBottom: 0 }}>DAYS</span>
-                        </span>
-                    </div>
-                    <div className={styles.statItem}>
-                        <span className={styles.statLabel}>PUBLIC_MODULES</span>
-                        <span className={styles.statValue}>{stats?.public_repos || "---"}</span>
-                    </div>
-                    <div className={styles.statItem}>
-                        <span className={styles.statLabel}>FOLLOWERS</span>
-                        <span className={styles.statValue}>{stats?.followers || "---"}</span>
-                    </div>
-                </div>
-
                 {/* Repos Grid */}
                 {loading ? (
                     <div className={styles.loading}>
