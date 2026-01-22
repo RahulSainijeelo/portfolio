@@ -5,30 +5,19 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import styles from '@/styles/hero.module.css';
-import UseTime from './animation/UseTime';
-import Cube from './Cube';
-import PathDrawing from './animation/PathDrawing';
-import MotionPath from './animation/MotionPath';
-import DecryptedText from "@/components/DecryptedText"
 import BlurText from "@/components/BlurText"
 import SplitText from './SplitText';
-import Orb from './Orb';
-import Galaxy from "./Galaxy"
 import useWindowSize from '@/hooks/useWindowSize';
 import { BackgroundLines } from './ui/background-lines';
-import { HoleBackground } from './animate-ui/components/backgrounds/hole';
-import { PixelatedCanvas } from './ui/pixelated-canvas';
-import VariableProximity from './VariableProximity';
 import ClickSpark from './ClickSpark';
-import Particles from './Particles';
-import wolf from "../app/wolf.jpg"
-// Register plugins
+import { HoleBackground } from './animate-ui/components/backgrounds/hole';
+
+
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const Bgs = () => {
   const { width, height } = useWindowSize();
 
-  // Handle SSR and initial load
   if (typeof window === 'undefined') return null;
 
   const currentWidth = width || window.innerWidth;
@@ -36,29 +25,9 @@ const Bgs = () => {
   const isDesktop = currentWidth > 1024;
 
   return (
-    <PixelatedCanvas
-      src={wolf.src}
-      width={currentWidth}
-      height={currentHeight}
-      cellSize={isDesktop ? 4 : 3}
-      dotScale={0.7}
-      shape="square"
-      backgroundColor="#000000"
-      dropoutStrength={0.4}
-      interactive
-      distortionStrength={3}
-      distortionRadius={80}
-      distortionMode="swirl"
-      followSpeed={0.2}
-      jitterStrength={4}
-      jitterSpeed={4}
-      sampleAverage
-      tintColor="#FFFFFF"
-      tintStrength={0.2}
-      objectFit={isDesktop ? "contain" : "cover"}
-      horizontalAlign={isDesktop ? "right" : "center"}
-      className="rounded-xl border border-neutral-800 shadow-lg"
-    />
+    <div className='flex absolute'>
+      <HoleBackground />
+    </div>
   );
 };
 

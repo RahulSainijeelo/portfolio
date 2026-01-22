@@ -139,7 +139,7 @@ const ProjectsSection = () => {
                     <div className={styles.introContent}>
                         <h2 className={styles.mainTitle}>SELECTED PROJECTS</h2>
                         <p className={styles.mainSubTitle}>
-                            A CURATED COLLECTION OF DIGITAL EXPERIENCES AND INNOVATIVE SOLUTIONS CRAFTED TO PUSH THE BOUNDARIES OF MODERN Application Development.
+                         What I’ve been up to lately.
                         </p>
                     </div>
                 </div>

@@ -291,18 +291,7 @@ export default function GithubSection() {
                 {/* Contribution Graph */}
                 <div className={styles.graphContainer}>
                     <div className={styles.graphHeader}>
-                        <span className={styles.graphTitle}>CONTRIBUTION_CALENDAR</span>
-                        <div className={styles.graphLegend}>
-                            <span>Less</span>
-                            <div className={styles.legendScale}>
-                                <div className={styles.level0} />
-                                <div className={styles.level1} />
-                                <div className={styles.level2} />
-                                <div className={styles.level3} />
-                                <div className={styles.level4} />
-                            </div>
-                            <span>More</span>
-                        </div>
+                        <span className={styles.graphTitle}>CONTRIBUTIONS</span>
 
                         <div className={styles.miniStat}>
                             <span className={styles.miniStatValue} style={{ textAlign: 'right' }}>
@@ -327,6 +316,18 @@ export default function GithubSection() {
                             ))}
                         </div>
                     </div>
+                    <div className={styles.graphLegend}>
+                            <span>Less</span>
+                            <div className={styles.legendScale}>
+                                <div className={styles.level0} />
+                                <div className={styles.level1} />
+                                <div className={styles.level2} />
+                                <div className={styles.level3} />
+                                <div className={styles.level4} />
+                            </div>
+                            <span>More</span>
+                        </div>
+
                 </div>
                 {/* Repos Grid */}
                 {loading ? (
