@@ -363,6 +363,10 @@
         line-height: 1.6;
         font-family: var(--font-primary);
         margin-bottom: 1.5rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     .mobileBtn {
