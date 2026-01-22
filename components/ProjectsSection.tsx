@@ -26,6 +26,7 @@ interface Project {
     sections?: {
         challenges: string;
         solutions: string;
+        features: string;
         outcome: string;
     };
 }
@@ -126,7 +127,7 @@ const ProjectsSection = () => {
     }, { scope: containerRef });
 
     return (
-        <div ref={containerRef} className={styles.container}>
+        <section ref={containerRef} id="projects" className={styles.container}>
             <ClickSpark
                 sparkColor='#fff'
                 sparkSize={10}
@@ -137,7 +138,7 @@ const ProjectsSection = () => {
             >
                 <div className={styles.introSection}>
                     <div className={styles.introContent}>
-                        <h1 className={styles.mainTitle}>SELECTED PROJECTS</h1>
+                        <h2 className={styles.mainTitle}>SELECTED PROJECTS</h2>
                         <p className={styles.mainSubTitle}>
                             A CURATED COLLECTION OF DIGITAL EXPERIENCES AND INNOVATIVE SOLUTIONS CRAFTED TO PUSH THE BOUNDARIES OF MODERN WEB DEVELOPMENT.
                         </p>
@@ -222,7 +223,7 @@ const ProjectsSection = () => {
                 />
 
             </ClickSpark>
-        </div>
+        </section>
     );
 };
 

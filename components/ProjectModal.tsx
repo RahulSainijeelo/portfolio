@@ -24,6 +24,7 @@ interface Project {
     sections?: {
         challenges: string;
         solutions: string;
+        features: string;
         outcome: string;
     };
 }
@@ -254,6 +255,10 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose })
                                                 <div className={styles.detailBox}>
                                                     <h3 className={styles.subHeader}>SOLUTIONS</h3>
                                                     <p className={styles.text}>{project.sections.solutions}</p>
+                                                </div>
+                                                <div className={styles.detailBox}>
+                                                    <h3 className={styles.subHeader}>FEATURES</h3>
+                                                    <p className={styles.text}>{project.sections.features}</p>
                                                 </div>
                                                 <div className={styles.detailBox}>
                                                     <h3 className={styles.subHeader}>OUTCOME</h3>

@@ -166,16 +166,16 @@ export default function PortfolioSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className={styles.portfolioSection}>
+    <section ref={sectionRef} id="portfolio" className={styles.portfolioSection}>
       <div className={styles.portfolioContainer}>
         
         {/* Background PORTFOLIO Title */}
-        <div 
+        <h2 
           ref={titleRef}
           className={styles.portfolioTitle}
         >
           PORTFOLIO
-        </div>
+        </h2>
 
         {/* Horizontal Scrolling Gallery */}
         <div 

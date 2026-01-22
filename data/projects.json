@@ -1,53 +1,118 @@
 [
     {
         "id": 1,
-        "title": "React Dashboard",
-        "description": "A comprehensive administrative dashboard built with React and TailwindCSS. Features real-time data visualization, user management, and customizable widgets.",
-        "longDescription": "This React Dashboard project showcases a modern approach to admin interfaces. It utilizes a modular architecture, leveraging React hooks and Context API for state management. Key features include a multi-layered sidebar, dynamic data tables with filtering and sorting, and a fully responsive layout optimized for all devices.",
+        "title": "Food Delivery System",
+        "description": "A real-time ecosystem connecting Customers, Restaurants, and Delivery Partners.",
+        "longDescription": "This platform is a robust monorepo orchestration of specialized applications, ensuring seamless data flow and specialized interfaces for every stakeholder. It's an real-time ecosystem connecting Customers, Restaurants, and Delivery Partners to process the live orders and seamless delivery of the food to the users.",
         "thumbnail": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80",
         "videoUrl": "https://pub-88542caeb82a4635aa980b4aeb205cb5.r2.dev/portfolio/only.mkv",
         "tags": [
             "React",
-            "GSAP",
-            "Three.js",
-            "WebGL"
+            "Next.js",
+            "Motion",
+            "css",
+            "tailwind",
+            "Express",
+            "Node.js",
+            "postgreSQL",
+            "RabbitMQ",
+            "Turborepo",
+            "Web Sockets",
+            "Real-time",
+            "Message Brokers",
+            "Email Service Integration",
+            "Figma Design",
+            "Prisma",
+            "JWT Authentication",
+            "RESTful APIs",
+            "Docker",
+            "Typescript",
+            "Cloudflare R2"          
         ],
         "stack": [
+            {"name": "Turborepo",
+                "logo": "https://cdn.simpleicons.org/vercel/000000"
+            },
             {
                 "name": "React",
                 "logo": "https://cdn.simpleicons.org/react/61DAFB"
             },
             {
-                "name": "GSAP",
-                "logo": "https://cdn.simpleicons.org/greensock/88CE02"
+                "name": "Next.js",
+                "logo": "https://cdn.simpleicons.org/nextdotjs/FFFFFF"
             },
             {
-                "name": "Three.js",
+                "name": "Motion-Three",
                 "logo": "https://cdn.simpleicons.org/three.js/FFFFFF"
             },
             {
                 "name": "Tailwind",
                 "logo": "https://cdn.simpleicons.org/tailwindcss/06B6D4"
+            },
+            {
+                "name": "Node.js",
+                "logo": "https://cdn.simpleicons.org/node.js/339933"
+            },
+            {
+                "name": "Express",
+                "logo": "https://cdn.simpleicons.org/express/FFFFFF"
+            },
+            {
+                "name": "PostgreSQL",
+                "logo": "https://cdn.simpleicons.org/postgresql/316192"
+            },
+            {
+                "name": "RabbitMQ",
+                "logo": "https://cdn.simpleicons.org/rabbitmq/FF6600"
+            },
+            {
+                "name": "Socket.io",
+                "logo": "https://cdn.simpleicons.org/socketdotio/010101"
+            },
+            {
+                "name": "Figma",
+                "logo": "https://cdn.simpleicons.org/figma/F24E1E"
+            },
+            {
+                "name": "Prisma",
+                "logo": "https://cdn.simpleicons.org/prisma/2D3748"
+            },
+            {
+                "name": "Docker",
+                "logo": "https://cdn.simpleicons.org/docker/2496ED"
+            },
+            {
+                "name": "TypeScript",
+                "logo": "https://cdn.simpleicons.org/typescript/3178C6"
+            },
+            {
+                "name": "Cloudflare",
+                "logo": "https://cdn.simpleicons.org/cloudflare/F38020"
             }
         ],
-        "link": "https://github.com",
+        "link": "https://github.com/rahulsainijeelo",
         "sections": {
-            "challenges": "Optimizing real-time data flow for thousands of concurrent data points without compromising UI responsiveness was a major hurdle.",
-            "solutions": "Implemented specialized Web Workers to offload heavy computations and used memoization strategies with React to minimize re-renders.",
-            "outcome": "Achieved 60fps rendering even with high-frequency data updates, resulting in an 85% improvement in user interaction fluidity."
+            "challenges": "Implementing real-time order updates and maintaining smooth performance during high-frequency data changes across multiple user interfaces. To make a secure, scalable and robust system that can handle thousands of concurrent users. Sending transactional and authentication emails reliably was also concerning and new to me.",
+            "solutions": "Utilized WebSockets for real-time communication, ensuring instantaneous updates across all user interfaces. Employed RabbitMQ as a message broker with a orderOutbox table to manage order processing efficiently. For email services, integrated with third-party providers like Zoho's Zeptomail to ensure reliable delivery of transactional emails. Adopted JWT for secure authentication and Prisma ORM with Postgres for efficient database management.",
+            "features": "Implemented order worker to handle the missed orders by the Message Broker for error free handling. Implemented Cleam Ui's for Users (seller_front) that is the main page for order placement and user ui, Restaurant Partner application with going offline and online functionlities to recieve/not recieve orders (In Real Time). Also Implemted Delivery Parner ui with same functionlities to process the to pickup and deliver the ready orders from the restauntants to the user locations. also implemented Admin Dashboard to monitor the whole system with order tracking and management. the dashboard has functionlities to add sub admins and registring the restaurants and drivers securely and driver assignment to the restaurants. It's also the managing place to manage payments and settelments and reports etc.",
+            "outcome": "After 2.5 months of development, around 600 git commits and crafting & managing service classes and endpoints for a database of 32 SQL tables, I finally reach to near end of this platform development. After a real hassel I have been able to develop a robus and complete working platfrom (Not some simulation). Implement my best knowledge of backend and frontend development to make this system work in real-time with all the functionlities required for a food delivery system. The system is now capable of handling thousands of concurrent users with real-time updates, secure transactions, and reliable email communications. This project has significantly enhanced my skills in full-stack development, real-time data handling, and system architecture design. "
         }
     },
     {
         "id": 2,
-        "title": "Cloud API Services",
-        "description": "Scalable RESTful API built with Node.js and Express, integrated with MongoDB. Optimized for high performance and secure data handling.",
-        "longDescription": "The Cloud API Services project focuses on providing a robust and scalable backend for modern web applications. Built on Node.js and Express.js, it handles millions of requests with ease. It features comprehensive API documentation using Swagger, JWT-based authentication for secure access, and integration with MongoDB.",
+        "title": "Con-Soul",
+        "description": "To redefine the way people discover and book premium nightlife and travel experiences, combining luxury with adventure through an intuitive digital interface.",
+        "longDescription": "Con-Soul is a high-end travel and adventure management platform designed specifically for nightlife, exploration, and premium trip experiences. Built with modern web technologies, it offers a seamless experience for both travelers looking for their next adventure and administrators managing trip logistics.",
         "thumbnail": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
-        "videoUrl": "https://pub-88542caeb82a4635aa980b4aeb205cb5.r2.dev/portfolio/kurukshetra.mkv",
+        "videoUrl": "https://pub-88542caeb82a4635aa980b4aeb205cb5.r2.dev/portfolio/con-soul.mkv",
         "tags": [
-            "Node.js",
-            "Express",
-            "MongoDB",
+            "Next.js",
+            "Firestore",
+            "Clerk",
+            "IMGBB",
+            "Tailwind CSS",
+            "Vercel",
+            "JWT Authentication",
             "Cloud"
         ],
         "stack": [
@@ -68,10 +133,11 @@
                 "logo": "https://cdn.simpleicons.org/docker/2496ED"
             }
         ],
-        "link": "https://github.com",
+        "link": "https://con-soul.in",
         "sections": {
             "challenges": "The system faced vertical scaling limitations during peak traffic bursts, leading to database connection timeouts.",
             "solutions": "Migrated to a horizontally scalable microservices architecture with Redis-based caching and database indexing optimizations.",
+            "features": "Real-time performance monitoring dashboard, automated database shard management, and multi-region failover support.",
             "outcome": "Successfully reduced average latency by 40% and improved system availability to 99.9% during high-traffic events."
         }
     },
@@ -110,6 +176,7 @@
         "sections": {
             "challenges": "Ensuring pixel-perfect consistency across both iOS and Android while maintaining high-performance fluid animations.",
             "solutions": "Utilized React Native Reanimated for native-threaded animations and standardizing layout constants via a global theme provider.",
+            "features": "Interactive personal finance dashboard, secure biometric authentication, real-time transaction tracking, and customizable expense categories.",
             "outcome": "Recognized for exceptional UX, with a 4.8-star user rating and a significant increase in user retention rates."
         }
     },
@@ -148,6 +215,7 @@
         "sections": {
             "challenges": "Visualizing high-dimensional AI model weights in a way that remains intuitive and actionable for developers.",
             "solutions": "Developed custom 3D visualization components using Three.js and D3-force simulations to represent neural network structures.",
+            "features": "Real-time model performance analytics, interactive 3D architecture explorer, automated hyperparameter tuning reports, and dataset integrity checks.",
             "outcome": "Reduced model debugging time for end-users by over 50% and provided a unique, visual-first approach to model management."
         }
     },
@@ -186,9 +254,8 @@
         "sections": {
             "challenges": "Visualizing high-dimensional AI model weights in a way that remains intuitive and actionable for developers.",
             "solutions": "Developed custom 3D visualization components using Three.js and D3-force simulations to represent neural network structures.",
-            "outcome": "Reduced model debugging time for end-users by over 50% and provided a unique, visual-first approach to model management.",
-            "something": "asdfasf."
-            
+            "features": "Advanced multi-model comparison view, collaborative model reviews, automated documentation generation, and version-controlled data pipelines.",
+            "outcome": "Reduced model debugging time for end-users by over 50% and provided a unique, visual-first approach to model management."
         }
     }
 ]

@@ -158,8 +158,10 @@ const HeroFrame = React.memo(({ frame, index, isActive, frameRef }: {
           <div className={styles.frameTextOverlay}>
             {frame.fancy ? (
               <div className={styles.frameTitle}>{frame.fancy}</div>
-            ) : (
+            ) : index === 0 ? (
               <h1 className={styles.frameTitle}>{frame.text}</h1>
+            ) : (
+              <h2 className={styles.frameTitle}>{frame.text}</h2>
             )}
             {frame.subtext && <p className={styles.frameSubtext}>{frame.subtext}</p>}
           </div>
@@ -172,8 +174,10 @@ const HeroFrame = React.memo(({ frame, index, isActive, frameRef }: {
           <div className={styles.frameTextContainer}>
             {frame.fancy ? (
               <div className={styles.frameTitle}>{frame.fancy}</div>
-            ) : (
+            ) : index === 0 ? (
               <h1 className={styles.frameTitle}>{frame.text}</h1>
+            ) : (
+              <h2 className={styles.frameTitle}>{frame.text}</h2>
             )}
             {frame.subtext && <p className={styles.frameSubtext}>{frame.subtext}</p>}
           </div>
@@ -294,6 +298,7 @@ const HeroSection: React.FC = () => {
   return (
     <div
       ref={containerRef}
+      id="home"
       className={styles.heroContainer}
     >
       <ClickSpark
