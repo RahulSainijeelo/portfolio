@@ -101,10 +101,10 @@
 .navigation {
   opacity: 1;
 }
-
+/* 
 .navigation .nameBox:first-child {
   border-right: 0 !important;
-}
+} */
 
 .navLink {
   color: white;

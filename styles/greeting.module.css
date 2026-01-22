@@ -12,27 +12,36 @@
   overflow: hidden;
 }
 
-/* Premium Aura Mesh Gradient Background */
+/* Modern Indian Aesthetic - Saffron & Gold Accents */
 .aura {
   position: absolute;
-  inset: -50%;
+  inset: 0;
   z-index: 1;
-  background:
-    radial-gradient(circle at 50% 50%, rgba(189, 147, 249, 0.15), transparent 50%),
-    radial-gradient(circle at 20% 80%, rgba(139, 233, 253, 0.1), transparent 40%),
-    radial-gradient(circle at 80% 20%, rgba(255, 121, 198, 0.1), transparent 40%);
-  filter: blur(80px);
-  animation: auraRotate 20s linear infinite;
+  background: 
+    radial-gradient(circle at 50% 50%, rgba(255, 153, 51, 0.08) 0%, transparent 70%),
+    #050505;
 }
 
-@keyframes auraRotate {
-  from {
-    transform: rotate(0deg);
-  }
+/* Mandala Pattern Background */
+.aura::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120vh;
+  height: 120vh;
+  transform: translate(-50%, -50%);
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 50m-40 0a40 40 0 1 0 80 0a40 40 0 1 0 -80 0' fill='none' stroke='%23ff9933' stroke-width='0.1' stroke-opacity='0.2'/%3E%3Cpath d='M50 10L55 40L85 45L55 50L50 80L45 50L15 45L45 40Z' fill='none' stroke='%23ff9933' stroke-width='0.1' stroke-opacity='0.2'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  mask-image: radial-gradient(circle, black 10%, transparent 70%);
+  -webkit-mask-image: radial-gradient(circle, black 10%, transparent 70%);
+  animation: mandalaRotate 60s linear infinite;
+  opacity: 0.5;
+}
 
-  to {
-    transform: rotate(360deg);
-  }
+@keyframes mandalaRotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .content {
@@ -42,16 +51,19 @@
 }
 
 .greetingText {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  font-size: clamp(3.5rem, 12vw, 10rem);
+  font-family: 'Playfair Display', serif, system-ui;
+  font-size: clamp(3rem, 12vw, 10rem);
   font-weight: 900;
   color: #ffffff;
   margin: 0;
-  letter-spacing: -0.04em;
-  line-height: 0.9;
+  letter-spacing: 0.02em;
+  line-height: 1;
   display: flex;
   justify-content: center;
   overflow: hidden;
+  text-transform: none;
+  /* Keep case for elegance */
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 40px rgba(255, 153, 51, 0.2);
 }
 
 .char {
@@ -64,22 +76,39 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 3rem;
+  padding: 4rem;
   z-index: 20;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: flex-end;
   pointer-events: none;
 }
 
-.loadingWrapper {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 0.75rem 1.5rem;
-  border-radius: 2rem;
+.techLabels {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  color: rgba(255, 153, 51, 0.5);
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+
+.loadingWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   gap: 1rem;
+  min-width: 200px;
+}
+
+.progressVal {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 600;
+  letter-spacing: 0.05em;
 }
 
 /* Hide default LoadingIndicator text if necessary, or style it via props if possible */
