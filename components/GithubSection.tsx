@@ -57,7 +57,7 @@ export default function GithubSection() {
     useEffect(() => {
         async function fetchRepos() {
             try {
-                const res = await fetch(`https://api.github.com/users/${USERNAME}/repos?sort=stars&per_page=6`);
+                const res = await fetch(`https://api.github.com/users/${USERNAME}/repos?sort=stars&per_page=16`);
                 const data = await res.json();
                 if (Array.isArray(data)) setRepos(data);
             } catch (e) { console.error("Repo Fetch Error", e); }
