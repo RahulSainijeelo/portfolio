@@ -66,31 +66,31 @@ const SectionTransition = () => {
             opacity: 1,
             duration: 0.1,
             ease: "power2.in"
-        }, 0.5);
+        }, 0.3);
 
         tl.to(flashRef.current, {
             opacity: 0,
-            duration: 0.3,
+            duration: 0.1,
             ease: "power2.out"
-        }, 0.6);
+        }, 0.4);
 
         // 3. Fade out video immediately after flash peak
         tl.to(videoWrapperRef.current, {
             opacity: 0,
-            duration: 0.2,
+            duration: 0.1,
             ease: "power2.inOut"
-        }, 0.6);
+        }, 0.5);
 
         // 4. Brightness pulse
         tl.to(videoWrapperRef.current, {
             filter: "brightness(2) contrast(1.5) saturate(2)",
-            duration: 0.2,
+            duration: 0.05,
             ease: "power1.in"
-        }, 0.5);
+        }, 0.6);
 
         tl.to(videoWrapperRef.current, {
             filter: "brightness(0.6) contrast(1.1) saturate(1.2)",
-            duration: 0.4,
+            duration: 0.1,
             ease: "power1.out"
         }, 0.7);
 
@@ -108,7 +108,7 @@ const SectionTransition = () => {
                         muted
                         playsInline
                     />
-                    <div className={styles.overlay} />
+                    {/* <div className={styles.overlay} /> */}
                     <div className={styles.glassFrame} />
                 </div>
                 <div ref={flashRef} className={styles.flash} />
