@@ -47,7 +47,7 @@ const jsonLd = {
   "name": "Rahul Saini",
   "url": "https://rahulsaini.dev",
   "jobTitle": "Full-Stack Developer",
-  "description": "Rahul Saini is a passionate Full-Stack Developer specializing in React, Next.js, Node.js, and Blockchain development.",
+  "description": "Rahul Saini is a Full-Stack Developer specializing in React, Next.js,express, Node.js, backend communications, devops and web3 development.",
   "sameAs": [
     "https://github.com/RahulSainijeelo",
     // "https://twitter.com/yourhandle", 
@@ -61,8 +61,8 @@ export const metadata: Metadata = {
 
     template: "%s | Rahul Saini"
   },
-  description: "Rahul Saini - A passionate Full-Stack Developer specialized in React, Next.js, Node.js, and Blockchain. Crafting seamless digital experiences and robust backend services.",
-  keywords: ["Rahul Saini", "Portfolio", "Full-Stack Developer", "Blockchain Developer", "Solana", "Ethereum", "React", "Next.js", "Node.js", "Solidity", "Software Engineer"],
+  description: "Rahul Saini - Full-Stack Developer specialized in React, Next.js, Node.js,devops, and web3. Crafting seamless digital experiences and robust backend services.",
+  keywords: ["Rahul Saini", "Portfolio", "Full-Stack Developer", "web3 Developer", "Solana", "Ethereum", "React", "Next.js", "Node.js", "Solidity", "Software Engineer"],
   authors: [{ name: "Rahul Saini" }],
   creator: "Rahul Saini",
   openGraph: {
@@ -70,11 +70,11 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://rahul-saini.me", // Replace with your actual domain
     siteName: "Rahul Saini Portfolio",
-    title: "Rahul Saini | Full-Stack Developer & Blockchain Explorer",
+    title: "Rahul Saini | Full-Stack Developer & Web 3 Explorer",
     description: "Exploring the intersection of elegant frontend design and sophisticated backend architecture.",
     images: [
       {
-        url: "/og-image.jpg", // Make sure to add this image to /public
+        url: "./apple-touch-icon.png",
         width: 1200,
         height: 630,
         alt: "Rahul Saini Portfolio",
@@ -85,8 +85,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Rahul Saini | Full-Stack Developer",
     description: "Full-Stack Developer crafting engaging frontends and sophisticated backends.",
-    creator: "@rahulsaini", // Replace with your actual twitter handle
-    images: ["/og-image.jpg"],
+    creator: "@Rahul1962",
+    images: ["./apple-touch-icon.png"],
   },
   robots: {
     index: true,
